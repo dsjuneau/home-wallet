@@ -9,10 +9,10 @@ export class Register extends Component {
     //verfication block
     const { userName, email, password, password2 } = this.state;
     if (userName && email && password) {
-      if (password === password2) {
+      if (password === password2 && password.length > 6) {
         console.log("passed verification");
       } else {
-        console.log("emial does not match");
+        console.log("Password does not match");
       }
     } else {
       console.log("something else did not work");

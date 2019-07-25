@@ -9,7 +9,7 @@ require("dotenv").config();
 router
   .route("/")
   .get((req, res) => {
-    res.json({ isAuth: false, userName: "Scott" });
+    res.json({ isAuth: true, userName: "Scott" });
   })
   .post((req, res) => {
     res.json({ isAuth: true, userName: "Scott" });

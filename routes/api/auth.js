@@ -5,6 +5,7 @@ const router = require("express").Router();
 require("dotenv").config();
 
 // Matches with "/api/auth"
+// This part of the code emmulates authentication
 router
   .route("/")
   .get((req, res) => {

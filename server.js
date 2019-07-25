@@ -3,6 +3,7 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const routes = require("./routes");
+const mongoose = require("mongoose");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +20,13 @@ app.use(routes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
+
+//Connect to mongoDB
+mongoose
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/myHomeWallet", {
+    useNewUrlParser: true
+  })
+  .then(() => console.log("Database Connected"));
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);

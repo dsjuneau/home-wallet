@@ -8,7 +8,10 @@ export class Login extends Component {
     e.preventDefault();
     const { email, password } = this.state;
     axios.post("/api/auth/login", { email, password }).then(res => {
-      console.log(res);
+      console.log(res.data);
+      if (res.data.msg === undefined) {
+        console.log("Time to call function which updates state variable");
+      }
     });
   };
   handleChange = event => {

@@ -24,7 +24,6 @@ export class Register extends Component {
           pwd: password
         };
         axios.post("/api/auth/register", { userToSave }).then(res => {
-          console.log(res);
           if (res.data.userExists) {
             this.setState({
               isError: true,

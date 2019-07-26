@@ -30,6 +30,8 @@ export class Register extends Component {
               isError: true,
               errorMsg: "User already exists"
             });
+          } else {
+            window.location.assign("/login");
           }
         });
       } else {

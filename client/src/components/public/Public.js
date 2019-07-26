@@ -13,7 +13,10 @@ export class Public extends Component {
         <div>
           <Nav />
           <Route path="/" exact component={Info} />
-          <Route path="/login/" component={Login} />
+          <Route
+            path="/login/"
+            render={() => <Login auth={this.props.auth} />}
+          />
           <Route path="/register/" component={Register} />
           <Footer />
         </div>

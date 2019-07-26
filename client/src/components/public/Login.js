@@ -10,7 +10,7 @@ export class Login extends Component {
     axios.post("/api/auth/login", { email, password }).then(res => {
       console.log(res.data);
       if (res.data.msg === undefined) {
-        console.log("Time to call function which updates state variable");
+        this.props.auth(res.data.userName, res.data._id);
       }
     });
   };

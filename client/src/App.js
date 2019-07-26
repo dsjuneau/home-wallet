@@ -20,9 +20,13 @@ class App extends React.Component {
     this.setState({ isAuth: false });
   };
 
+  auth = (userName, id) => {
+    this.setState({ userName, id, isAuth: true });
+  };
+
   render() {
     return !this.state.isAuth ? (
-      <Public />
+      <Public auth={this.auth} />
     ) : (
       <Private unAuth={this.unAuth} user={this.state} />
     );

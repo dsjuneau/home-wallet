@@ -13,6 +13,7 @@ export class Register extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ isError: false });
     //verfication block
     const { userName, email, password, password2 } = this.state;
     if (userName && email && password) {

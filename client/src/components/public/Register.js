@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import axios from "axios";
 
 export class Register extends Component {
-  state = { userName: "", email: "", password: "", password2: "" };
+  state = {
+    userName: "",
+    email: "",
+    password: "",
+    password2: "",
+    isError: false,
+    errorMsg: ""
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -10,12 +17,32 @@ export class Register extends Component {
     const { userName, email, password, password2 } = this.state;
     if (userName && email && password) {
       if (password === password2 && password.length > 6) {
-        console.log("passed verification");
+        let userToSave = {
+          userName: this.state.userName,
+          email: this.state.email,
+          pwd: this.state.password
+        };
+        axios.post("/api/auth/login", { userToSave }).then(res => {
+          console.log(res);
+          if (res.data.userExists) {
+            this.setState({
+              isError: true,
+              errorMsg: "User already exists"
+            });
+          }
+        });
       } else {
-        console.log("Password does not match");
+        this.setState({
+          isError: true,
+          errorMsg:
+            "Passwords need to match and must be at least 7 characters in length"
+        });
       }
     } else {
-      console.log("something else did not work");
+      this.setState({
+        isError: true,
+        errorMsg: "All fields must be completed"
+      });
     }
   };
   handleChange = event => {
@@ -29,6 +56,7 @@ export class Register extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
+          <label>{this.state.isError ? this.state.errorMsg : ""}</label>
           <input
             onChange={this.handleChange}
             name="userName"

@@ -21,7 +21,7 @@ class App extends React.Component {
   };
 
   render() {
-    return this.state.isAuth ? (
+    return !this.state.isAuth ? (
       <Public />
     ) : (
       <Private unAuth={this.unAuth} user={this.state} />

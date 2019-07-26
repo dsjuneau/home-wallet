@@ -1,7 +1,6 @@
 const router = require("express").Router();
+const usersController = require("../../controllers/usersController");
 
-// the controller is for accessing the database
-// const booksController = require("../../controllers/booksController");
 require("dotenv").config();
 
 // Matches with "/api/auth"
@@ -9,10 +8,12 @@ require("dotenv").config();
 router
   .route("/")
   .get((req, res) => {
-    res.json({ isAuth: true, userName: "Scott" });
+    res.json({ isAuth: false, userName: "Scott" });
   })
   .post((req, res) => {
-    res.json({ isAuth: true, userName: "Scott" });
+    res.json({ isAuth: false, userName: "Scott" });
   });
+
+router.route("/login").post(usersController.createUser);
 
 module.exports = router;

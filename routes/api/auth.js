@@ -14,6 +14,7 @@ router
     res.json({ isAuth: false, userName: "Scott" });
   });
 
-router.route("/login").post(usersController.createUser);
+router.route("/register").post(usersController.createUser);
+router.route("/login").post(usersController.authUser);
 
 module.exports = router;

@@ -6,7 +6,10 @@ export class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state.email, this.state.password);
+    const { email, password } = this.state;
+    axios.post("/api/auth/login", { email, password }).then(res => {
+      console.log(res);
+    });
   };
   handleChange = event => {
     const { name, value } = event.target;

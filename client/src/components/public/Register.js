@@ -19,11 +19,11 @@ export class Register extends Component {
     if (userName && email && password) {
       if (password === password2 && password.length > 6) {
         let userToSave = {
-          userName: this.state.userName,
-          email: this.state.email,
-          pwd: this.state.password
+          userName,
+          email,
+          pwd: password
         };
-        axios.post("/api/auth/login", { userToSave }).then(res => {
+        axios.post("/api/auth/register", { userToSave }).then(res => {
           console.log(res);
           if (res.data.userExists) {
             this.setState({

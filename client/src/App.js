@@ -6,7 +6,7 @@ import axios from "axios";
 import "./App.css";
 
 class App extends React.Component {
-  state = { isAuth: false };
+  state = { isFromLogin: false, isAuth: false };
 
   componentWillMount() {
     axios.get("/api/auth").then(response => {
@@ -21,8 +21,17 @@ class App extends React.Component {
   };
 
   auth = (userName, id) => {
-    this.setState({ userName, id, isAuth: true });
+    this.setState({ userName, id, isAuth: true, isFromLogin: true });
   };
+
+  componentDidUpdate() {
+    console.log("componentDidUpdate ran");
+    if (this.state.isFromLogin) {
+      console.log("getting here");
+      window.location.assign("/");
+      this.setState({ isFromLogin: false });
+    }
+  }
 
   render() {
     return !this.state.isAuth ? (

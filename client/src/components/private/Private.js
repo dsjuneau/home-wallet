@@ -12,7 +12,8 @@ export class Private extends Component {
       <Router>
         <div>
           <Nav />
-          <Route path="/" exact component={Calendar} />
+          <Route path={["/", "/login"]} exact component={Calendar} />
+
           <Route path="/page2/" component={Page2} />
           <Route path="/page3/" component={Page3} />
           <Footer />

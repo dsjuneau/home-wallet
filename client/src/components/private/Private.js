@@ -11,7 +11,7 @@ export class Private extends Component {
     return (
       <Router>
         <div>
-          <Nav />
+          <Nav userName={this.props.user.userName} />
           <Route path={["/", "/login"]} exact component={Calendar} />
 
           <Route path="/page2/" component={Page2} />

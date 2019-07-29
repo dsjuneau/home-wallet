@@ -16,5 +16,6 @@ router
 
 router.route("/register").post(usersController.createUser);
 router.route("/login").post(usersController.authUser);
+router.route("/login").get(usersController.isAuthUser);
 
 module.exports = router;

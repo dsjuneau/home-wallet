@@ -1,5 +1,6 @@
 const db = require("../models");
 const bcrypt = require("bcryptjs");
+const uuid = require("uuid/v1");
 
 // Defining methods for the booksController
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.userToSave.pwd, salt);
         req.body.userToSave.pwd = hash;
+        req.body.userToSave.key = uuid();
         db.User.create(req.body.userToSave)
           .then(dbModel => res.json(dbModel))
           .catch(err => res.status(422).json(err));
@@ -37,5 +39,22 @@ module.exports = {
         }
       })
       .catch(err => res.status(422).json(err));
+  },
+  isAuthUser: function(req, res) {
+    if (req.cookies !== null) {
+      db.User.findOne({ key: req.cookies.key })
+        .then(dbModel => {
+          if (dbModel !== null) {
+            //Turn the password here into an encrypted password
+            //Change req.body.password to the encrypted password
+            res.json(dbModel);
+          } else {
+            res.json({ msg: "User not authenticated" });
+          }
+        })
+        .catch(err => res.status(422).json(err));
+    } else {
+      res.json({ msg: "User not authnticated" });
+    }
   }
 };

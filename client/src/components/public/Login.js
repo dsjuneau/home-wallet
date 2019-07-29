@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { runInThisContext } from "vm";
 
 export class Login extends Component {
   state = { email: "", password: "", isError: false };
 
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ isError: false });
     const { email, password } = this.state;
     axios.post("/api/auth/login", { email, password }).then(res => {
       console.log(res.data);
@@ -23,7 +25,9 @@ export class Login extends Component {
       [name]: value
     });
   };
-
+  handleClick = () => {
+    axios.post("/api/auth/reset", { email: this.state.email });
+  };
   render() {
     return (
       <div>
@@ -45,6 +49,7 @@ export class Login extends Component {
           />
           <button>Submit</button>
         </form>
+        <button onClick={this.handleClick}>Reset Password</button>
       </div>
     );
   }

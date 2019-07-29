@@ -56,5 +56,18 @@ module.exports = {
     } else {
       res.json({ msg: "User not authnticated" });
     }
+  },
+  reset: function(req, res) {
+    db.User.findOne({ email: req.body.email })
+      .then(dbModel => {
+        if (dbModel !== null) {
+          //Database update to change password
+          //Mailer to send out new password
+          console.log("password is reset");
+        } else {
+          res.json({ msg: "User not authenticated" });
+        }
+      })
+      .catch(err => res.status(422).json(err));
   }
 };

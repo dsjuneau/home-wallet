@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 export class Login extends Component {
-  state = { email: "", password: "" };
+  state = { email: "", password: "", isError: false };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -12,6 +12,8 @@ export class Login extends Component {
       if (res.data.msg === undefined) {
         document.cookie = `key=${res.data.key};path=/`;
         this.props.auth(res.data.userName, res.data._id);
+      } else {
+        this.setState({ isError: true, errorMsg: res.data.msg });
       }
     });
   };
@@ -26,6 +28,7 @@ export class Login extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
+          <label>{this.state.isError ? this.state.errorMsg : ""}</label>
           <input
             onChange={this.handleChange}
             name="email"

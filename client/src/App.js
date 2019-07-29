@@ -1,7 +1,6 @@
 import React from "react";
 import Private from "./components/private/Private";
 import Public from "./components/public/Public";
-import axios from "axios";
 
 import "./App.css";
 

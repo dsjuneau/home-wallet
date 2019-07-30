@@ -2,6 +2,7 @@ const db = require("../models");
 const bcrypt = require("bcryptjs");
 const uuid = require("uuid/v1");
 const nodemailer = require("nodemailer");
+const generator = require("generate-password");
 require("dotenv").config();
 
 module.exports = {
@@ -56,9 +57,17 @@ module.exports = {
       .then(dbModel => {
         if (dbModel !== null) {
           //Fix this part to create a new password
-          // and encrypt the password before it is stored
-          const newPwd = uuid();
-          db.User.updateOne({ email: req.body.email }, { pwd: newPwd });
+          //and encrypt the password before it is stored
+          //use a password creation utility
+          const newPwd = generator.generate({
+            length: 10,
+            numbers: true
+          });
+          const salt = bcrypt.genSaltSync(10);
+          const hash = bcrypt.hashSync(newPwd, salt);
+
+          db.User.updateOne({ email: req.body.email }, { pwd: hash })
+          .catch(err => console.log(err));
 
           function main() {
             let transporter = nodemailer.createTransport({

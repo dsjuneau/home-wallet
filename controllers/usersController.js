@@ -1,14 +1,13 @@
 const db = require("../models");
 const bcrypt = require("bcryptjs");
 const uuid = require("uuid/v1");
+const nodemailer = require("nodemailer");
+require("dotenv").config();
 
-// Defining methods for the booksController
 module.exports = {
   createUser: function(req, res) {
     db.User.find({ email: req.body.userToSave.email }).then(dbModel => {
       if (dbModel[0] === undefined) {
-        //Add code here to encrypt password
-        //Change userToSave.password to the encrypted password
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.userToSave.pwd, salt);
         req.body.userToSave.pwd = hash;
@@ -26,9 +25,6 @@ module.exports = {
     db.User.findOne({ email: req.body.email })
       .then(dbModel => {
         if (dbModel !== null) {
-          //Turn the password here into an encrypted password
-          //Change req.body.password to the encrypted password
-
           if (bcrypt.compareSync(req.body.password, dbModel.pwd)) {
             res.json(dbModel);
           } else {
@@ -45,8 +41,6 @@ module.exports = {
       db.User.findOne({ key: req.cookies.key })
         .then(dbModel => {
           if (dbModel !== null) {
-            //Turn the password here into an encrypted password
-            //Change req.body.password to the encrypted password
             res.json(dbModel);
           } else {
             res.json({ msg: "User not authenticated" });
@@ -61,8 +55,30 @@ module.exports = {
     db.User.findOne({ email: req.body.email })
       .then(dbModel => {
         if (dbModel !== null) {
-          //Database update to change password
-          //Mailer to send out new password
+          //Fix this part to create a new password
+          // and encrypt the password before it is stored
+          const newPwd = uuid();
+          db.User.updateOne({ email: req.body.email }, { pwd: newPwd });
+
+          function main() {
+            let transporter = nodemailer.createTransport({
+              service: "gmail",
+              auth: {
+                user: process.env.USER_NAME,
+                pass: process.env.USER_PASSWORD
+              }
+            });
+
+            const mailOptions = {
+              from: "hometeam.home.wallet@gmail.com",
+              to: "dsjuneau@gmail.com",
+              subject: "Password reset",
+              text: `Your password has been reset to ${newPwd}`
+            };
+            transporter.sendMail(mailOptions);
+          }
+          main();
+
           console.log("password is reset");
         } else {
           res.json({ msg: "User not authenticated" });

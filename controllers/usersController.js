@@ -66,8 +66,9 @@ module.exports = {
           const salt = bcrypt.genSaltSync(10);
           const hash = bcrypt.hashSync(newPwd, salt);
 
-          db.User.updateOne({ email: req.body.email }, { pwd: hash })
-          .catch(err => console.log(err));
+          db.User.updateOne({ email: req.body.email }, { pwd: hash }).catch(
+            err => console.log(err)
+          );
 
           function main() {
             let transporter = nodemailer.createTransport({
@@ -80,7 +81,7 @@ module.exports = {
 
             const mailOptions = {
               from: "hometeam.home.wallet@gmail.com",
-              to: "dsjuneau@gmail.com",
+              to: req.body.email,
               subject: "Password reset",
               text: `Your password has been reset to ${newPwd}`
             };

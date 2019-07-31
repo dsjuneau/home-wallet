@@ -1,5 +1,17 @@
-import React from "react";
+// https://fullcalendar.io/docs/react // NOT DONE
 
-export default function Calendar() {
-  return <div>Calendar</div>;
+import React from 'react'
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+
+import './main.scss' // webpack must be configured to do this
+
+export default class DemoApp extends React.Component {
+
+  render() {
+    return (
+      <FullCalendar defaultView="dayGridMonth" plugins={[ dayGridPlugin ]} />
+    )
+  }
+
 }

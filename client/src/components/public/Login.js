@@ -11,7 +11,7 @@ export class Login extends Component {
     axios.post("/api/auth/login", { email, password }).then(res => {
       console.log(res.data);
       if (res.data.msg === undefined) {
-        document.cookie = `key=${res.data.key};path=/`;
+        document.cookie = `key=${res.data.key};path=/;max-age=3600`;
         this.props.auth(res.data.userName, res.data._id);
       } else {
         this.setState({ isError: true, errorMsg: res.data.msg });

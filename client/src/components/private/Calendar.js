@@ -6,11 +6,47 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 
 import './main.scss' // webpack must be configured to do this
 
-export default class DemoApp extends React.Component {
+export default class Calendar extends React.Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+        events: [],
+        search: "",
+        eventToSave: {}
+      };
+     /*  this.handleSaveBook = this.handleSaveBook.bind(this);
+      this.handleInputChange = this.handleInputChange.bind(this);
+      this.handleFormSubmit = this.handleFormSubmit.bind(this); */
+    }
+
 
   handleDateClick = (arg) => { // bind with an arrow function
       alert(arg.dateStr)
     }
+
+/*   loadEvents = (start, end, timezone, callback) => {
+      $.ajax({
+           url: ‘myxmlfeed.php’,
+           dataType: ‘xml’,
+           data: {
+                           // our hypothetical feed requires UNIX timestamps
+                          start: start.unix(),
+                          end: end.unix()
+          },
+          success: function(doc) {
+               var events = [];
+                          $(doc).find(‘event’).each(function() {
+                               events.push({
+                                    title: $(this).attr(‘title’),
+                                    start: $(this).attr(‘start’) // will be parsed
+                    });
+                        });
+                       callback(events);
+                    }
+    });
+ } */
 
 render() {
   return (

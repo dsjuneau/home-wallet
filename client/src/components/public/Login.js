@@ -24,6 +24,7 @@ export class Login extends Component {
       [name]: value,
     });
   };
+
   handleClick = () => {
     axios.post("/api/auth/reset", { email: this.state.email });
   };
@@ -72,6 +73,8 @@ export class Login extends Component {
             </form>
 
             <div className="form-group text-center mt-5">
+              <a href="/Register/">Create an Account</a>
+              <br />
               <a href="#" className="ForgetPwd" onClick={this.handleClick}>
                 Forget Your Password ?
               </a>

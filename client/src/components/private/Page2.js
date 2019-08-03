@@ -1,5 +1,12 @@
 import React from "react";
 
 export default function Page2() {
-  return <div>Page 2 content</div>;
+  return (
+    <div>
+      <div className="container">
+        <div className="card" />
+      </div>
+      Page 2 content
+    </div>
+  );
 }

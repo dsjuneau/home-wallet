@@ -8,7 +8,7 @@ export class Register extends Component {
     password: "",
     password2: "",
     isError: false,
-    errorMsg: ""
+    errorMsg: "",
   };
 
   handleSubmit = e => {
@@ -21,13 +21,13 @@ export class Register extends Component {
         let userToSave = {
           userName,
           email,
-          pwd: password
+          pwd: password,
         };
         axios.post("/api/auth/register", { userToSave }).then(res => {
           if (res.data.userExists) {
             this.setState({
               isError: true,
-              errorMsg: "User already exists"
+              errorMsg: "User already exists",
             });
           } else {
             window.location.assign("/login");
@@ -37,58 +37,95 @@ export class Register extends Component {
         this.setState({
           isError: true,
           errorMsg:
-            "Passwords need to match and must be at least 7 characters in length"
+            "Passwords need to match and must be at least 7 characters in length",
         });
       }
     } else {
       this.setState({
         isError: true,
-        errorMsg: "All fields must be completed"
+        errorMsg: "All fields must be completed",
       });
     }
   };
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>{this.state.isError ? this.state.errorMsg : ""}</label>
-          <input
-            onChange={this.handleChange}
-            name="userName"
-            type="text"
-            placeholder="Full Name"
-            value={this.state.userName}
-          />
-          <input
-            onChange={this.handleChange}
-            name="email"
-            type="text"
-            placeholder="e-mail"
-            value={this.state.email}
-          />
-          <input
-            onChange={this.handleChange}
-            name="password"
-            type="password"
-            placeholder="password"
-            value={this.state.password}
-          />
-          <input
-            onChange={this.handleChange}
-            name="password2"
-            type="password"
-            placeholder="retype password"
-            value={this.state.password2}
-          />
-          <button>Submit</button>
-        </form>
+        <div className="container mt-5">
+          <div className="card">
+            <div className="card-header mb-4 bg-secondary text-white">
+              <h3 className="text-center mt-4 ">
+                <i class="fas fa-user-cog" /> Get started with your free account
+              </h3>
+            </div>
+            <form className="mx-auto" onSubmit={this.handleSubmit}>
+              <div className="form-group input-group">
+                <label>{this.state.isError ? this.state.errorMsg : ""}</label>
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    <i className="fas fa-user-check" />
+                  </span>
+                </div>
+                <input
+                  onChange={this.handleChange}
+                  name="userName"
+                  type="text"
+                  placeholder=" full name"
+                  value={this.state.userName}
+                />
+              </div>
+              <div className="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-envelope" />
+                  </span>
+                </div>
+                <input
+                  onChange={this.handleChange}
+                  name="email"
+                  type="text"
+                  placeholder=" e-mail"
+                  value={this.state.email}
+                />
+              </div>
+              <div className="form-group input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    <i className="fa fa-lock" />
+                  </span>
+                </div>
+                <input
+                  onChange={this.handleChange}
+                  name="password"
+                  type="password"
+                  placeholder=" password"
+                  value={this.state.password}
+                />
+              </div>
+              <div className="form-group input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    <i className="fa fa-lock" />
+                  </span>
+                </div>
+                <input
+                  onChange={this.handleChange}
+                  name="password2"
+                  type="password"
+                  placeholder=" retype password"
+                  value={this.state.password2}
+                />
+              </div>
+              <button className="btn btn-success mb-4">Submit</button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

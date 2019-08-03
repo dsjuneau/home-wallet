@@ -21,7 +21,7 @@ export class Login extends Component {
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
   handleClick = () => {
@@ -30,25 +30,54 @@ export class Login extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>{this.state.isError ? this.state.errorMsg : ""}</label>
-          <input
-            onChange={this.handleChange}
-            name="email"
-            type="text"
-            placeholder="e-mail"
-            value={this.state.email}
-          />
-          <input
-            onChange={this.handleChange}
-            name="password"
-            type="password"
-            placeholder="password"
-            value={this.state.password}
-          />
-          <button>Submit</button>
-        </form>
-        <button onClick={this.handleClick}>Reset Password</button>
+        <div className="container mt-5">
+          <div className="card ">
+            <div className="card-header mb-4 bg-secondary text-white">
+              <h3 className="text-center mt-4 ">
+                {" "}
+                <i class="fas fa-user-circle" /> Login
+              </h3>
+            </div>
+            <form className="mx-auto" onSubmit={this.handleSubmit}>
+              <div className="form-group input-group">
+                <label>{this.state.isError ? this.state.errorMsg : ""}</label>
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    <i className="fa fa-envelope" />
+                  </span>
+                </div>
+                <input
+                  onChange={this.handleChange}
+                  name="email"
+                  type="text"
+                  placeholder="e-mail"
+                  value={this.state.email}
+                />
+              </div>
+              <div className="form-group input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    <i className="fa fa-lock" />
+                  </span>
+                </div>
+                <input
+                  onChange={this.handleChange}
+                  name="password"
+                  type="password"
+                  placeholder="password"
+                  value={this.state.password}
+                />
+              </div>
+              <button className="btn btn-success">Submit</button>
+            </form>
+
+            <div className="form-group text-center mt-5">
+              <a href="#" className="ForgetPwd" onClick={this.handleClick}>
+                Forget Your Password ?
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

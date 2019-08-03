@@ -33,7 +33,10 @@ export class Login extends Component {
         <div className="container mt-5">
           <div className="card ">
             <div className="card-header mb-4 bg-secondary text-white">
-              <h3 className="text-center mt-4 ">Login</h3>
+              <h3 className="text-center mt-4 ">
+                {" "}
+                <i class="fas fa-user-circle" /> Login
+              </h3>
             </div>
             <form className="mx-auto" onSubmit={this.handleSubmit}>
               <div className="form-group input-group">

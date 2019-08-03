@@ -87,7 +87,7 @@ export default function Info() {
             <h2 class="text-center">Features</h2>
 
             <div class="row text-center">
-              <div class="col-4 mb-5 mt-5">
+              <div class="col-4 mb-3 mt-5">
                 <div class="card">
                   <img
                     src="https://media.noria.com/sites/Uploads/2018/12/20/73c77e51-97d0-4ec5-81dc-e80c0b265dcf_Images_ProactiveMaintenanceApproach_31035_1234x694_large.jpeg"
@@ -107,7 +107,7 @@ export default function Info() {
                 </div>
               </div>
               {/* <!-- card --> */}
-              <div class="col-4 mb-5 mt-5">
+              <div class="col-4 mb-3 mt-5">
                 <div class="card">
                   <img
                     src="https://media.noria.com/sites/Uploads/2018/12/20/73c77e51-97d0-4ec5-81dc-e80c0b265dcf_Images_ProactiveMaintenanceApproach_31035_1234x694_large.jpeg"
@@ -127,7 +127,7 @@ export default function Info() {
                 </div>
               </div>
               {/* <!-- card --> */}
-              <div class="col-4 mb-5 mt-5">
+              <div class="col-4 mb-3 mt-5">
                 <div class="card">
                   <img
                     src="https://media.noria.com/sites/Uploads/2018/12/20/73c77e51-97d0-4ec5-81dc-e80c0b265dcf_Images_ProactiveMaintenanceApproach_31035_1234x694_large.jpeg"
@@ -149,9 +149,12 @@ export default function Info() {
               {/* <!-- card --> */}
             </div>
             <div class="form-group text-center">
+              <a href="/Register/" className="btn btn-success mb-3">
+                Click Here to Register
+              </a>
               <p>
                 &nbsp;&nbsp;&nbsp; Already have an account? &nbsp;&nbsp;&nbsp;
-                <a href="./login.html">Log In</a>
+                <a href="/login">Log In</a>
               </p>
             </div>
           </form>

@@ -61,7 +61,7 @@ export class Register extends Component {
           <div className="card">
             <div className="card-header mb-4 bg-secondary text-white">
               <h3 className="text-center mt-4 ">
-                Get started with your free account
+                <i class="fas fa-user-cog" /> Get started with your free account
               </h3>
             </div>
             <form className="mx-auto" onSubmit={this.handleSubmit}>
@@ -76,7 +76,7 @@ export class Register extends Component {
                   onChange={this.handleChange}
                   name="userName"
                   type="text"
-                  placeholder="Full Name"
+                  placeholder=" full name"
                   value={this.state.userName}
                 />
               </div>
@@ -90,7 +90,7 @@ export class Register extends Component {
                   onChange={this.handleChange}
                   name="email"
                   type="text"
-                  placeholder="e-mail"
+                  placeholder=" e-mail"
                   value={this.state.email}
                 />
               </div>

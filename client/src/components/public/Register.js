@@ -124,6 +124,9 @@ export class Register extends Component {
               </div>
               <button className="btn btn-success mb-4">Submit</button>
             </form>
+            <div className="form-group text-center mt-5">
+              <a href="/Login/">Already have an account?</a>
+            </div>
           </div>
         </div>
       </div>

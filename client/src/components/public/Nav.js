@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {
   Dropdown,
   DropdownToggle,
@@ -49,35 +48,6 @@ export default class Nav extends React.Component {
                 <DropdownItem>
                   <a className="dropdown-item" href="/Register/">
                     <i className="fas fa-user-cog" /> Register
-                  </a>
-                  {/* Action (disabled) */}
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem disabled>
-                  <a className="dropdown-item" href="#">
-                    {" "}
-                    <i className="fas fa-home" /> Home Profile - Disabled
-                  </a>
-                </DropdownItem>
-                <DropdownItem disabled>
-                  {" "}
-                  <a className="dropdown-item" href="#">
-                    <i className="far fa-calendar-alt" /> Calendar - Disabled
-                  </a>
-                </DropdownItem>
-                <DropdownItem disabled>
-                  <a className="dropdown-item" href="#">
-                    <i className="fas fa-file-pdf" /> Documents - Disabled
-                  </a>
-                </DropdownItem>
-                <DropdownItem disabled>
-                  <a className="dropdown-item" href="#">
-                    <i className="fas fa-tools" /> Repairs - Disabled
-                  </a>
-                </DropdownItem>
-                <DropdownItem disabled>
-                  <a className="dropdown-item" href="#">
-                    <i className="far fa-address-card" /> Vendors - Disabled
                   </a>
                 </DropdownItem>
               </DropdownMenu>

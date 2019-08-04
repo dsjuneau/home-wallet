@@ -75,7 +75,11 @@ export class Login extends Component {
             <div className="form-group text-center mt-5">
               <a href="/Register/">Create an Account</a>
               <br />
-              <a href="#" className="ForgetPwd" onClick={this.handleClick}>
+              <a
+                href="/Login/"
+                className="ForgetPwd"
+                onClick={this.handleClick}
+              >
                 Forget Your Password ?
               </a>
             </div>

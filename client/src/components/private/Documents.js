@@ -12,14 +12,14 @@ export default function Documents() {
         </div>
         <div className="card-body">
           <div className="text-right">
-            <a className="btn btn-info" href="#">
+            <a className="btn btn-info" href="/AddDocument/">
               <i class="fa fa-plus-circle" aria-hidden="true" />
               &nbsp; Add Document
             </a>
           </div>
           <br />
           <div className="card mt-2">
-            <div className="card-header">Document Name</div>
+            <div className="card-header">Document List</div>
             <div className="container">
               <ul>
                 <li>Doc 1</li>

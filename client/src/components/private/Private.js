@@ -8,8 +8,10 @@ import Footer from "./Footer";
 import Vendors from "./Vendors";
 import Repairs from "./Repairs";
 import Documents from "./Documents";
-import AddRepair from "./AddRepair";
 import AddVendor from "./AddVendor";
+import AddRepair from "./AddRepair";
+import AddDocument from "./AddDocument";
+import Profile from "./Profile";
 
 export class Private extends Component {
   render() {
@@ -25,6 +27,8 @@ export class Private extends Component {
           <Route path="/Documents/" component={Documents} />
           <Route path="/AddVendor/" component={AddVendor} />
           <Route path="/AddRepair/" component={AddRepair} />
+          <Route path="/AddDocument/" component={AddDocument} />
+          <Route path="/Profile/" component={Profile} />
           <Footer />
         </div>
       </Router>

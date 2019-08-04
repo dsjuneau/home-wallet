@@ -8,7 +8,7 @@ export default function Footer() {
           className="mt-5 bg-light text-danger"
           href="https://github.com/dsjuneau/home-wallet"
         >
-          Find it on GitHub <i class="fab fa-github" />
+          Find it on GitHub <i className="fab fa-github" />
         </a>
       </h6>
     </div>

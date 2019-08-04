@@ -5,18 +5,21 @@ var parseString = require("xml2js").parseString;
 require("dotenv").config();
 
 // @ Get - request for distances from Google
-module.exports = function(app) {
-  // app.get("/api/zillow/:address/:zip", function (req, res) {
-  app.get("/api/zillow/", function(req, res) {
+module.exports = function() {
+  // router.get("/api/zillow/:address/:zip", function (req, res) {
+  router.route("/").get(function(req, res) {
     // const address = req.params.address;
     // const zip = req.params.zip;
+    res.json("this is working");
+
     const address = "3113%20Jamestown%20Drive";
+
     const zip = 75150;
     const key = process.env.ZWID;
     const url = `https://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=${key}&address=${address}&citystatezip=${zip}`;
     axios
       .get(url)
-      .then(function(response) {
+      .then(function(req, response) {
         console.log(response);
         convertToJSON(response.data);
       })

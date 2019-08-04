@@ -16,16 +16,19 @@ export default class Profile extends Component {
     event.preventDefault();
     const { zipCode, streetAddress } = this.state;
     if (zipCode && streetAddress) {
-      // alert("got zip and street");
-      axios
-        .get("/api/zillow")
+      console.log("got zip and street");
+      axios.get("/api/zillow").then(function(req, response) {
+        console.log("something");
+        console.log("anything");
 
-        .then(function(response) {
-          if (response) {
-            alert("hit");
-          }
-          alert("no data");
-        });
+        alert(req);
+        alert(response);
+
+        if (response) {
+          alert("hit");
+        }
+        alert("no data");
+      });
     } else {
       alert("Please enter the full address with zip code");
     }
@@ -73,7 +76,7 @@ export default class Profile extends Component {
             <div className="card-body mt-2">
               <form>
                 <div className="form-group">
-                  <label for="streetAddress">Street Address</label>
+                  <label>Street Address</label>
                   <input
                     type="text"
                     className="form-control"
@@ -86,7 +89,7 @@ export default class Profile extends Component {
                 </div>
                 {/* Street Address */}
                 <div className="form-group">
-                  <label for="city">City</label>
+                  <label>City</label>
                   <input
                     type="text"
                     className="form-control"
@@ -99,7 +102,7 @@ export default class Profile extends Component {
                 </div>
                 {/* City */}
                 <div className="form-group">
-                  <label for="state" />
+                  <label />
                   State
                   <select
                     className="form-control"
@@ -115,7 +118,7 @@ export default class Profile extends Component {
                 </div>
                 {/* State */}
                 <div className="form-group">
-                  <label for="zipCode">Zip Code</label>
+                  <label>Zip Code</label>
                   <input
                     type="number"
                     className="form-control"
@@ -129,7 +132,7 @@ export default class Profile extends Component {
                 {/* Zip Code */}
                 {this.state.hasCategory ? (
                   <div className="form-group">
-                    <label for="addCategory">Add Category</label>
+                    <label>Add Category</label>
                     <input
                       className="form-control"
                       id="addCategory"
@@ -142,12 +145,11 @@ export default class Profile extends Component {
                 ) : (
                   <p />
                 )}
-
                 <div>
                   <a
                     className="btn btn-info btn-block"
                     onClick={this.handleZillowCall}
-                    href="#"
+                    href="/profile/"
                   >
                     Check Zillow
                   </a>

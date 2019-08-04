@@ -18,6 +18,7 @@ class App extends React.Component {
 
   unAuth = () => {
     this.setState({ isAuth: false });
+    window.location = "/";
   };
 
   auth = (userName, id) => {

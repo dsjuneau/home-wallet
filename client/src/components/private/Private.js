@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Nav from "./Nav";
 import Calendar from "./Calendar";
+<<<<<<< HEAD
 // import Page2 from "./Page2";
+=======
+import Page2 from "./Page2";
+>>>>>>> megan
 // import Page3 from "./Page3";
 import Footer from "./Footer";
 import Vendors from "./Vendors";
@@ -20,6 +24,7 @@ export class Private extends Component {
         <div>
           <Nav userName={this.props.user.userName} unAuth={this.props.unAuth} />
           <Route path={["/", "/login"]} exact component={Calendar} />
+<<<<<<< HEAD
           {/* <Route path="/page2/" component={Page2} />
           <Route path="/page3/" component={Page3} /> */}
           <Route path="/Vendors/" component={Vendors} />
@@ -29,6 +34,11 @@ export class Private extends Component {
           <Route path="/AddRepair/" component={AddRepair} />
           <Route path="/AddDocument/" component={AddDocument} />
           <Route path="/Profile/" component={Profile} />
+=======
+
+          <Route path="/page2/" component={Page2} />
+      {/*     <Route path="/page3/" component={Page3} /> */}
+>>>>>>> megan
           <Footer />
         </div>
       </Router>

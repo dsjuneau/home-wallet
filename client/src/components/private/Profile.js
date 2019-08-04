@@ -17,7 +17,8 @@ export default class Profile extends Component {
     const { zipCode, streetAddress } = this.state;
     if (zipCode && streetAddress) {
       console.log("got zip and street");
-      axios.get("/api/zillow").then(function(req, response) {
+
+      axios.get(`/api/zillow/`).then(function(req, response) {
         console.log("something");
         console.log("anything");
 

@@ -4,7 +4,7 @@ var parseString = require("xml2js").parseString;
 
 require("dotenv").config();
 
-// @ Get - request for distances from Google
+// @ Get home data from Zillow
 
 // router.get("/api/zillow/:address/:zip", function (req, res) {
 router.route("/").get(function(req, res) {
@@ -50,7 +50,6 @@ router.route("/").get(function(req, res) {
         propData[0].zestimate[0].valuationRange[0].high[0]._
       );
       console.log("Links:", propData[0].links[0].homedetails[0]);
-      console.log("\n\n");
     });
   }
 });

@@ -6,6 +6,7 @@ const repairSchema = new Schema({
   bidId: { type: Schema.Types.ObjectId, ref: 'Bid' },
   title: { type: Schema.Types.ObjectId, ref: 'Bid' },
   category: { type: Schema.Types.ObjectId, ref: 'Bid' },
+  priority: { type: String },
   vendor: { type: Schema.Types.ObjectId, ref: 'Bid' },
   start: { type: Schema.Types.ObjectId, ref: 'Bid' },   // Look up "saving refs" in the Mongoose docs.
   end: { type: Schema.Types.ObjectId, ref: 'Bid' },

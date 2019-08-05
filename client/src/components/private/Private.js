@@ -14,12 +14,15 @@ import AddDocument from "./AddDocument";
 import Profile from "./Profile";
 
 export class Private extends Component {
+
+ 
+
   render() {
     return (
       <Router>
         <div>
           <Nav userName={this.props.user.userName} unAuth={this.props.unAuth} />
-          <Route path={["/", "/login"]} exact component={Calendar} />
+          <Route path={["/", "/login"]}  exact render={() => <Calendar user_id={this.props.user.id} />} />
           {/* <Route path="/page2/" component={Page2} />
           <Route path="/page3/" component={Page3} /> */}
           <Route path="/Vendors/" component={Vendors} />

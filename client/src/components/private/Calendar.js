@@ -1,38 +1,37 @@
 // https://fullcalendar.io/docs/react // NOT DONE
 
-import React from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction';
+import React from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
-import './main.scss' // webpack must be configured to do this
+import "./main.scss"; // webpack must be configured to do this
 
 export default class Calendar extends React.Component {
-
-  calendarComponentRef = React.createRef()
+  calendarComponentRef = React.createRef();
   state = {
-    events: 
-    [{
-      title: "Mow Lawn",
-      start: "2019-08-03T12:30:00Z",
-      end: "2019-08-03T1:30:00Z",
-      editable: true
-    },
-    {
-      title: "Repair Fence",
-      start: "2019-08-07",
-      end: "2019-08-09",
-      editable: true
-    },
-    {
-      title: "Change Air Filter",
-      start: "2019-08-09",
-      end: "2019-08-09",
-      editable: true
-    },
-  ],
+    events: [
+      {
+        title: "Mow Lawn",
+        start: "2019-08-03T12:30:00Z",
+        end: "2019-08-03T1:30:00Z",
+        editable: true,
+      },
+      {
+        title: "Repair Fence",
+        start: "2019-08-07",
+        end: "2019-08-09",
+        editable: true,
+      },
+      {
+        title: "Change Air Filter",
+        start: "2019-08-09",
+        end: "2019-08-09",
+        editable: true,
+      },
+    ],
     search: "",
-    eventToSave: {}
+    eventToSave: {},
   };
 
   /* constructor(props) {
@@ -47,31 +46,31 @@ export default class Calendar extends React.Component {
       this.handleInputChange = this.handleInputChange.bind(this);
       this.handleFormSubmit = this.handleFormSubmit.bind(this);
     } */
-    
 
-    handleDateClick = (arg) => {
-      // eslint-disable-next-line no-restricted-globals
-      if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {  // Need a form in a modal here.
-        console.log(this.state.events);
-        this.setState({  // add new event data
-          events: this.state.events.concat({ // creates a new array
-            title: arg.title,
-            start: arg.start,
-            end: arg.end,
-            editable: true
-          })
-        })
-      }
+  handleDateClick = arg => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
+      // Need a form in a modal here.
+      console.log(this.state.events);
+      this.setState({
+        // add new event data
+        events: this.state.events.concat({
+          // creates a new array
+          title: arg.title,
+          start: arg.start,
+          end: arg.end,
+          editable: true,
+        }),
+      });
     }
+  };
 
-/*   gotoPast = () => {
+  /*   gotoPast = () => {
     let calendarApi = this.calendarComponentRef.current.getApi()
     calendarApi.gotoDate('2000-01-01') // call a method on the Calendar object
   } */
 
-
-
-/*   loadEvents = (start, end, timezone, callback) => {
+  /*   loadEvents = (start, end, timezone, callback) => {
       $.axios({
            url: ‘myxmlfeed.php’,
            dataType: ‘xml’,
@@ -93,35 +92,31 @@ export default class Calendar extends React.Component {
     });
  } */
 
-render() {
-  return (
+  render() {
+    return (
       <div>
-      <h3>Click a date/time to add an event</h3>
-      <div className='calendar-container'>
-        <div className='calendar-top'>
-       {/*    <button onClick={ this.gotoPast }>go to a date in the past</button>&nbsp; */}
+        <div className="container">
+          <h3>Click a date/time to add an event</h3>
+          <div className="calendar-container">
+            <div className="calendar-top">
+              {/*    <button onClick={ this.gotoPast }>go to a date in the past</button>&nbsp; */}
+            </div>
+            <div className="calendar" />
+            <FullCalendar
+              defaultView="dayGridMonth"
+              dateClick={this.handleDateClick}
+              header={{
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+              }}
+              plugins={[dayGridPlugin, interactionPlugin]}
+              ref={this.calendarComponentRef}
+              events={this.state.events}
+            />
+          </div>
         </div>
-        <div className='calendar'></div>
-    <FullCalendar 
-    defaultView="dayGridMonth"
-    dateClick={this.handleDateClick}
-    
-    header={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-            }}
-    plugins={[ dayGridPlugin, interactionPlugin ]}
-    ref={ this.calendarComponentRef }
-    events={ this.state.events }
-    >
-
-    </FullCalendar>
-
-  
       </div>
-    </div>
-  )
-}
-
+    );
+  }
 }

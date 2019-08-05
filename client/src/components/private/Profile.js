@@ -3,10 +3,10 @@ import axios from "axios";
 
 export default class Profile extends Component {
   state = {
-    streetAddress: "",
+    address: "",
     city: "",
     state: "",
-    zipCode: "",
+    zip: "",
     hasPool: false,
     hasFence: false,
     hasProfile: false,
@@ -14,22 +14,27 @@ export default class Profile extends Component {
 
   handleZillowCall = event => {
     event.preventDefault();
-    const { zipCode, streetAddress } = this.state;
-    if (zipCode && streetAddress) {
+    const { zip, address } = this.state;
+    if (zip && address) {
       console.log("got zip and street");
 
-      axios.get(`/api/zillow/`).then(function(req, response) {
-        console.log("something");
-        console.log("anything");
+      axios
+        .get(`/api/zillow/${address}/${zip}`)
+        // axios.get(`/api/zillow/`)
+        .then(function(req, response) {
+          console.log(req);
+          console.log(response);
+          console.log("something");
+          console.log("anything");
 
-        alert(req);
-        alert(response);
+          alert(req);
+          alert(response);
 
-        if (response) {
-          alert("hit");
-        }
-        alert("no data");
-      });
+          if (response) {
+            alert("hit");
+          }
+          alert("no data");
+        });
     } else {
       alert("Please enter the full address with zip code");
     }
@@ -49,17 +54,20 @@ export default class Profile extends Component {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
-    // Alert that the profile has been created and set hasProfile to True
+    //need to set up a Route and Profile Schema to post once completed.  Then on load get that data once set up.???
+
+    // Alert that the profile has been created, set hasProfile to True
     alert(`Profile Created`);
     this.setState({
-      streetAddress: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      hasPool: false,
-      hasFence: false,
+      // address: "",
+      // city: "",
+      // state: "",
+      // zip: "",
+      // hasPool: false,
+      // hasFence: false,
       hasProfile: true,
     });
+    window.location = "/";
   };
 
   render() {
@@ -81,9 +89,9 @@ export default class Profile extends Component {
                   <input
                     type="text"
                     className="form-control"
-                    id="streetAddressInput"
-                    value={this.state.streetAddress}
-                    name="streetAddress"
+                    id="addressInput"
+                    value={this.state.address}
+                    name="address"
                     onChange={this.handleInputChange}
                     placeholder="123 Main St"
                   />
@@ -123,9 +131,9 @@ export default class Profile extends Component {
                   <input
                     type="number"
                     className="form-control"
-                    id="zipCodeInput"
-                    value={this.state.zipCode}
-                    name="zipCode"
+                    id="zipInput"
+                    value={this.state.zip}
+                    name="zip"
                     onChange={this.handleInputChange}
                     placeholder="12345"
                   />
@@ -155,7 +163,6 @@ export default class Profile extends Component {
                     Check Zillow
                   </a>
                 </div>
-
                 {/* <div className="form-group">
                   <label for="vendorNotes">Notes</label>
                   <textarea
@@ -178,25 +185,21 @@ export default class Profile extends Component {
                   May not make the final Cut!
                 </label>
               </div> */}
-                <button
+                <div className="container">
+                  <div className="card">
+                    <div className="card-header pl-5 text-center">
+                      <h4>Home Profile for {this.state.address}</h4>
+                      <div className="card">Results Go Here</div>
+                    </div>
+                  </div>
+                </div>
+                {/* <button
                   onClick={this.handleFormSubmit}
                   className="btn btn-block btn-success mt-5"
                 >
                   Set Profile
-                </button>
+                </button> */}
               </form>
-            </div>
-          </div>
-          <div className="container">
-            <div className="card">
-              <div className="card-header pl-5 text-center">
-                <h4>
-                  Home Profile for {this.state.streetAddress}
-                  {/* ,{this.state.city}
-                  , {this.state.state} {this.state.zipCode} */}
-                </h4>
-                <div className="card">Results Go Here</div>
-              </div>
             </div>
           </div>
         </div>

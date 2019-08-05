@@ -13,6 +13,7 @@ import Profile from "./Profile";
 
 export class Private extends Component {
   render() {
+    console.log(this.props);
     return (
       <Router>
         <div>
@@ -26,14 +27,15 @@ export class Private extends Component {
           <Route path="/AddDocument/" component={AddDocument} />
           <Route
             path="/Profile/"
-            render={() => <Profile handleZillowCall={this.handleZillowCall} />}
+            render={() => (
+              <Profile
+                streetaddress={this.state.streetaddress}
+                zipCode={this.state.zipCode}
+                handleZillowCall={this.handleZillowCall}
+                hasProfile={this.state.hasProfile}
+              />
+            )}
           />
-
-          {/* //   <Route
-        //    path="/search/"
-        //    render={() => <Search handleEmit={this.handleEmit} />}
-        //  /> */}
-
           <Footer />
         </div>
       </Router>

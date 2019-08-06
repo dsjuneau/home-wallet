@@ -1,6 +1,6 @@
 const router = require("express").Router();
-var axios = require("axios");
-var parseString = require("xml2js").parseString;
+const axios = require("axios");
+const parseString = require("xml2js").parseString;
 
 require("dotenv").config();
 
@@ -10,57 +10,77 @@ require("dotenv").config();
 router.route("/:address/:zip").get(function(req, res) {
   const address = req.params.address;
   const zip = req.params.zip;
-
-  // const address = "3113%20Jamestown%20Drive";
-
-  // const zip = 75150;
   const key = process.env.ZWID;
   const url = `https://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=${key}&address=${address}&citystatezip=${zip}`;
   axios
     .get(url)
-    .then(function(req, res) {
-      convertToJSON(req.data);
+    .then(function(start) {
+      return convertToJSON(start.data);
+    })
+    .then(function(response) {
+      res.json(response);
     })
     .catch(function(error) {
       console.log("Unable to find", address, "in zip code", zip);
+      res.json(error);
     });
 
   function convertToJSON(xml) {
+    let details = {};
     parseString(xml, function(err, result) {
-      // console.log(JSON.stringify(result, null, 2));
-      const propData =
+      propData =
         result["SearchResults:searchresults"].response[0].results[0].result;
-
-      console.log("\n====================================");
-      console.log("\t Search Results");
-      console.log("====================================\n");
-      console.log("Year Built:", propData[0].yearBuilt[0]);
+      {
+        propData[0].yearBuilt
+          ? (details.yearbuilt = propData[0].yearBuilt[0])
+          : (details.yearbuilt = "unknown");
+      }
       {
         propData[0].lotSizeSqFt
-          ? console.log("Lot Size:", propData[0].lotSizeSqFt[0])
-          : console.log("not applicable");
+          ? (details.lotSize = propData[0].lotSizeSqFt[0])
+          : (details.lotSize = "not available");
       }
-      console.log("Square Footage:", propData[0].finishedSqFt[0]);
-      console.log("Bedrooms:", propData[0].bedrooms[0]);
-      console.log("Bathrooms:", propData[0].bathrooms[0]);
-
+      {
+        propData[0].finishedSqFt
+          ? (details.gla = propData[0].finishedSqFt[0])
+          : (details.gla = "not available");
+      }
+      {
+        propData[0].bedrooms
+          ? (details.bedrooms = propData[0].bedrooms[0])
+          : (details.bedrooms = "not available");
+      }
+      {
+        propData[0].bathrooms
+          ? (details.bathrooms = propData[0].bathrooms[0])
+          : (details.bathrooms = "not available");
+      }
       {
         propData[0].taxAssessment
-          ? console.log("Tax Assessment: $" + propData[0].taxAssessment[0])
-          : console.log("not applicable");
+          ? (details.taxAssessment = propData[0].taxAssessment[0])
+          : (details.taxAssessment = "not available");
       }
-      console.log("Year:", propData[0].taxAssessmentYear[0]);
-      console.log("Zestimate: $" + propData[0].zestimate[0].amount[0]._);
-      console.log(
-        "Zestimate Low:",
-        propData[0].zestimate[0].valuationRange[0].low[0]._
-      );
-      console.log(
-        "Zestimate High:",
-        propData[0].zestimate[0].valuationRange[0].high[0]._
-      );
-      console.log("Links:", propData[0].links[0].homedetails[0]);
+      {
+        propData[0].taxAssessmentYear
+          ? (details.taxYear = propData[0].taxAssessmentYear[0])
+          : (details.taxYear = "no taxes here");
+      }
+      {
+        propData[0].zestimate
+          ? ((details.zestimate = propData[0].zestimate[0].amount[0]._),
+            (details.zestimateHigh =
+              propData[0].zestimate[0].valuationRange[0].high[0]._),
+            (details.zestimateLow =
+              propData[0].zestimate[0].valuationRange[0].low[0]._))
+          : (details.zestimate = "no zestimate");
+      }
+      {
+        propData[0].links
+          ? (details.zillowLink = propData[0].links[0].homedetails[0])
+          : (details.zillowLink = "www.zillow.com");
+      }
     });
+    return details;
   }
 });
 module.exports = router;

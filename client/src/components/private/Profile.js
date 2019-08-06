@@ -2,52 +2,30 @@ import React, { Component } from "react";
 import axios from "axios";
 
 export default class Profile extends Component {
-  state = {
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    hasPool: false,
-    hasFence: false,
-    hasProfile: false,
-  };
-
+  // state = {
+  //   address: "",
+  //   city: "",
+  //   state: "",
+  //   zip: "",
+  //   yearbuilt: "",
+  //   hasPool: false,
+  //   hasFence: false,
+  // };
   handleZillowCall = event => {
     event.preventDefault();
-    const { zip, address } = this.state;
-    if (zip && address) {
+    const { zipCode, streetAddress } = this.props;
+    if (zipCode && streetAddress) {
       console.log("got zip and street");
 
       axios
-        .get(`/api/zillow/${address}/${zip}`)
-        // axios.get(`/api/zillow/`)
+        .get(`/api/zillow/${streetAddress}/${zipCode}`)
         .then(function(req, response) {
           console.log(req);
           console.log(response);
-          console.log("something");
-          console.log("anything");
-
-          alert(req);
-          alert(response);
-
-          if (response) {
-            alert("hit");
-          }
-          alert("no data");
         });
     } else {
       alert("Please enter the full address with zip code");
     }
-  };
-
-  handleInputChange = event => {
-    // Getting the value and name of the input which triggered the change
-    const { name, value } = event.target;
-
-    // Updating the input's state
-    this.setState({
-      [name]: value,
-    });
   };
 
   handleFormSubmit = event => {
@@ -59,15 +37,14 @@ export default class Profile extends Component {
     // Alert that the profile has been created, set hasProfile to True
     alert(`Profile Created`);
     this.setState({
-      // address: "",
       // city: "",
       // state: "",
       // zip: "",
       // hasPool: false,
       // hasFence: false,
-      hasProfile: true,
+      hasHomeProfile: true,
     });
-    window.location = "/";
+    // window.location = "/";
   };
 
   render() {
@@ -78,7 +55,7 @@ export default class Profile extends Component {
           <div className="card-header mb-4 bg-secondary text-white">
             <h3 className="text-center mt-4 ">
               <i className="fas fa-home" />
-              &nbsp; Your Home Profile
+              &nbsp; Enter your Address
             </h3>
           </div>
           <div className="card-body">
@@ -90,9 +67,9 @@ export default class Profile extends Component {
                     type="text"
                     className="form-control"
                     id="addressInput"
-                    value={this.state.address}
-                    name="address"
-                    onChange={this.handleInputChange}
+                    value={this.props.streetAddress}
+                    name="streetAddress"
+                    onChange={this.props.handleInputChange}
                     placeholder="123 Main St"
                   />
                 </div>
@@ -103,9 +80,9 @@ export default class Profile extends Component {
                     type="text"
                     className="form-control"
                     id="cityInput"
-                    value={this.state.city}
+                    value={this.props.city}
                     name="city"
-                    onChange={this.handleInputChange}
+                    onChange={this.props.handleInputChange}
                     placeholder="Dallas"
                   />
                 </div>
@@ -116,9 +93,9 @@ export default class Profile extends Component {
                   <select
                     className="form-control"
                     id="state"
-                    value={this.state.state}
+                    value={this.props.state}
                     name="state"
-                    onChange={this.handleInputChange}
+                    onChange={this.props.handleInputChange}
                   >
                     <option>TX </option>
                     <option>OK </option>
@@ -132,14 +109,14 @@ export default class Profile extends Component {
                     type="number"
                     className="form-control"
                     id="zipInput"
-                    value={this.state.zip}
-                    name="zip"
-                    onChange={this.handleInputChange}
+                    value={this.props.zipCode}
+                    name="zipCode"
+                    onChange={this.props.handleInputChange}
                     placeholder="12345"
                   />
                 </div>
                 {/* Zip Code */}
-                {this.state.hasCategory ? (
+                {this.props.hasCategory ? (
                   <div className="form-group">
                     <label>Add Category</label>
                     <input
@@ -147,7 +124,7 @@ export default class Profile extends Component {
                       id="addCategory"
                       value={this.state.vendorCategory}
                       name="vendorCategory"
-                      onChange={this.handleInputChange}
+                      onChange={this.props.handleInputChange}
                       placeholder="Arborist"
                     />
                   </div>
@@ -155,13 +132,13 @@ export default class Profile extends Component {
                   <p />
                 )}
                 <div>
-                  <a
+                  <button
                     className="btn btn-info btn-block"
-                    onClick={this.handleZillowCall}
-                    href="/profile/"
+                    onClick={this.props.handleZillowCall}
+                    // href="/profile/"
                   >
                     Check Zillow
-                  </a>
+                  </button>
                 </div>
                 {/* <div className="form-group">
                   <label for="vendorNotes">Notes</label>
@@ -185,20 +162,18 @@ export default class Profile extends Component {
                   May not make the final Cut!
                 </label>
               </div> */}
-                <div className="container">
+                {/* <div className="container">
                   <div className="card">
                     <div className="card-header pl-5 text-center">
-                      <h4>Home Profile for {this.state.address}</h4>
-                      <div className="card">Results Go Here</div>
+                      <h4>Address Details: {this.props.address}</h4>
+                      <div className="card">
+                        Results Go Here
+                        <p>{this.props.streetAddress}</p>
+                        <p>{this.props.zillowData.zestimate}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {/* <button
-                  onClick={this.handleFormSubmit}
-                  className="btn btn-block btn-success mt-5"
-                >
-                  Set Profile
-                </button> */}
+                </div> */}
               </form>
             </div>
           </div>

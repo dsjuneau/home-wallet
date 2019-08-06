@@ -8,6 +8,7 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
+  ModalHeader,
 } from "reactstrap";
 
 import Profile from "./Profile.js";
@@ -17,11 +18,12 @@ export default class Nav extends React.Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.toggle2 = this.toggle2.bind(this);
+
     this.state = {
       dropdownOpen: false,
-      hasProfile: true,
+      hasHomeProfile: false,
       modal: false,
+      modal2: false,
     };
   }
   handleClick = () => {
@@ -34,10 +36,14 @@ export default class Nav extends React.Component {
       dropdownOpen: !prevState.dropdownOpen,
     }));
   }
-  toggle2() {
-    this.setState(prevState => ({
-      modal: !prevState.modal,
-    }));
+
+  componentDidMount() {
+    if (!this.state.hasHomeProfile) {
+      console.log(this.state.hasHomeProfile);
+      this.setState({
+        modal: true,
+      });
+    }
   }
 
   render() {
@@ -93,38 +99,71 @@ export default class Nav extends React.Component {
         <div className="container text-center bg-light text-success">
           <h1>Welcome {this.props.userName}</h1>
         </div>
-        {!this.state.hasProfile ? (
+        {this.state.hasHomeProfile ? (
           <p>Profile Data</p>
         ) : (
           <div>
             <div className="container">
-              <p>Profile Data</p>
-
-              <div>
-                <Button color="danger" onClick={this.toggle2}>
-                  {this.props.buttonLabel}
-                </Button>
-                <Modal
-                  isOpen={this.state.modal}
-                  toggle={this.toggle2}
-                  className={this.props.className}
-                >
-                  <ModalBody>
-                    <Profile />
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="success" onClick={this.toggle2}>
-                      Set Profile
-                    </Button>{" "}
-                    <Button color="danger" onClick={this.toggle2}>
-                      Cancel
-                    </Button>
-                  </ModalFooter>
-                </Modal>
-              </div>
+              <Modal
+                isOpen={!this.props.modal}
+                toggle={this.toggle2}
+                className={this.props.className}
+              >
+                <ModalHeader className="ml-auto">
+                  <Button color="danger" onClick={this.props.toggle2}>
+                    x
+                  </Button>
+                </ModalHeader>
+                <ModalBody>
+                  <Profile
+                    hasHomeProfile={this.state.hasHomeProfile}
+                    streetAddress={this.props.streetAddress}
+                    zipCode={this.props.zipCode}
+                    handleZillowCall={this.props.handleZillowCall}
+                    zillowData={this.props.zillowData}
+                    handleInputChange={this.props.handleInputChange}
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  {/* <Button color="success" onClick={this.toggle2}>
+                    Set Profile
+                  </Button>{" "} */}
+                </ModalFooter>
+              </Modal>
             </div>
           </div>
         )}
+
+        <div>
+          <div className="container">
+            <Modal
+              isOpen={this.props.modal}
+              toggle={this.toggle2}
+              className={this.props.className}
+            >
+              <ModalHeader className="ml-auto">
+                <Button color="danger" onClick={this.toggle2}>
+                  x
+                </Button>
+              </ModalHeader>
+              <ModalBody>
+                <Profile
+                  hasHomeProfile={this.state.hasHomeProfile}
+                  streetAddress={this.props.streetAddress}
+                  zipCode={this.props.zipCode}
+                  handleZillowCall={this.props.handleZillowCall}
+                  zillowData={this.props.zillowData}
+                  handleInputChange={this.props.handleInputChange}
+                />
+              </ModalBody>
+              <ModalFooter>
+                {/* <Button color="success" onClick={this.toggle2}>
+                    Set Profile
+                  </Button>{" "} */}
+              </ModalFooter>
+            </Modal>
+          </div>
+        </div>
       </div>
     );
   }

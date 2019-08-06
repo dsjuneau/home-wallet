@@ -5,6 +5,7 @@ import { Button, Modal, ModalBody, Row, Card, CardHeader } from "reactstrap";
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
+
 import API from "../../utils/API";
 import './main.scss' // webpack must be configured to do this
 
@@ -15,39 +16,22 @@ export default class Calendar extends React.Component {
 
  this.calendarComponentRef = React.createRef()
   this.state = {
-    events: 
-    [{
-     
-    },
-    {
-      title: "Repair Fence",
-      start: "2019-08-07",
-      end: "2019-08-09",
-      editable: true
-    },
-    {
-      title: "Change Air Filter",
-      start: "2019-08-09",
-      end: "2019-08-09",
-      editable: true
-    },
-  ],
-    search: "",
-    eventToSave: {
-      repairType: "",
-      title: "",
-      startDate: "", // need to parse before putting into events array
-      endDate: "",
-      startTime: "",
-      endTime: "",
-      cost: 0,
-      priority: "",
-      status: "",
-      isVendor: false,
-      vendor: "",
-      notes: "",
-      editable: true,
-    },
+    events: [],
+ //   search: "",
+    repairType: "",
+    title: "",
+    startDate: "", // need to parse before putting into events array
+    endDate: "",
+    startTime: "",
+    endTime: "",
+    cost: 0,
+    priority: "",
+    status: "",
+    isVendor: false,
+    vendor: "",
+    notes: "",
+    editable: true,
+    
     modal: false,
   };
 
@@ -55,16 +39,37 @@ export default class Calendar extends React.Component {
  this.handleInputChange = this.handleInputChange.bind(this);
 } 
   
-     /*  this.handleSaveBook = this.handleSaveBook.bind(this);
-     
+componentDidMount() {
+    this.loadEvents();
+  }
+
+  loadEvents = () => { 
       
-    } */
+     API.getEvents()
+       .then(events => {
+//        console.log(books);
+         const eventList =  events.data.map(item => ({
+            title: item.title,
+            start: item.start,
+            end: item.end,
+            editable: item.editable 
+        }))      
+       /*  console.log("results of get in getBooks: " + JSON.stringify(books));  // working */
+        this.setState({ 
+          events: eventList,
+         });
+      })
+       .catch(err => console.log(err));       
+      };
+
     
     toggle = () => {
       this.setState(prevState => ({
         modal: !prevState.modal,
       }));
     };
+
+  
    
     handleNewEvent = (arg) => {                            // handleDateClick = 
   //    console.log(this.props.user_id);  // working
@@ -96,41 +101,48 @@ export default class Calendar extends React.Component {
         
       // Updating the input's state
       this.setState({
-        eventToSave: {
+       
         [name]: value,
-        }
+      
       });
-      console.log(this.state.eventToSave);  // Not working for dropdowns?
     };
 
     handleFormSubmit = event => {
       // Preventing the default behavior of the form submit (which is to refresh the page)
       event.preventDefault();
-      console.log(this.state.eventToSave);
-      let newEvent = {
-        repairType: this.state.eventToSave.repairType,
-        title: this.state.eventToSave.title,
-        cost: this.state.eventToSave.cost,
-        priority: this.state.eventToSave.priority,
-        status: this.state.eventToSave.status,
-        startDate: this.state.eventToSave.startDate,
-        endDate: this.state.eventToSave.endDate,
-        startTime: this.state.eventToSave.startTime,
-        endTime: this.state.eventToSave.endTime,
-        isVendor: this.state.eventToSave.isVendor,
-        vendor: this.state.eventToSave.vendor,
-        notes: this.state.eventToSave,            // .notes
-        editable: true,                         // This is the only thing being pushed to the DB.
+
+      //   Sample:  2018-06-01T12:30:00
+      let parsedStartDate = this.state.startDate + "T" + this.state.startTime + ":00";
+      let parsedEndDate = this.state.endDate + "T" + this.state.endTime + ":00";
+      
+      let newRepair = {
+        repairType: this.state.repairType,
+        title: this.state.title,
+        cost: this.state.cost,
+        priority: this.state.priority,
+        status: this.state.status,
+        startDate: parsedStartDate,
+        endDate: parsedEndDate,
+        vendor: this.state.vendor,
+        notes: this.state.notes,
       }
-      API.saveRepair(newEvent)
-          .then(newEvent => {
-            console.log(newEvent);
+
+      let newEvent ={
+        title: this.state.title,
+        start: parsedStartDate,
+        end: parsedEndDate,
+        editable: true
+
+      }
+      API.saveRepair(newRepair)
+          .then(newRepair => {
+            console.log(newRepair);
           })
           .catch(err => console.log(err));
 
       API.saveEvent(newEvent)
       .then(newEvent => {
-
+/* 
         this.setState({ 
           events: this.state.events.concat({ // creates a new array
             title: newEvent.title,
@@ -138,21 +150,21 @@ export default class Calendar extends React.Component {
             end: newEvent.end,
             editable: true
           })
-        });
+        }); */
         this.toggle();
       })
       .catch(err => console.log(err));
-      
-      
-      
-      
+
+      API.getEvents()
+      .then(response => {
+        console.log(response);
+        this.setState({ 
+            events: response.data
+          });
+      })
+      .catch(err => console.log(err));
+
     };
-
-/*   gotoPast = () => {
-    let calendarApi = this.calendarComponentRef.current.getApi()
-    calendarApi.gotoDate('2000-01-01') // call a method on the Calendar object
-  } */
-
 
 
 /*   loadEvents = (start, end, timezone, callback) => {
@@ -188,7 +200,7 @@ render() {
         </div>
         <div className='calendar'></div>
     <FullCalendar
-    timeZone= "UTC"
+   /*  timeZone= "UTC" */
     defaultView="dayGridMonth"
     /* dateClick={this.handleDateClick} */
     
@@ -225,7 +237,7 @@ render() {
                   <select
                     className="form-control"
                     id="repairTypeSelect"
-                    value={this.state.eventToSave.repairType}
+                    value={this.state.repairType}
                     name="repairType"
                     onChange={this.handleInputChange}
                   >
@@ -242,7 +254,7 @@ render() {
                     className="form-control"
                     id="repairDescriptionInput"
                     placeholder="mow grass"
-                    value={this.state.eventToSave.title}
+                    value={this.state.title}
                     name="repairDescription"
                     onChange={this.handleInputChange}
                   />
@@ -253,7 +265,7 @@ render() {
                     type="date"
                     className="form-control"
                     id="start-date-input"
-                    value={this.state.eventToSave.startDate}
+                    value={this.state.startDate}
                     name="startDate"
                     onChange={this.handleInputChange}
                     />
@@ -264,7 +276,7 @@ render() {
                     type="date"
                     className="form-control"
                     id="end-date-input"
-                    value={this.state.eventToSave.endDate}
+                    value={this.state.endDate}
                     name="endDate"
                     onChange={this.handleInputChange}
                     />
@@ -275,7 +287,7 @@ render() {
                     type="time"
                     className="form-control"
                     id="start-time-input"
-                    value={this.state.eventToSave.startTime}
+                    value={this.state.startTime}
                     name="startTime"
                     onChange={this.handleInputChange}
                     />                  
@@ -286,7 +298,7 @@ render() {
                     type="time"
                     className="form-control"
                     id="end-time-input"
-                    value={this.state.eventToSave.endTime}
+                    value={this.state.endTime}
                     name="endTime"
                     onChange={this.handleInputChange}
                     />                  
@@ -298,7 +310,7 @@ render() {
                     className="form-control"
                     id="repairCostInput"
                     placeholder="$35"
-                    value={this.state.eventToSave.cost}
+                    value={this.state.cost}
                     name="repairCost"
                     onChange={this.handleInputChange}
                   />
@@ -308,7 +320,7 @@ render() {
                   <select
                     className="form-control"
                     id="repairPrioritySelect"
-                    value={this.state.eventToSave.priority}
+                    value={this.state.priority}
                     name="repairPriority"
                     onChange={this.handleInputChange}
                   >
@@ -323,7 +335,7 @@ render() {
                   <select
                     className="form-control"
                     id="repairStatusSelect"
-                    value={this.state.eventToSave.status}
+                    value={this.state.status}
                     name="repairStatus"
                     onChange={this.handleInputChange}
                   >
@@ -342,7 +354,7 @@ render() {
                     <div className="col-4">
                       <input
                         type="checkbox"
-                        checked={this.state.eventToSave.isVendor}
+                        checked={this.state.isVendor}
                         onChange={this.handleCheck}
                       />
                     </div>
@@ -355,7 +367,7 @@ render() {
                     <select
                       className="form-control"
                       id="repairVendorSelect"
-                      value={this.state.eventToSave.vendor}
+                      value={this.state.vendor}
                       name="repairVendor"
                       onChange={this.handleInputChange}
                     >
@@ -373,7 +385,7 @@ render() {
                     className="form-control"
                     id="repairNotesInput"
                     rows="3"
-                    value={this.state.eventToSave.notes}
+                    value={this.state.notes}
                     name="repairNotes"
                     onChange={this.handleInputChange}
                   />
@@ -412,7 +424,7 @@ render() {
                   onClick={this.handleFormSubmit}
                   className="btn btn-block btn-success mt-3"
                 >
-                  Add {this.state.eventToSave.repairType}
+                  Add
                 </button>
               </form>
                 </ModalBody>

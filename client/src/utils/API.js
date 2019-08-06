@@ -11,7 +11,7 @@ export default {
   
   // Saves a book to the database
   saveEvent: function(eventData) {
-    console.log("saveEvent axios: " + eventData);
+    console.log("saveEvent axios: " + JSON.stringify(eventData));
     return axios.post("/api/events", eventData);
   },
 
@@ -30,7 +30,7 @@ export default {
   },
 
   saveRepair: function(repairData) {
-    console.log("saveRepair axios: " + repairData);
+    console.log("saveRepair axios: " + JSON.stringify(repairData));
     return axios.post("/api/repairs", repairData);
   },
 

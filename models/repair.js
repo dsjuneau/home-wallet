@@ -2,15 +2,19 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const repairSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: 'User' },  // replace with house id?
-  bidId: { type: Schema.Types.ObjectId, ref: 'Bid' },
-  title: { type: Schema.Types.ObjectId, ref: 'Bid' },
-  category: { type: Schema.Types.ObjectId, ref: 'Bid' },
+//  userId: { type: Schema.Types.ObjectId, ref: 'User' },  // replace with house id?
+//  bidId: { type: Schema.Types.ObjectId, ref: 'Bid' },
+  title: { type: String },
+  cost: { type: Number },
+//  category: { type: String },
   priority: { type: String },
-  vendor: { type: Schema.Types.ObjectId, ref: 'Bid' },
-  start: { type: Schema.Types.ObjectId, ref: 'Bid' },   // Look up "saving refs" in the Mongoose docs.
-  end: { type: Schema.Types.ObjectId, ref: 'Bid' },
-  status: { type: String },                                 // MAKE THIS A LIST (DROPDOWN)
+  status: { type: String },
+  startDate: { type: Date, default: Date.now },   // Parse into start and end.
+  endDate: { type: Date, default: Date.now },
+//  startTime: { type: Date, default: Date.now },
+//  endTime: { type: Date, default: Date.now },
+  vendor: { type: String },
+  notes: { type: String },                                 // MAKE THIS A LIST (DROPDOWN)
   date: { type: Date, default: Date.now },
 //  scope: { type: Schema.Types.ObjectId, ref: 'Bid'  },    // PDF?
 });

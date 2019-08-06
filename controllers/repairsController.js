@@ -15,7 +15,7 @@ module.exports = {
         .catch(err => res.status(422).json(err));
     },
     create: function(req, res) {
-    //  console.log("getting here");
+      console.log("create in repairsController", req.body);
       db.Repair
         .create(req.body)
         .then(dbModel => res.json(dbModel))

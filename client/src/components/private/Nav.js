@@ -18,10 +18,10 @@ export default class Nav extends React.Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.toggle2 = this.toggle.bind(this);
 
     this.state = {
       dropdownOpen: false,
-      hasHomeProfile: false,
       modal: false,
       modal2: false,
     };
@@ -37,18 +37,33 @@ export default class Nav extends React.Component {
     }));
   }
 
+  toggle2() {
+    this.setState(prevState => ({
+      modal2: !prevState.modal2,
+    }));
+  }
+
   componentDidMount() {
-    if (!this.state.hasHomeProfile) {
-      console.log(this.state.hasHomeProfile);
+    if (!this.props.hasZillow) {
       this.setState({
         modal: true,
+      });
+
+      if (this.props.hasZillow && this.props.hasHomeProfile) {
+        this.setState({
+          modal: false,
+        });
+      }
+    }
+
+    if (this.props.hasZillow && !this.props.hasHomeProfile) {
+      this.setState({
+        modal2: true,
       });
     }
   }
 
   render() {
-    // export default function Nav(props) {
-
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light ">
@@ -99,14 +114,14 @@ export default class Nav extends React.Component {
         <div className="container text-center bg-light text-success">
           <h1>Welcome {this.props.userName}</h1>
         </div>
-        {this.state.hasHomeProfile ? (
+        {this.props.hasZillow ? (
           <p>Profile Data</p>
         ) : (
           <div>
             <div className="container">
               <Modal
                 isOpen={!this.props.modal}
-                toggle={this.toggle2}
+                toggle={this.props.toggle2}
                 className={this.props.className}
               >
                 <ModalHeader className="ml-auto">
@@ -137,29 +152,129 @@ export default class Nav extends React.Component {
         <div>
           <div className="container">
             <Modal
-              isOpen={this.props.modal}
-              toggle={this.toggle2}
+              isOpen={this.props.modal2}
+              toggle={this.props.toggle2}
               className={this.props.className}
             >
               <ModalHeader className="ml-auto">
-                <Button color="danger" onClick={this.toggle2}>
+                {/* <Button color="danger" onClick={this.toggle2}>
                   x
-                </Button>
+                </Button> */}
               </ModalHeader>
               <ModalBody>
-                <Profile
-                  hasHomeProfile={this.state.hasHomeProfile}
-                  streetAddress={this.props.streetAddress}
-                  zipCode={this.props.zipCode}
-                  handleZillowCall={this.props.handleZillowCall}
-                  zillowData={this.props.zillowData}
-                  handleInputChange={this.props.handleInputChange}
-                />
+                <div className="container">
+                  <div className="card">
+                    <div className="card-header mb-4 bg-secondary text-white">
+                      <h3 className="text-center mt-4 ">
+                        <i className="fas fa-home" />
+                        &nbsp; Tell us about {this.props.streetAddress}
+                      </h3>
+                    </div>
+                    <div className="card-body">
+                      <h4 className="text-center">Data from Zillow</h4>
+                      <p>
+                        Year Built: {this.props.zillowData.yearbuilt}
+                        <br />
+                        Beds: {this.props.zillowData.bedrooms}
+                        <br />
+                        Baths: {this.props.zillowData.bathrooms}
+                        <br />
+                        Square Footage: {this.props.zillowData.gla} <br />
+                        Lot Size: {this.props.zillowData.lotSize} sf
+                        <br />
+                        Tax Assessment for {this.props.zillowData.taxYear}: $
+                        {this.props.zillowData.taxAssessment}
+                        <br />
+                        Zestimate Range: ${this.props.zillowData.zestimateLow} -
+                        {this.props.zillowData.zestimateHigh}
+                        <br />
+                        Zestimate: ${this.props.zillowData.zestimate}
+                        <br />
+                        <a
+                          href={this.props.zillowData.zillowLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Link to Zillow Listing
+                        </a>
+                      </p>
+
+                      <form>
+                        {/* <div className="form-group">
+                          <div className="row">
+                            <div className="col-4">
+                              <label for="isVendor">
+                                Check if you have a pool?{" "}
+                              </label>
+                            </div>
+                            <div className="col-8">
+                              <input
+                                value={this.props.hasPool}
+                                id="hasPool"
+                                type="checkbox"
+                                name="hasPool"
+                                checked={this.props.hasPool}
+                                onChange={this.handleCheck}
+                              />
+                            </div>
+                            <div className="col-4">
+                              <label for="hasFence">
+                                Check if you have a fence?{" "}
+                              </label>
+                            </div>
+                            <div className="col-8">
+                              <input
+                                value={this.props.hasFence}
+                                id="hasFence"
+                                type="checkbox"
+                                name="hasFence"
+                                checked={this.props.hasFence}
+                                onChange={this.handleCheck}
+                              />
+                            </div>
+                          </div>
+                        </div> */}
+                        <div className="form-group">
+                          <label />
+                          Parking
+                          <select
+                            className="form-control"
+                            id="parking"
+                            value={this.props.parking}
+                            name="parking"
+                            onChange={this.props.handleInputChange}
+                          >
+                            <option>1 Car Garage </option>
+                            <option>2 Car Garage </option>
+                            <option>3+ Car Garage </option>
+                            <option>Carport</option>
+                            <option>No Garage</option>
+                          </select>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div className="card-header">
+                    <a
+                      className="text-center"
+                      href="https://www.zillow.com/zestimate/"
+                    >
+                      What's a Zestimate?
+                    </a>
+                  </div>
+                </div>
               </ModalBody>
               <ModalFooter>
-                {/* <Button color="success" onClick={this.toggle2}>
-                    Set Profile
-                  </Button>{" "} */}
+                <div className="row">
+                  <div className="col-12">
+                    <button
+                      className=" btn btn-block btn-success"
+                      onClick={this.props.handleSaveProfile}
+                    >
+                      Save Profile
+                    </button>
+                  </div>
+                </div>
               </ModalFooter>
             </Modal>
           </div>

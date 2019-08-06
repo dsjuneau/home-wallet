@@ -2,15 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 
 export default class Profile extends Component {
-  // state = {
-  //   address: "",
-  //   city: "",
-  //   state: "",
-  //   zip: "",
-  //   yearbuilt: "",
-  //   hasPool: false,
-  //   hasFence: false,
-  // };
   handleZillowCall = event => {
     event.preventDefault();
     const { zipCode, streetAddress } = this.props;
@@ -135,9 +126,8 @@ export default class Profile extends Component {
                   <button
                     className="btn btn-info btn-block"
                     onClick={this.props.handleZillowCall}
-                    // href="/profile/"
                   >
-                    Check Zillow
+                    Get Records from Zillow
                   </button>
                 </div>
                 {/* <div className="form-group">

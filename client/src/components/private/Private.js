@@ -9,41 +9,49 @@ import Documents from "./Documents";
 import AddVendor from "./AddVendor";
 import AddRepair from "./AddRepair";
 import AddDocument from "./AddDocument";
-import Profile from "./Profile";
 import axios from "axios";
 
 export class Private extends Component {
   constructor(props) {
     super(props);
     this.toggle2 = this.toggle2.bind(this);
+    // this.handleSaveProfile = this.handleSaveProfile.bind(this);
 
     this.state = {
       zillowData: {},
       streetAddress: "",
-      city: "",
-      state: "",
       zipCode: "",
-      yearbuilt: "",
       hasPool: false,
       hasFence: false,
-      hasProfile: false,
+      parking: "",
+      hasHomeProfile: false,
+      hasZillow: false,
       modal: false,
       modal2: false,
     };
   }
+
+  handleSaveProfile = event => {
+    event.preventDefault();
+    // Set hasHomeProfile
+    this.setState({
+      hasHomeProfile: true,
+      modal2: false,
+    });
+  };
+
   handleZillowCall = event => {
     event.preventDefault();
     const { zipCode, streetAddress } = this.state;
     if (zipCode && streetAddress) {
-      console.log("got zip and street");
-
       axios.get(`/api/zillow/${streetAddress}/${zipCode}`).then(response => {
-        // console.log(req);
         console.log(response);
 
         this.setState({
           zillowData: response.data,
-          modal: true,
+          hasZillow: true,
+          modal: false,
+          modal2: true,
         });
       });
     } else {
@@ -77,11 +85,17 @@ export class Private extends Component {
           streetAddress={this.state.streetAddress}
           zipCode={this.state.zipCode}
           handleZillowCall={this.handleZillowCall}
-          hasProfile={this.state.hasProfile}
-          zillowData={this.state.zillowData}
+          hasHomeProfile={this.state.hasHomeProfile}
+          handleSaveProfile={this.handleSaveProfile}
           handleInputChange={this.handleInputChange}
+          toggle2={this.toggle2}
+          hasZillow={this.state.hasZillow}
+          zillowData={this.state.zillowData}
           modal={this.state.modal}
           modal2={this.state.modal2}
+          hasPool={this.state.hasPool}
+          hasFence={this.state.hasFence}
+          parking={this.state.parking}
         />
         <Router>
           <Route path={["/", "/login"]} exact component={Calendar} />

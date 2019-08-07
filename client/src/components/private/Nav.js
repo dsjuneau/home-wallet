@@ -111,11 +111,59 @@ export default class Nav extends React.Component {
             </Dropdown>
           </div>
         </nav>
-        <div className="container text-center bg-light text-success">
-          <h1>Welcome {this.props.userName}</h1>
-        </div>
-        {this.props.hasZillow ? (
-          <p>Profile Data</p>
+
+        {this.props.hasZillow && this.props.hasHomeProfile ? (
+          <div className="container mb-5">
+            <div className="card">
+              <div className="container text-center bg-dark text-white">
+                <h5>Welcome {this.props.userName}</h5>
+                <h6>Profile for {this.props.streetAddress}</h6>
+              </div>
+              <div className="row mt-2">
+                <div className="col-1 col-md-12" />
+
+                <div className="col">
+                  <p>
+                    <strong>Lot Size:</strong> {this.props.zillowData.lotSize}{" "}
+                    sf
+                    <br />
+                    <strong>
+                      Tax Assessment for {this.props.zillowData.taxYear}:
+                    </strong>
+                    ${this.props.zillowData.taxAssessment}
+                    <br />
+                    <strong>Zestimate Range:</strong> $
+                    {this.props.zillowData.zestimateLow} -
+                    {this.props.zillowData.zestimateHigh}
+                    <br />
+                    <strong>Zestimate:</strong> $
+                    {this.props.zillowData.zestimate}
+                    <br />
+                  </p>
+                </div>
+                <div className="col">
+                  <p>
+                    <strong>Square Footage:</strong> {this.props.zillowData.gla}{" "}
+                    <br />
+                    <strong>Beds:</strong> {this.props.zillowData.bedrooms}
+                    <br />
+                    <strong>Baths:</strong> {this.props.zillowData.bathrooms}
+                    <br />
+                    <strong>Year Built: </strong>{" "}
+                    {this.props.zillowData.yearbuilt}
+                    <br />
+                    <strong>Parking: </strong> {this.props.parking}
+                    <br />
+                    <strong>Pool: </strong> {this.props.hasPool ? " Yes" : "No"}
+                    <br />
+                    <strong>Fence: </strong>{" "}
+                    {this.props.hasFence ? " Yes" : "No"}
+                  </p>
+                </div>
+              </div>
+              <div className="row" />
+            </div>
+          </div>
         ) : (
           <div>
             <div className="container">
@@ -139,11 +187,6 @@ export default class Nav extends React.Component {
                     handleInputChange={this.props.handleInputChange}
                   />
                 </ModalBody>
-                <ModalFooter>
-                  {/* <Button color="success" onClick={this.toggle2}>
-                    Set Profile
-                  </Button>{" "} */}
-                </ModalFooter>
               </Modal>
             </div>
           </div>
@@ -165,13 +208,22 @@ export default class Nav extends React.Component {
                 <div className="container">
                   <div className="card">
                     <div className="card-header mb-4 bg-secondary text-white">
-                      <h3 className="text-center mt-4 ">
+                      <h3 className="text-center mt-2 ">
                         <i className="fas fa-home" />
                         &nbsp; Tell us about {this.props.streetAddress}
                       </h3>
                     </div>
                     <div className="card-body">
-                      <h4 className="text-center">Data from Zillow</h4>
+                      <h4 className="text-center">
+                        Data from{" "}
+                        <a
+                          href={this.props.zillowData.zillowLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Zillow
+                        </a>
+                      </h4>
                       <p>
                         Year Built: {this.props.zillowData.yearbuilt}
                         <br />
@@ -189,18 +241,10 @@ export default class Nav extends React.Component {
                         {this.props.zillowData.zestimateHigh}
                         <br />
                         Zestimate: ${this.props.zillowData.zestimate}
-                        <br />
-                        <a
-                          href={this.props.zillowData.zillowLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Link to Zillow Listing
-                        </a>
                       </p>
 
                       <form>
-                        {/* <div className="form-group">
+                        <div className="form-group">
                           <div className="row">
                             <div className="col-4">
                               <label for="isVendor">
@@ -210,30 +254,28 @@ export default class Nav extends React.Component {
                             <div className="col-8">
                               <input
                                 value={this.props.hasPool}
-                                id="hasPool"
                                 type="checkbox"
                                 name="hasPool"
                                 checked={this.props.hasPool}
-                                onChange={this.handleCheck}
+                                onChange={this.props.handlePoolCheck}
                               />
                             </div>
                             <div className="col-4">
                               <label for="hasFence">
-                                Check if you have a fence?{" "}
+                                Check if you have a fence?
                               </label>
                             </div>
                             <div className="col-8">
                               <input
                                 value={this.props.hasFence}
-                                id="hasFence"
                                 type="checkbox"
                                 name="hasFence"
                                 checked={this.props.hasFence}
-                                onChange={this.handleCheck}
+                                onChange={this.props.handleFenceCheck}
                               />
                             </div>
                           </div>
-                        </div> */}
+                        </div>
                         <div className="form-group">
                           <label />
                           Parking
@@ -244,23 +286,15 @@ export default class Nav extends React.Component {
                             name="parking"
                             onChange={this.props.handleInputChange}
                           >
+                            <option>No Garage</option>
                             <option>1 Car Garage </option>
                             <option>2 Car Garage </option>
                             <option>3+ Car Garage </option>
                             <option>Carport</option>
-                            <option>No Garage</option>
                           </select>
                         </div>
                       </form>
                     </div>
-                  </div>
-                  <div className="card-header">
-                    <a
-                      className="text-center"
-                      href="https://www.zillow.com/zestimate/"
-                    >
-                      What's a Zestimate?
-                    </a>
                   </div>
                 </div>
               </ModalBody>

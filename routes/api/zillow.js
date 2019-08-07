@@ -6,7 +6,6 @@ require("dotenv").config();
 
 // @ Get home data from Zillow
 
-// router.get("/api/zillow/:address/:zip", function (req, res) {
 router.route("/:address/:zip").get(function(req, res) {
   const address = req.params.address;
   const zip = req.params.zip;
@@ -32,8 +31,8 @@ router.route("/:address/:zip").get(function(req, res) {
         result["SearchResults:searchresults"].response[0].results[0].result;
       {
         propData[0].yearBuilt
-          ? (details.yearbuilt = propData[0].yearBuilt[0])
-          : (details.yearbuilt = "unknown");
+          ? (details.yearBuilt = propData[0].yearBuilt[0])
+          : (details.yearBuilt = "unknown");
       }
       {
         propData[0].lotSizeSqFt

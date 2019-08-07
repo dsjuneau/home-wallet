@@ -15,7 +15,6 @@ export class Private extends Component {
   constructor(props) {
     super(props);
     this.toggle2 = this.toggle2.bind(this);
-    // this.handleSaveProfile = this.handleSaveProfile.bind(this);
 
     this.state = {
       zillowData: {},
@@ -23,7 +22,7 @@ export class Private extends Component {
       zipCode: "",
       hasPool: false,
       hasFence: false,
-      parking: "",
+      parking: "No Garage",
       hasHomeProfile: false,
       hasZillow: false,
       modal: false,
@@ -33,11 +32,56 @@ export class Private extends Component {
 
   handleSaveProfile = event => {
     event.preventDefault();
-    // Set hasHomeProfile
-    this.setState({
-      hasHomeProfile: true,
-      modal2: false,
-    });
+    const {
+      zillowData,
+      streetAddress,
+      zipCode,
+      hasPool,
+      hasFence,
+      parking,
+      city,
+      hasHomeProfile,
+      hasZillow,
+    } = this.state;
+
+    if (zillowData) {
+      let homeProfile = {
+        hasHomeProfile,
+        hasZillow,
+        streetAddress,
+        city,
+        // zipCode,
+        // hasPool,
+        // hasFence,
+        // parking,
+        // yearBuilt: zillowData.yearBuilt,
+        // bedrooms: zillowData.bedrooms,
+        // bathrooms: zillowData.bathrooms,
+        // gla: zillowData.gla,
+        // lotSize: zillowData.lotSize,
+        // taxAssessment: zillowData.taxAssessment,
+        // taxYear: zillowData.taxYear,
+        // zestimate: zillowData.zestimate,
+        // zestimateHigh: zillowData.zestimateHigh,
+        // zeistimateLow: zillowData.zeistimateLow,
+        // zillowLink: zillowData.zillowLink,
+      };
+
+      axios
+        .post("/api/home", { homeProfile })
+        // .then(alert("home profile created"))
+        .then(
+          this.setState({
+            hasHomeProfile: true,
+            modal2: false,
+          })
+        )
+        .catch(function(error) {
+          if (error) {
+            console.log(error);
+          }
+        });
+    }
   };
 
   handleZillowCall = event => {
@@ -74,6 +118,13 @@ export class Private extends Component {
       [name]: value,
     });
   };
+  handlePoolCheck = () => {
+    this.setState({ hasPool: !this.state.hasPool });
+  };
+
+  handleFenceCheck = () => {
+    this.setState({ hasFence: !this.state.hasFence });
+  };
 
   render() {
     // console.log(this.props);
@@ -85,10 +136,12 @@ export class Private extends Component {
           streetAddress={this.state.streetAddress}
           zipCode={this.state.zipCode}
           handleZillowCall={this.handleZillowCall}
-          hasHomeProfile={this.state.hasHomeProfile}
           handleSaveProfile={this.handleSaveProfile}
+          handleFenceCheck={this.handleFenceCheck}
+          handlePoolCheck={this.handlePoolCheck}
           handleInputChange={this.handleInputChange}
           toggle2={this.toggle2}
+          hasHomeProfile={this.state.hasHomeProfile}
           hasZillow={this.state.hasZillow}
           zillowData={this.state.zillowData}
           modal={this.state.modal}

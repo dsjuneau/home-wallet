@@ -9,10 +9,12 @@ const repairSchema = new Schema({
 //  category: { type: String },
   priority: { type: String },
   status: { type: String },
-  isRecurring: { type: Boolean, default: false },
-  recurrencePeriod: { type: Number },
-  startDate: { type: Date, default: Date.now },   // Parse into start and end.
-  endDate: { type: Date, default: Date.now },
+  recurrencePeriod: { type: String },
+  startDate: { type: Date },   // Parse into start and end.
+  recurrenceStartDate: { type: Date },
+  recurrenceEndDate: { type: Date },
+  repeatInterval: { type: Number },
+  repeatDayOfWeek: { type: String },  // change back tp number?
 //  startTime: { type: Date, default: Date.now },
 //  endTime: { type: Date, default: Date.now },
   vendor: { type: String },

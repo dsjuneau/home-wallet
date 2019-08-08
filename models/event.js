@@ -6,11 +6,24 @@ const eventSchema = new Schema({
 //  group_id: { type: Schema.Types.ObjectId }
   title: { type: String },
 //  category: { type: String },
-  start: { type: Date },   // Look up "saving refs" in the Mongoose docs.
+  start: { type: Date },
   end: { type: Date },
+  rrule: {
+    freq: { type: String },
+    interval: { type: Number },
+    byweekday: { type: String },
+    dtstart: { type: Date },
+    until: { type: Date },
+  },
+  duration: { type: Number },
+  backgroundColor: { type: String },
   editable: { type: Boolean, default: true }
 });
 
 const Event = mongoose.model("Event", eventSchema);
 
 module.exports = Event;
+
+
+
+

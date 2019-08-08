@@ -489,12 +489,17 @@ render() {
         <FormGroup>
         <Label for="repeatInterval">every</Label>
         <Input
-        type="number"
+        type="select"
         name="repeatInterval"
-        placeholder={1}
+       
         value={this.state.repeatInterval}
         onChange={this.handleInputChange}   
-        />
+        >
+        <option selected value={1}>1</option>    
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        </Input>
     <span>week(s)</span>
     </FormGroup>
     </Col>

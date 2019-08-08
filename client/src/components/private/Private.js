@@ -22,9 +22,9 @@ export class Private extends Component {
       zipCode: "",
       hasPool: false,
       hasFence: false,
-      parking: "No Garage",
+      parking: "",
       modal2: false,
-      // currentHomeProfile: {},
+      currentHomeProfile: {},
     };
   }
 
@@ -87,6 +87,10 @@ export class Private extends Component {
       .then(
         this.setState({
           currentHomeProfile: homeProfile,
+        })
+      )
+      .then(
+        this.setState({
           hasHomeProfile: true,
           modal2: false,
         })
@@ -141,8 +145,6 @@ export class Private extends Component {
   };
 
   render() {
-    console.log(this.props);
-    console.log(this.state);
     return (
       <div>
         <Nav
@@ -158,7 +160,7 @@ export class Private extends Component {
           handleInputChange={this.handleInputChange}
           toggle2={this.toggle2}
           hasHomeProfile={this.state.hasHomeProfile}
-          currentHomeProfile={this.state.currentHomeProfile}
+          HomeProfile={this.state.currentHomeProfile}
           hasZillow={this.state.hasZillow}
           zillowData={this.state.zillowData}
           modal={this.state.modal}

@@ -45,6 +45,10 @@ export default class Nav extends React.Component {
     }));
   }
 
+  reloadwindow() {
+    window.location = "/";
+  }
+
   componentDidMount() {
     const { userId } = this.props;
 
@@ -54,7 +58,6 @@ export default class Nav extends React.Component {
         this.setState({
           homeProfile: response.data,
         });
-        // console.log(response.data);
       })
       .catch(function(error) {
         console.log(error);
@@ -83,10 +86,13 @@ export default class Nav extends React.Component {
   }
 
   render() {
-    const currentProfile = this.state.homeProfile[0];
-    // console.log(currentProfile);
+    let currentProfile = this.state.homeProfile[0];
 
-    console.log(this.props.currentHomeProfile);
+    if (this.props.currentHomeProfile) {
+      currentProfile = this.props.currentHomeProfile[0];
+    }
+    console.log(this.props.homeProfile);
+    // console.log(currentProfile);
 
     return (
       <div>
@@ -141,44 +147,59 @@ export default class Nav extends React.Component {
             <div className="card">
               <div className="container text-center bg-dark text-white">
                 <h5>Welcome {this.props.userName}</h5>
-                <h6>Profile for {currentProfile.streetAddress}</h6>
               </div>
-              <div className="row mt-2">
-                <div className="col-1 col-md-12" />
+              {currentProfile ? (
+                <div>
+                  <div className="row mt-2">
+                    <h5 className="mx-auto card-header">
+                      <strong>
+                        Profile for {currentProfile.streetAddress}
+                      </strong>
+                    </h5>
 
-                <div className="col">
-                  <p>
-                    <strong>Lot Size:</strong> {currentProfile.lotSize} sf
-                    <br />
-                    <strong>
-                      Tax Assessment for {currentProfile.taxYear}:
-                    </strong>
-                    ${currentProfile.taxAssessment}
-                    <br />
-                    <strong>Zestimate:</strong> ${currentProfile.zestimate}
-                    <br />
-                  </p>
+                    <div className="col-2 col-md-12" />
+
+                    <div className="col">
+                      <p>
+                        <strong>Lot Size:</strong>
+                        <span> {currentProfile.lotSize}</span> sf
+                        <br />
+                        <strong>
+                          Tax Assessment for {currentProfile.taxYear}:
+                        </strong>
+                        <span>${currentProfile.taxAssessment}</span>
+                        <br />
+                        <strong>Zestimate:</strong> ${currentProfile.zestimate}
+                        <br />
+                      </p>
+                    </div>
+                    <div className="col">
+                      <p>
+                        <strong>Square Footage:</strong> {currentProfile.gla}{" "}
+                        <br />
+                        <strong>Beds:</strong> {currentProfile.bedrooms}
+                        <br />
+                        <strong>Baths:</strong> {currentProfile.bathrooms}
+                        <br />
+                        <strong>Year Built: </strong> {currentProfile.yearBuilt}
+                        <br />
+                        <strong>Parking: </strong> {currentProfile.parking}
+                        <br />
+                        <strong>Pool: </strong>{" "}
+                        {currentProfile.hasPool ? " Yes" : "No"}
+                        <br />
+                        <strong>Fence: </strong>{" "}
+                        {currentProfile.hasFence ? " Yes" : "No"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="row" />
                 </div>
-                <div className="col">
-                  <p>
-                    <strong>Square Footage:</strong> {currentProfile.gla} <br />
-                    <strong>Beds:</strong> {currentProfile.bedrooms}
-                    <br />
-                    <strong>Baths:</strong> {currentProfile.bathrooms}
-                    <br />
-                    <strong>Year Built: </strong> {currentProfile.yearbuilt}
-                    <br />
-                    <strong>Parking: </strong> {currentProfile.parking}
-                    <br />
-                    <strong>Pool: </strong>{" "}
-                    {currentProfile.hasPool ? " Yes" : "No"}
-                    <br />
-                    <strong>Fence: </strong>{" "}
-                    {currentProfile.hasFence ? " Yes" : "No"}
-                  </p>
+              ) : (
+                <div className="container text-center">
+                  <button onClick={this.reloadwindow}>View Profile</button>
                 </div>
-              </div>
-              <div className="row" />
+              )}
             </div>
           </div>
         ) : (

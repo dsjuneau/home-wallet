@@ -1,10 +1,11 @@
 // https://fullcalendar.io/docs/react // NOT DONE
 
 import React from 'react'
-import { Button, Modal, ModalBody, Row, Card, CardHeader } from "reactstrap";
+import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card, CardHeader } from "reactstrap";
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
+import rrulePlugin from '@fullcalendar/rrule';
 import moment from 'moment';
 import API from "../../utils/API";
 import './main.scss' // webpack must be configured to do this
@@ -20,7 +21,10 @@ export default class Calendar extends React.Component {
     //   search: "",
         repairType: "",
         title: "",
-        startDate: "", // need to parse before putting into events array
+        recurrencePeriod: 0,
+        repeatInterval: 0,
+        repeatDayOfWeek: "",
+        startDate: "",
         endDate: "",
         startTime: "",
         endTime: "",
@@ -48,14 +52,14 @@ export default class Calendar extends React.Component {
         
         API.getEvents()
         .then(events => {
-    //        console.log(books);
+    
             const eventList =  events.data.map(item => ({
                 title: item.title,
                 start: item.start,
                 end: item.end,
                 editable: item.editable 
             }))      
-        /*  console.log("results of get in getBooks: " + JSON.stringify(books));  // working */
+       
             this.setState({ 
             events: eventList,
             });
@@ -70,13 +74,15 @@ export default class Calendar extends React.Component {
       }));
     };
 
-    handleDateClick = (dateObj) => {
+
+    // Want to create modal that shows event or repair details.
+    /* handleDateClick = (dateObj) => {
         const {date} = dateObj;
         const newEvents = this.state.events.filter (event => event.start === date);
         console.log("this.state.events: " + this.state.events);
         console.log("Date: " + date);
         console.log(newEvents);
-    }
+    } */
    
     handleNewEvent = (arg) => {                            // handleDateClick = 
   //    console.log(this.props.user_id);  // working
@@ -87,8 +93,8 @@ export default class Calendar extends React.Component {
     }
 
 
-    handleCheck = () => {
-      this.setState({ isVendor: !this.state.isVendor });
+    handleCheck = () => {      
+        this.setState({ isVendor: !this.state.isVendor });
     };
 
 
@@ -115,11 +121,12 @@ export default class Calendar extends React.Component {
       let parsedEndDate = this.state.endDate + "T" + this.state.endTime + ":00";
 
       let momentDate = moment().format(parsedStartDate);
-      console.log(momentDate);
-      console.log(typeof momentDate);
+      console.log("momentDate: " + momentDate);
+  //    console.log(typeof momentDate); // string
    
       let newDateDate = new Date(parsedStartDate);
-      console.log("newDateDate: " + newDateDate)
+      console.log("newDateDate: " + newDateDate);
+      console.log(typeof newDateDate); // object
 
       
       let newRepair = {
@@ -222,7 +229,7 @@ render() {
               center: 'title',
               right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
             }}
-    plugins={[ dayGridPlugin, interactionPlugin ]}
+    plugins={[ dayGridPlugin, interactionPlugin, rrulePlugin ]}
     ref={ this.calendarComponentRef }
     events={ this.state.events }
 
@@ -246,6 +253,7 @@ render() {
                 </Button>
                 <ModalBody>
                 <form>
+
                 <div className="form-group">
                   <label htmlFor="repairType">Type</label>
                   <select
@@ -260,7 +268,6 @@ render() {
                     <option>Maintenance</option>
                   </select>
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="repairDescription">Description</label>
                   <input
@@ -273,6 +280,8 @@ render() {
                     onChange={this.handleInputChange}
                   />
                   </div>
+                  <Row form>
+                    <Col md={6}>
                     <div className="form-group">
                       <label htmlFor="start-date-input">Start Date</label>
                   <input
@@ -284,17 +293,8 @@ render() {
                     onChange={this.handleInputChange}
                     />
                  </div>
-                 <div className="form-group">
-                      <label htmlFor="end-date-input">End Date</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="end-date-input"
-                    value={this.state.endDate}
-                    name="endDate"
-                    onChange={this.handleInputChange}
-                    />
-                 </div>
+                 </Col>
+                 <Col md={6}>
                  <div className="form-group">
                   <label htmlFor="start-time-input">Start Time</label>
                   <input
@@ -306,6 +306,23 @@ render() {
                     onChange={this.handleInputChange}
                     />                  
                 </div>
+                </Col>
+                </Row>
+                <Row form>
+                <Col md={6}>
+                 <div className="form-group">
+                      <label htmlFor="end-date-input">End Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="end-date-input"
+                    value={this.state.endDate}
+                    name="endDate"
+                    onChange={this.handleInputChange}
+                    />
+                 </div>
+                 </Col>
+                 <Col md={6}>
                 <div className="form-group">
                   <label htmlFor="end-time-input">End Time</label>
                   <input
@@ -317,6 +334,53 @@ render() {
                     onChange={this.handleInputChange}
                     />                  
                 </div>
+                </Col>
+                </Row>
+                <div className="form-group">
+                  <div className="row">
+                    <div className="col-6">
+                      <label htmlFor="isRecurring">Is this a recurring event? </label>
+                    </div>
+                    <div className="col-6">
+                      <input
+                        type="checkbox"
+                        name="recurringCheckbox"
+                        checked={this.state.isRecurring}
+                        onChange={this.handleCheck}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {this.state.isRecurring ? (
+                  <div className="form-group">
+                    <label htmlFor="recurringPeriod">Recurring every:</label> />
+                    <select
+                    className="form-control"
+                    id="recurringPeriod"
+                    value={this.state.recurrencePeriod}
+                    name="recurrencePeriod"
+                    onChange={this.handleInputChange}
+                  >
+                    <option>Day</option>
+                    <option>Week</option>
+                    <option>Month</option>
+                    <option>Year</option>
+                  </select>
+                    <input
+                      type="number"
+                      className="form-group"
+                      id="recurringPeriod"
+                      value={this.state.recurrencePeriod}
+                      name="recurrencePeriod"
+                      onChange={this.handleInputChange}
+                    />
+                  </div>
+                ) : (
+                  <p />
+                )}
+                 <Row form>
+                <Col md={4}>
                 <div className="form-group">
                   <label htmlFor="repairCost"> Repair Cost</label>
                   <input
@@ -329,6 +393,8 @@ render() {
                     onChange={this.handleInputChange}
                   />
                 </div>
+                </Col>
+                <Col md={4}>
                 <div className="form-group">
                   <label htmlFor="repairPriority">Repair Priority</label>
                   <select
@@ -343,7 +409,8 @@ render() {
                     <option>high</option>
                   </select>
                 </div>
-
+                </Col>
+                <Col md={4}>
                 <div className="form-group">
                   <label htmlFor="repairStatus">Repair Status</label>
                   <select
@@ -353,13 +420,15 @@ render() {
                     name="status"
                     onChange={this.handleInputChange}
                   >
+                    <option></option>
                     <option>Thinking about it!</option>
                     <option>Getting Bids</option>
                     <option>In Progress</option>
                     <option>Completed</option>
                   </select>
                 </div>
-
+                </Col>
+                </Row>
                 <div className="form-group">
                   <div className="row">
                     <div className="col-4">
@@ -368,6 +437,7 @@ render() {
                     <div className="col-4">
                       <input
                         type="checkbox"
+                        name="vendorCheckbox"
                         checked={this.state.isVendor}
                         onChange={this.handleCheck}
                       />

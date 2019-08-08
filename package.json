@@ -25,6 +25,7 @@
   "homepage": "https://github.com/dsjuneau/home-wallet#readme",
   "dependencies": {
     "@fullcalendar/interaction": "^4.2.0",
+    "@fullcalendar/rrule": "^4.2.0",
     "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",

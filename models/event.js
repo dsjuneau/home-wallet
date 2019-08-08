@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const eventSchema = new Schema({
-//  id: { type: Schema.Types.ObjectId, ref: 'Repair' },  // replace with house id?
+  userId: { type: String },
 //  group_id: { type: Schema.Types.ObjectId }
   title: { type: String },
 //  category: { type: String },

@@ -102,6 +102,26 @@ export class Private extends Component {
       });
   };
 
+  handleDeleteProfile = event => {
+    event.preventDefault();
+
+    axios
+      .delete(`/api/home/${this.props.user.id}`)
+      .then(console.log("home profile deleted"))
+      .then(
+        this.setState({
+          hasHomeProfile: false,
+          hasZillow: false,
+        })
+      )
+      .then((window.location = "/"))
+      .catch(function(error) {
+        if (error) {
+          console.log(error);
+        }
+      });
+  };
+
   handleZillowCall = event => {
     event.preventDefault();
     const { zipCode, streetAddress } = this.state;
@@ -155,6 +175,7 @@ export class Private extends Component {
           zipCode={this.state.zipCode}
           handleZillowCall={this.handleZillowCall}
           handleSaveProfile={this.handleSaveProfile}
+          handleDeleteProfile={this.handleDeleteProfile}
           handleFenceCheck={this.handleFenceCheck}
           handlePoolCheck={this.handlePoolCheck}
           handleInputChange={this.handleInputChange}
@@ -176,12 +197,36 @@ export class Private extends Component {
             exact
             component={Calendar}
           />
-          <Route path="/Vendors/" component={Vendors} />
-          <Route path="/Repairs/" component={Repairs} />
-          <Route path="/Documents/" component={Documents} />
-          <Route path="/AddVendor/" component={AddVendor} />
-          <Route path="/AddRepair/" component={AddRepair} />
-          <Route path="/AddDocument/" component={AddDocument} />
+          <Route
+            userId={this.props.user.id}
+            path="/Vendors/"
+            component={Vendors}
+          />
+          <Route
+            userId={this.props.user.id}
+            path="/Repairs/"
+            component={Repairs}
+          />
+          <Route
+            userId={this.props.user.id}
+            path="/Documents/"
+            component={Documents}
+          />
+          <Route
+            userId={this.props.user.id}
+            path="/AddVendor/"
+            component={AddVendor}
+          />
+          <Route
+            userId={this.props.user.id}
+            path="/AddRepair/"
+            component={AddRepair}
+          />
+          <Route
+            userId={this.props.user.id}
+            path="/AddDocument/"
+            component={AddDocument}
+          />
         </Router>
         <Footer />
       </div>

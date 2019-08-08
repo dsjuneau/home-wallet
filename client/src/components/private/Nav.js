@@ -87,13 +87,6 @@ export default class Nav extends React.Component {
 
   render() {
     let currentProfile = this.state.homeProfile[0];
-
-    if (this.props.currentHomeProfile) {
-      currentProfile = this.props.currentHomeProfile[0];
-    }
-    console.log(this.props.homeProfile);
-    // console.log(currentProfile);
-
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light ">
@@ -134,8 +127,10 @@ export default class Nav extends React.Component {
                   </a>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>
-                  <button onClick={this.handleClick}>Logout</button>
+                <DropdownItem className="text-center">
+                  <button onClick={this.handleClick}>
+                    <i class="fas fa-sign-out-alt" /> Logout
+                  </button>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -151,15 +146,14 @@ export default class Nav extends React.Component {
               {currentProfile ? (
                 <div>
                   <div className="row mt-2">
-                    <h5 className="mx-auto card-header">
+                    <h5 className="mx-auto">
                       <strong>
-                        Profile for {currentProfile.streetAddress}
+                        Profile for {currentProfile.streetAddress} <span />
                       </strong>
                     </h5>
-
-                    <div className="col-2 col-md-12" />
-
-                    <div className="col">
+                  </div>
+                  <div className="row">
+                    <div className="col-4">
                       <p>
                         <strong>Lot Size:</strong>
                         <span> {currentProfile.lotSize}</span> sf
@@ -173,7 +167,7 @@ export default class Nav extends React.Component {
                         <br />
                       </p>
                     </div>
-                    <div className="col">
+                    <div className="col-4">
                       <p>
                         <strong>Square Footage:</strong> {currentProfile.gla}{" "}
                         <br />
@@ -183,21 +177,36 @@ export default class Nav extends React.Component {
                         <br />
                         <strong>Year Built: </strong> {currentProfile.yearBuilt}
                         <br />
-                        <strong>Parking: </strong> {currentProfile.parking}
-                        <br />
-                        <strong>Pool: </strong>{" "}
-                        {currentProfile.hasPool ? " Yes" : "No"}
-                        <br />
-                        <strong>Fence: </strong>{" "}
-                        {currentProfile.hasFence ? " Yes" : "No"}
                       </p>
                     </div>
+
+                    <div className="col-4">
+                      <strong>Parking: </strong> {currentProfile.parking}
+                      <br />
+                      <strong>Pool: </strong>{" "}
+                      {currentProfile.hasPool ? " Yes" : "No"}
+                      <br />
+                      <strong>Fence: </strong>{" "}
+                      {currentProfile.hasFence ? " Yes" : "No"} <br />
+                    </div>
                   </div>
-                  <div className="row" />
+                  <div className="row">
+                    <button
+                      className="btn btn-sm btn-danger ml-auto"
+                      onClick={this.props.handleDeleteProfile}
+                    >
+                      <i class="fas fa-trash-alt" /> Delete Profile
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div className="container text-center">
-                  <button onClick={this.reloadwindow}>View Profile</button>
+                  <button
+                    className="btn btn-block bg-white"
+                    onClick={this.reloadwindow}
+                  >
+                    View Profile
+                  </button>
                 </div>
               )}
             </div>
@@ -237,11 +246,7 @@ export default class Nav extends React.Component {
               toggle={this.props.toggle2}
               className={this.props.className}
             >
-              <ModalHeader className="ml-auto">
-                {/* <Button color="danger" onClick={this.toggle2}>
-                  x
-                </Button> */}
-              </ModalHeader>
+              <ModalHeader className="ml-auto" />
               <ModalBody>
                 <div className="container">
                   <div className="card">

@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 
 import Profile from "./Profile.js";
+import Axios from "axios";
 
 export default class Nav extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class Nav extends React.Component {
       dropdownOpen: false,
       modal: false,
       modal2: false,
+      homeProfile: {},
     };
   }
   handleClick = () => {
@@ -44,6 +46,20 @@ export default class Nav extends React.Component {
   }
 
   componentDidMount() {
+    const { userId } = this.props;
+
+    Axios.get(`/api/home/${userId}`)
+
+      .then(response => {
+        this.setState({
+          homeProfile: response.data,
+        });
+        // console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
     if (!this.props.hasZillow) {
       this.setState({
         modal: true,
@@ -54,6 +70,9 @@ export default class Nav extends React.Component {
           modal: false,
         });
       }
+      this.setState({
+        modal: true,
+      });
     }
 
     if (this.props.hasZillow && !this.props.hasHomeProfile) {
@@ -64,6 +83,11 @@ export default class Nav extends React.Component {
   }
 
   render() {
+    const currentProfile = this.state.homeProfile[0];
+    // console.log(currentProfile);
+
+    console.log(this.props.currentHomeProfile);
+
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light ">
@@ -117,47 +141,40 @@ export default class Nav extends React.Component {
             <div className="card">
               <div className="container text-center bg-dark text-white">
                 <h5>Welcome {this.props.userName}</h5>
-                <h6>Profile for {this.props.streetAddress}</h6>
+                <h6>Profile for {currentProfile.streetAddress}</h6>
               </div>
               <div className="row mt-2">
                 <div className="col-1 col-md-12" />
 
                 <div className="col">
                   <p>
-                    <strong>Lot Size:</strong> {this.props.zillowData.lotSize}{" "}
-                    sf
+                    <strong>Lot Size:</strong> {currentProfile.lotSize} sf
                     <br />
                     <strong>
-                      Tax Assessment for {this.props.zillowData.taxYear}:
+                      Tax Assessment for {currentProfile.taxYear}:
                     </strong>
-                    ${this.props.zillowData.taxAssessment}
+                    ${currentProfile.taxAssessment}
                     <br />
-                    <strong>Zestimate Range:</strong> $
-                    {this.props.zillowData.zestimateLow} -
-                    {this.props.zillowData.zestimateHigh}
-                    <br />
-                    <strong>Zestimate:</strong> $
-                    {this.props.zillowData.zestimate}
+                    <strong>Zestimate:</strong> ${currentProfile.zestimate}
                     <br />
                   </p>
                 </div>
                 <div className="col">
                   <p>
-                    <strong>Square Footage:</strong> {this.props.zillowData.gla}{" "}
+                    <strong>Square Footage:</strong> {currentProfile.gla} <br />
+                    <strong>Beds:</strong> {currentProfile.bedrooms}
                     <br />
-                    <strong>Beds:</strong> {this.props.zillowData.bedrooms}
+                    <strong>Baths:</strong> {currentProfile.bathrooms}
                     <br />
-                    <strong>Baths:</strong> {this.props.zillowData.bathrooms}
+                    <strong>Year Built: </strong> {currentProfile.yearbuilt}
                     <br />
-                    <strong>Year Built: </strong>{" "}
-                    {this.props.zillowData.yearbuilt}
+                    <strong>Parking: </strong> {currentProfile.parking}
                     <br />
-                    <strong>Parking: </strong> {this.props.parking}
-                    <br />
-                    <strong>Pool: </strong> {this.props.hasPool ? " Yes" : "No"}
+                    <strong>Pool: </strong>{" "}
+                    {currentProfile.hasPool ? " Yes" : "No"}
                     <br />
                     <strong>Fence: </strong>{" "}
-                    {this.props.hasFence ? " Yes" : "No"}
+                    {currentProfile.hasFence ? " Yes" : "No"}
                   </p>
                 </div>
               </div>
@@ -168,7 +185,7 @@ export default class Nav extends React.Component {
           <div>
             <div className="container">
               <Modal
-                isOpen={!this.props.modal}
+                isOpen={this.props.modal}
                 toggle={this.props.toggle2}
                 className={this.props.className}
               >

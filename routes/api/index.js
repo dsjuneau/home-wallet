@@ -4,11 +4,10 @@ const events = require("./events");
 const zillow = require("./zillow");
 const home = require("./home");
 
-// Book routes
+// Home Routes
 router.use("/auth", auth);
 router.use("/events", events);
 // router.use("/repairs", repairs);
-
 router.use("/home", home);
 router.use("/zillow", zillow);
 

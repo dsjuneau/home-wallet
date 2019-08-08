@@ -10,7 +10,7 @@ router
 // Matches with "/api/home/:id"
 router
   .route("/:id")
-  .get(homeController.findById)
+  .get(homeController.findProfile)
   .put(homeController.update)
   .delete(homeController.remove);
 

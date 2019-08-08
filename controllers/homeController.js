@@ -14,7 +14,7 @@ module.exports = {
   },
   create: function(req, res) {
     console.log("getting here", req.body);
-    db.Home.create(req.body)
+    db.Home.create(req.body.homeProfile)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -24,8 +24,18 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    db.Home.findOneAndDelete({ book_id: req.params.id })
+    db.Home.findOneAndDelete({ home_id: req.params.id })
       .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  findProfile: function(req, res) {
+    const string = req.params.id.toString();
+    console.log(string);
+    db.Home.find({ userId: string })
+      .then(dbModel => {
+        console.log(dbModel);
+        res.json(dbModel);
+      })
       .catch(err => res.status(422).json(err));
   },
 };

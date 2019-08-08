@@ -13,8 +13,8 @@ router.route("/:address/:zip").get(function(req, res) {
   const url = `https://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=${key}&address=${address}&citystatezip=${zip}`;
   axios
     .get(url)
-    .then(function(start) {
-      return convertToJSON(start.data);
+    .then(function(response) {
+      return convertToJSON(response.data);
     })
     .then(function(response) {
       res.json(response);

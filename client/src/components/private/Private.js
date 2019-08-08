@@ -23,11 +23,25 @@ export class Private extends Component {
       hasPool: false,
       hasFence: false,
       parking: "No Garage",
-      hasHomeProfile: false,
-      hasZillow: false,
-      modal: false,
       modal2: false,
+      // currentHomeProfile: {},
     };
+  }
+
+  componentDidMount() {
+    axios.get("/api/home").then(res => {
+      if (res.data.length > 0) {
+        this.setState({
+          hasHomeProfile: true,
+          hasZillow: true,
+          modal: false,
+        });
+      } else {
+        this.setState({
+          modal: true,
+        });
+      }
+    });
   }
 
   handleSaveProfile = event => {
@@ -44,44 +58,44 @@ export class Private extends Component {
       hasZillow,
     } = this.state;
 
-    if (zillowData) {
-      let homeProfile = {
-        hasHomeProfile,
-        hasZillow,
-        streetAddress,
-        city,
-        // zipCode,
-        // hasPool,
-        // hasFence,
-        // parking,
-        // yearBuilt: zillowData.yearBuilt,
-        // bedrooms: zillowData.bedrooms,
-        // bathrooms: zillowData.bathrooms,
-        // gla: zillowData.gla,
-        // lotSize: zillowData.lotSize,
-        // taxAssessment: zillowData.taxAssessment,
-        // taxYear: zillowData.taxYear,
-        // zestimate: zillowData.zestimate,
-        // zestimateHigh: zillowData.zestimateHigh,
-        // zeistimateLow: zillowData.zeistimateLow,
-        // zillowLink: zillowData.zillowLink,
-      };
+    let homeProfile = {
+      userId: this.props.user.id,
+      hasHomeProfile,
+      hasZillow,
+      streetAddress,
+      city,
+      zipCode,
+      hasPool,
+      hasFence,
+      parking,
+      yearBuilt: zillowData.yearBuilt,
+      bedrooms: zillowData.bedrooms,
+      bathrooms: zillowData.bathrooms,
+      gla: zillowData.gla,
+      lotSize: zillowData.lotSize,
+      taxAssessment: zillowData.taxAssessment,
+      taxYear: zillowData.taxYear,
+      zestimate: zillowData.zestimate,
+      zestimateHigh: zillowData.zestimateHigh,
+      zeistimateLow: zillowData.zeistimateLow,
+      zillowLink: zillowData.zillowLink,
+    };
 
-      axios
-        .post("/api/home", { homeProfile })
-        // .then(alert("home profile created"))
-        .then(
-          this.setState({
-            hasHomeProfile: true,
-            modal2: false,
-          })
-        )
-        .catch(function(error) {
-          if (error) {
-            console.log(error);
-          }
-        });
-    }
+    axios
+      .post("/api/home", { homeProfile })
+      // .then(alert("home profile created"))
+      .then(
+        this.setState({
+          currentHomeProfile: homeProfile,
+          hasHomeProfile: true,
+          modal2: false,
+        })
+      )
+      .catch(function(error) {
+        if (error) {
+          console.log(error);
+        }
+      });
   };
 
   handleZillowCall = event => {
@@ -127,11 +141,13 @@ export class Private extends Component {
   };
 
   render() {
-    // console.log(this.props);
+    console.log(this.props);
+    console.log(this.state);
     return (
       <div>
         <Nav
           userName={this.props.user.userName}
+          userId={this.props.user.id}
           unAuth={this.props.unAuth}
           streetAddress={this.state.streetAddress}
           zipCode={this.state.zipCode}
@@ -142,6 +158,7 @@ export class Private extends Component {
           handleInputChange={this.handleInputChange}
           toggle2={this.toggle2}
           hasHomeProfile={this.state.hasHomeProfile}
+          currentHomeProfile={this.state.currentHomeProfile}
           hasZillow={this.state.hasZillow}
           zillowData={this.state.zillowData}
           modal={this.state.modal}
@@ -151,7 +168,12 @@ export class Private extends Component {
           parking={this.state.parking}
         />
         <Router>
-          <Route path={["/", "/login"]} exact component={Calendar} />
+          <Route
+            userId={this.props.user.id}
+            path={["/", "/login"]}
+            exact
+            component={Calendar}
+          />
           <Route path="/Vendors/" component={Vendors} />
           <Route path="/Repairs/" component={Repairs} />
           <Route path="/Documents/" component={Documents} />

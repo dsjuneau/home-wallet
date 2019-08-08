@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Nav from "./Nav";
-import Calendar from "./CalendarV2";
+import Calendar from "./Calendar";
 // import Page2 from "./Page2";
 // import Page3 from "./Page3";
 import Footer from "./Footer";

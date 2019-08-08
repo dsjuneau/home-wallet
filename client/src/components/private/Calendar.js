@@ -21,8 +21,8 @@ export default class Calendar extends React.Component {
     //   search: "",
         repairType: "",
         title: "",
-        recurrencePeriod: 0,
-        repeatInterval: 0,
+        recurrencePeriod: "0",
+        repeatInterval: "0",
         repeatDayOfWeek: "",
         startDate: "",
         endDate: "",
@@ -142,6 +142,8 @@ export default class Calendar extends React.Component {
       }
 
       let newEvent ={
+        userId: this.props.userId,
+        category: this.state.repairType,
         title: this.state.title,
         start: parsedStartDate,
         end: parsedEndDate,
@@ -239,280 +241,292 @@ render() {
       </div>
 
       <div>
-              <Modal
-                isOpen={this.state.modal}
-                toggle={this.toggle}
-                className={this.props.className}
-              >
-                <Button
-                  className="ml-auto"
-                  color="danger"
-                  onClick={this.toggle}
+        <Modal
+        isOpen={this.state.modal}
+        toggle={this.toggle}
+        className={this.props.className}
+        >
+        <Button
+            className="ml-auto"
+            color="danger"
+            onClick={this.toggle}
+        >
+            x
+        </Button>
+        <ModalBody>
+        <Form>
+            <FormGroup>
+                <Label for="repairType">Type</Label>
+                <Input
+                type="select"
+                /* className="form-control" */
+                id="repairTypeSelect"
+                value={this.state.repairType}
+                name="repairType"
+                onChange={this.handleInputChange}
                 >
-                  x
-                </Button>
-                <ModalBody>
-                <form>
+                <option>Update</option>
+                <option>Repair</option>
+                <option>Maintenance</option>
+                </Input>
+            </FormGroup>
+            <FormGroup>
+                <Label for="repairDescription">Description</Label>
+                <Input
+                type="text"
+               /*  className="form-control" */
+                id="repairDescriptionInput"
+                placeholder="mow grass"
+                value={this.state.title}
+                name="title"
+                onChange={this.handleInputChange}
+                />
+            </FormGroup>
+            <Row form>
+            <Col md={6}>
+            <FormGroup>
+                <Label for="start-date-input">Start Date</Label>
+                <Input
+                type="date"
+                /* className="form-control" */
+                id="start-date-input"
+                value={this.state.startDate}
+                name="startDate"
+                onChange={this.handleInputChange}
+                />
+            </FormGroup>
+            </Col>
+            <Col md={6}>
+            <FormGroup>
+            <Label for="start-time-input">Start Time</Label>
+            <Input
+            type="time"
+            /* className="form-control" */
+            id="start-time-input"
+            value={this.state.startTime}
+            name="startTime"
+            onChange={this.handleInputChange}
+            />                  
+            </FormGroup>
+        </Col>
+        </Row>
+        <Row form>
+        <Col md={6}>
+            <FormGroup>
+                <Label for="end-date-input">End Date</Label>
+            <Input
+            type="date"
+            /* className="form-control" */
+            id="end-date-input"
+            value={this.state.endDate}
+            name="endDate"
+            onChange={this.handleInputChange}
+            />
+            </FormGroup>
+        </Col>
+        <Col md={6}>
+            <FormGroup>
+            <Label for="end-time-input">End Time</Label>
+            <Input
+            type="time"
+            /* className="form-control" */
+            id="end-time-input"
+            value={this.state.endTime}
+            name="endTime"
+            onChange={this.handleInputChange}
+            />                  
+            </FormGroup>
+        </Col>
+        </Row>
+        <FormGroup>
+        <Label for="recurringPeriod">Repeat</Label>
+        <Input
+        type="select"
+        value={this.state.recurrencePeriod}
+        name="recurrencePeriod"
+        onChange={this.handleInputChange}
+        >
+        <option selected value="0">Never</option>    
+    {/*   <option>Daily</option> */}
+        <option value="1">Weekly</option>
+    {/*   <option>Monthly</option> */}
+    {/*   <option>Yearly</option> */}
+        </Input>
+        </FormGroup>
+        
 
-                <div className="form-group">
-                  <label htmlFor="repairType">Type</label>
-                  <select
-                    className="form-control"
-                    id="repairTypeSelect"
-                    value={this.state.repairType}
-                    name="repairType"
-                    onChange={this.handleInputChange}
-                  >
-                    <option>Update</option>
-                    <option>Repair</option>
-                    <option>Maintenance</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="repairDescription">Description</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="repairDescriptionInput"
-                    placeholder="mow grass"
-                    value={this.state.title}
-                    name="title"
-                    onChange={this.handleInputChange}
-                  />
-                  </div>
-                  <Row form>
-                    <Col md={6}>
-                    <div className="form-group">
-                      <label htmlFor="start-date-input">Start Date</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="start-date-input"
-                    value={this.state.startDate}
-                    name="startDate"
-                    onChange={this.handleInputChange}
-                    />
-                 </div>
-                 </Col>
-                 <Col md={6}>
-                 <div className="form-group">
-                  <label htmlFor="start-time-input">Start Time</label>
-                  <input
-                    type="time"
-                    className="form-control"
-                    id="start-time-input"
-                    value={this.state.startTime}
-                    name="startTime"
-                    onChange={this.handleInputChange}
-                    />                  
-                </div>
-                </Col>
-                </Row>
-                <Row form>
-                <Col md={6}>
-                 <div className="form-group">
-                      <label htmlFor="end-date-input">End Date</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="end-date-input"
-                    value={this.state.endDate}
-                    name="endDate"
-                    onChange={this.handleInputChange}
-                    />
-                 </div>
-                 </Col>
-                 <Col md={6}>
-                <div className="form-group">
-                  <label htmlFor="end-time-input">End Time</label>
-                  <input
-                    type="time"
-                    className="form-control"
-                    id="end-time-input"
-                    value={this.state.endTime}
-                    name="endTime"
-                    onChange={this.handleInputChange}
-                    />                  
-                </div>
-                </Col>
-                </Row>
-                <div className="form-group">
-                  <div className="row">
-                    <div className="col-6">
-                      <label htmlFor="isRecurring">Is this a recurring event? </label>
-                    </div>
-                    <div className="col-6">
-                      <input
-                        type="checkbox"
-                        name="recurringCheckbox"
-                        checked={this.state.isRecurring}
-                        onChange={this.handleCheck}
-                      />
-                    </div>
-                  </div>
-                </div>
+         {(this.state.recurrencePeriod === "1") ? (
+             <div>
+           <FormGroup>
+           <Label for="repeatInterval">every</Label>
+           <Input
+           type="number"
+           name="repeatInterval"
+           placeholder="1"
+           value={this.state.repeatInterval}
+           onChange={this.handleInputChange}   
+           />
+       <span>week(s)</span>
+       </FormGroup>
+       
+       <FormGroup>
+           <Label for="repeatDayOfWeek">on</Label>
+           <Input
+           type="select"
+           value={this.state.repeatDayOfWeek}
+           name="repeatDayOfWeek"
+           onChange={this.handleInputChange}
+           >
+           <option selected value="SU">Sunday</option>
+           <option value="MO">Monday</option>
+           <option value="TU">Tuesday</option>
+           <option value="WE">Wednesday</option>
+           <option value="TH">Thursday</option>
+           <option value="FR">Friday</option>
+           <option value="SA">Saturday</option>
+           </Input>
+       </FormGroup>
+       </div>
+        ) : (
+            <p />
+        )}
+            <Row form>
+        <Col md={4}>
+        <FormGroup>
+            <Label for="repairCost"> Repair Cost</Label>
+            <Input
+            type="number"
+           /*  className="form-control" */
+            id="repairCostInput"
+            placeholder="$35"
+            value={this.state.cost}
+            name="cost"
+            onChange={this.handleInputChange}
+            />
+        </FormGroup>
+        </Col>
+        <Col md={4}>
+        <FormGroup>
+            <Label for="repairPriority">Repair Priority</Label>
+            <Input
+            type="select"
+            /* className="form-control" */
+            id="repairPrioritySelect"
+            value={this.state.priority}
+            name="priority"
+            onChange={this.handleInputChange}
+            >
+            <option selected>low</option>
+            <option>medium</option>
+            <option>high</option>
+            </Input>
+        </FormGroup>
+        </Col>
+        <Col md={4}>
+        <FormGroup>
+            <Label for="repairStatus">Repair Status</Label>
+            <Input
+            type="select"
+            /* className="form-control" */
+            id="repairStatusSelect"
+            value={this.state.status}
+            name="status"
+            onChange={this.handleInputChange}
+            >
+            <option selected>Thinking about it!</option>
+            <option>Getting Bids</option>
+            <option>In Progress</option>
+            <option>Completed</option>
+            </Input>
+        </FormGroup>
+        </Col>
+        </Row>
+        <FormGroup>
+        <Row form>
+        <Col md={4}>
+                <Label for="isVendor">Assign a Contractor/Vendor?</Label>
+        </Col>
+        <Col md={4}>
+            <input
+            type="checkbox"
+            name="vendorCheckbox"
+            checked={this.state.isVendor}
+            onChange={this.handleCheck}
+            />
+        </Col>
+        </Row>
+        </FormGroup>
 
-                {this.state.isRecurring ? (
-                  <div className="form-group">
-                    <label htmlFor="recurringPeriod">Recurring every:</label> />
-                    <select
-                    className="form-control"
-                    id="recurringPeriod"
-                    value={this.state.recurrencePeriod}
-                    name="recurrencePeriod"
-                    onChange={this.handleInputChange}
-                  >
-                    <option>Day</option>
-                    <option>Week</option>
-                    <option>Month</option>
-                    <option>Year</option>
-                  </select>
-                    <input
-                      type="number"
-                      className="form-group"
-                      id="recurringPeriod"
-                      value={this.state.recurrencePeriod}
-                      name="recurrencePeriod"
-                      onChange={this.handleInputChange}
-                    />
-                  </div>
-                ) : (
-                  <p />
-                )}
-                 <Row form>
-                <Col md={4}>
-                <div className="form-group">
-                  <label htmlFor="repairCost"> Repair Cost</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="repairCostInput"
-                    placeholder="$35"
-                    value={this.state.cost}
-                    name="cost"
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-                </Col>
-                <Col md={4}>
-                <div className="form-group">
-                  <label htmlFor="repairPriority">Repair Priority</label>
-                  <select
-                    className="form-control"
-                    id="repairPrioritySelect"
-                    value={this.state.priority}
-                    name="priority"
-                    onChange={this.handleInputChange}
-                  >
-                    <option>low</option>
-                    <option>medium</option>
-                    <option>high</option>
-                  </select>
-                </div>
-                </Col>
-                <Col md={4}>
-                <div className="form-group">
-                  <label htmlFor="repairStatus">Repair Status</label>
-                  <select
-                    className="form-control"
-                    id="repairStatusSelect"
-                    value={this.state.status}
-                    name="status"
-                    onChange={this.handleInputChange}
-                  >
-                    <option></option>
-                    <option>Thinking about it!</option>
-                    <option>Getting Bids</option>
-                    <option>In Progress</option>
-                    <option>Completed</option>
-                  </select>
-                </div>
-                </Col>
-                </Row>
-                <div className="form-group">
-                  <div className="row">
-                    <div className="col-4">
-                      <label htmlFor="isVendor">Assign a Contractor/Vendor? </label>
-                    </div>
-                    <div className="col-4">
-                      <input
-                        type="checkbox"
-                        name="vendorCheckbox"
-                        checked={this.state.isVendor}
-                        onChange={this.handleCheck}
-                      />
-                    </div>
-                  </div>
-                </div>
+        {this.state.isVendor ? (
+            <FormGroup>
+            <Label for="repairVendor"></Label>
+            <Input
+                type="select"
+                className="form-control"
+                id="repairVendorSelect"
+                value={this.state.vendor}
+                name="vendor"
+                onChange={this.handleInputChange}
+            >
+                <option>Big Bob</option>
+                <option>Julio</option>
+            </Input>
+            </FormGroup>
+        ) : (
+            <p />
+        )}
 
-                {this.state.isVendor ? (
-                  <div className="form-group">
-                    <label htmlFor="repairVendor" />
-                    <select
-                      className="form-control"
-                      id="repairVendorSelect"
-                      value={this.state.vendor}
-                      name="vendor"
-                      onChange={this.handleInputChange}
-                    >
-                      <option>Vendor 1</option>
-                      <option>Vendor 2</option>
-                    </select>
-                  </div>
-                ) : (
-                  <p />
-                )}
+            <FormGroup>
+            <Label for="repairNotes">Additional Notes/Instruction</Label>
+            <Input
+            type="textarea"
+            /* className="form-control" */
+            id="repairNotesInput"
+            rows="3"
+            value={this.state.notes}
+            name="notes"
+            onChange={this.handleInputChange}
+            />
+            </FormGroup>
 
-                <div className="form-group">
-                  <label htmlFor="repairNotes">Additional Notes/Instruction</label>
-                  <textarea
-                    className="form-control"
-                    id="repairNotesInput"
-                    rows="3"
-                    value={this.state.notes}
-                    name="notes"
-                    onChange={this.handleInputChange}
-                  />
-                </div>
+        {/* // If we can get calendar then we can work on this                 <div className="form-group">
+            <label for="isRecurring">Is this recurring?</label>
+            <select
+            className="form-control"
+            id="isRecurringSelect"
+            value={this.state.isRecurring}
+            name="isRecurring"
+            onChange={this.handleInputChange}
+            >
+            <option>Yes</option>
+            <option>No, I do this myself</option>
+            </select>
+        </div> */}
 
-                {/* // If we can get calendar then we can work on this                 <div className="form-group">
-                  <label for="isRecurring">Is this recurring?</label>
-                  <select
-                    className="form-control"
-                    id="isRecurringSelect"
-                    value={this.state.isRecurring}
-                    name="isRecurring"
-                    onChange={this.handleInputChange}
-                  >
-                    <option>Yes</option>
-                    <option>No, I do this myself</option>
-                  </select>
-                </div> */}
+        {/* // If we can get bids working then we can work on this //
+        <div className="form-group">
+        <label for="vendor">Add bids/receipts</label>
+        <div className="custom-file">
+            <input
+            type="file"
+            className="custom-file-input"
+            id="customFile"
+            />
+            <label className="custom-file-label" for="customFile">
+            Choose file
+            </label>
+        </div>
+        </div> */}
 
-                {/* // If we can get bids working then we can work on this //
-               <div className="form-group">
-                <label for="vendor">Add bids/receipts</label>
-                <div className="custom-file">
-                  <input
-                    type="file"
-                    className="custom-file-input"
-                    id="customFile"
-                  />
-                  <label className="custom-file-label" for="customFile">
-                    Choose file
-                  </label>
-                </div>
-              </div> */}
-
-                <button
-                  onClick={this.handleFormSubmit}
-                  className="btn btn-block btn-success mt-3"
-                >
-                  Add
-                </button>
-              </form>
-                </ModalBody>
-              </Modal>
+        <button
+            onClick={this.handleFormSubmit}
+            className="btn btn-block btn-success mt-3"
+        >
+            Add
+        </button>
+        </Form>
+        </ModalBody>
+        </Modal>
             </div>
     </div>
   )

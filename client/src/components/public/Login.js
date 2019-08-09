@@ -9,7 +9,7 @@ export class Login extends Component {
     this.setState({ isError: false });
     const { email, password } = this.state;
     axios.post("/api/auth/login", { email, password }).then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.msg === undefined) {
         document.cookie = `key=${res.data.key};path=/;max-age=3600`;
         this.props.auth(res.data.userName, res.data._id);
@@ -36,7 +36,7 @@ export class Login extends Component {
             <div className="card-header mb-4 bg-secondary text-white">
               <h3 className="text-center mt-4 ">
                 {" "}
-                <i class="fas fa-user-circle" /> Login
+                <i className="fas fa-user-circle" /> Login
               </h3>
             </div>
             <form className="mx-auto" onSubmit={this.handleSubmit}>

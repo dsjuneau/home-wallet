@@ -1,5 +1,6 @@
 // https://fullcalendar.io/docs/react // NOT DONE
 
+
 import React from 'react'
 import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card, CardHeader } from "reactstrap";
 import FullCalendar from '@fullcalendar/react'
@@ -295,6 +296,7 @@ export default class Calendar extends React.Component {
 
 
 /*   loadEvents = (start, end, timezone, callback) => {
+
       $.axios({
            url: ‘myxmlfeed.php’,
            dataType: ‘xml’,
@@ -316,9 +318,10 @@ export default class Calendar extends React.Component {
     });
  } */
 
-render() {
-  return (
+  render() {
+    return (
       <div>
+
       <button onClick={ this.handleNewEvent }><h3>Add Event</h3></button>&nbsp;
       <div className='calendar-container'>
         <div className='calendar-top'>
@@ -642,6 +645,5 @@ render() {
             </div>
     </div>
   )
-}
 
 }

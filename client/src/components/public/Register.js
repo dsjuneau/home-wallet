@@ -104,7 +104,7 @@ export class Register extends Component {
                   onChange={this.handleChange}
                   name="password"
                   type="password"
-                  placeholder=" password"
+                  placeholder="password"
                   value={this.state.password}
                 />
               </div>
@@ -118,7 +118,7 @@ export class Register extends Component {
                   onChange={this.handleChange}
                   name="password2"
                   type="password"
-                  placeholder=" retype password"
+                  placeholder="retype password"
                   value={this.state.password2}
                 />
               </div>

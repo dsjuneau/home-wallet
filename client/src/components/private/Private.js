@@ -12,6 +12,7 @@ import AddDocument from "./AddDocument";
 import axios from "axios";
 
 export class Private extends Component {
+
   constructor(props) {
     super(props);
     this.toggle2 = this.toggle2.bind(this);
@@ -191,12 +192,8 @@ export class Private extends Component {
           parking={this.state.parking}
         />
         <Router>
-          <Route
-            userId={this.props.user.id}
-            path={["/", "/login"]}
-            exact
-            component={Calendar}
-          />
+          <Route path={["/", "/login"]}  exact render={() => <Calendar userId={this.props.user.id} />} />
+          {/* <Route path="/page2/" component={Page2} />
           <Route
             path="/Vendors/"
             render={props => <Vendors {...props} userId={this.props.user.id} />}
@@ -231,6 +228,7 @@ export class Private extends Component {
         </Router>
         <Footer />
       </div>
+
     );
   }
 }

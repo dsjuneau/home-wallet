@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const homeSchema = new Schema({
+
   userId: { type: String },
   // hasHomeProfile: { type: Boolean, default: true },
   hasHomeProfile: { type: Boolean },
@@ -24,6 +25,7 @@ const homeSchema = new Schema({
   hasFence: { type: Boolean, default: false },
   hasPool: { type: Boolean, default: false },
   parking: { type: String },
+
   date: { type: Date, default: Date.now },
 });
 

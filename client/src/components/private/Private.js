@@ -12,7 +12,6 @@ import AddDocument from "./AddDocument";
 import axios from "axios";
 
 export class Private extends Component {
-
   constructor(props) {
     super(props);
     this.toggle2 = this.toggle2.bind(this);
@@ -25,7 +24,7 @@ export class Private extends Component {
       hasFence: false,
       parking: "",
       modal2: false,
-      currentHomeProfile: {},
+      currentHomeProfile: {}
     };
   }
 
@@ -35,11 +34,11 @@ export class Private extends Component {
         this.setState({
           hasHomeProfile: true,
           hasZillow: true,
-          modal: false,
+          modal: false
         });
       } else {
         this.setState({
-          modal: true,
+          modal: true
         });
       }
     });
@@ -56,7 +55,7 @@ export class Private extends Component {
       parking,
       city,
       hasHomeProfile,
-      hasZillow,
+      hasZillow
     } = this.state;
 
     let homeProfile = {
@@ -79,7 +78,7 @@ export class Private extends Component {
       zestimate: zillowData.zestimate,
       zestimateHigh: zillowData.zestimateHigh,
       zeistimateLow: zillowData.zeistimateLow,
-      zillowLink: zillowData.zillowLink,
+      zillowLink: zillowData.zillowLink
     };
 
     axios
@@ -87,13 +86,13 @@ export class Private extends Component {
       // .then(alert("home profile created"))
       .then(
         this.setState({
-          currentHomeProfile: homeProfile,
+          currentHomeProfile: homeProfile
         })
       )
       .then(
         this.setState({
           hasHomeProfile: true,
-          modal2: false,
+          modal2: false
         })
       )
       .catch(function(error) {
@@ -112,7 +111,7 @@ export class Private extends Component {
       .then(
         this.setState({
           hasHomeProfile: false,
-          hasZillow: false,
+          hasZillow: false
         })
       )
       .then((window.location = "/"))
@@ -134,7 +133,7 @@ export class Private extends Component {
           zillowData: response.data,
           hasZillow: true,
           modal: false,
-          modal2: true,
+          modal2: true
         });
       });
     } else {
@@ -144,7 +143,7 @@ export class Private extends Component {
 
   toggle2() {
     this.setState(prevState => ({
-      modal: !prevState.modal,
+      modal: !prevState.modal
     }));
   }
 
@@ -154,7 +153,7 @@ export class Private extends Component {
 
     // Updating the input's state
     this.setState({
-      [name]: value,
+      [name]: value
     });
   };
   handlePoolCheck = () => {
@@ -192,8 +191,12 @@ export class Private extends Component {
           parking={this.state.parking}
         />
         <Router>
-          <Route path={["/", "/login"]}  exact render={() => <Calendar userId={this.props.user.id} />} />
-          {/* <Route path="/page2/" component={Page2} />
+          <Route
+            path={["/", "/login"]}
+            exact
+            render={() => <Calendar userId={this.props.user.id} />}
+          />
+
           <Route
             path="/Vendors/"
             render={props => <Vendors {...props} userId={this.props.user.id} />}
@@ -228,7 +231,6 @@ export class Private extends Component {
         </Router>
         <Footer />
       </div>
-
     );
   }
 }

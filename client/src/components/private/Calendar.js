@@ -644,6 +644,6 @@ export default class Calendar extends React.Component {
         </Modal>
             </div>
     </div>
-  )
+  );
 
-}
+    }}

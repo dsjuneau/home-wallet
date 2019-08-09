@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function AddRepair() {
+export default function Repairs() {
   return (
     <div>
       <div className="container">

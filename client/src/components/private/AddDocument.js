@@ -10,6 +10,15 @@ export default function AddDocument() {
             <i className="fas fa-file-pdf" /> &nbsp; Add Document
           </h3>
         </div>
+
+        {/* //added for File Upload - will reorganize after */}
+        {/* <h5 className="display-5 text-center">
+          <i className="fab fa-react" />
+          File Upload
+        </h5> */}
+
+        {/* File upload per (https://www.youtube.com/watch?v=b6Oe2puTdMQ) */}
+
         <div className="card-body">
           <div className="text-right">
             <a className="btn btn-info" href="/Documents/">

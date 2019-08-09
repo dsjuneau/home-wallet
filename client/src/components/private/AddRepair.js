@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class Repairs extends Component {
+export default class AddRepair extends Component {
   state = {
     repairType: "",
     repairDescription: "",

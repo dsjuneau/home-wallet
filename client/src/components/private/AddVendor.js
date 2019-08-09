@@ -1,15 +1,22 @@
 import React, { Component } from "react";
-export default class AddVendor extends Component {
-  state = {
-    vendorName: "",
-    vendorCompany: "",
-    vendorPhone: "",
-    vendorEmail: "",
-    vendorCategory: "",
-    hasCategory: false,
-    vendorNotes: "",
-  };
+import axios from "axios";
+import { Alert } from "reactstrap";
 
+export default class AddVendor extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      vendorName: "",
+      vendorCompany: "",
+      vendorPhone: "",
+      vendorEmail: "",
+      vendorCategory: "none selected",
+      hasCategory: false,
+      vendorNotes: "",
+      visible: false,
+    };
+  }
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
@@ -24,36 +31,74 @@ export default class AddVendor extends Component {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
-    // Alert the user their first and last name, clear `this.state.firstName` and `this.state.lastName`, clearing the inputs
-    alert(`Vendor Added`);
+    // Clear all inputs
     this.setState({
       vendorName: "",
       vendorCompany: "",
       vendorPhone: "",
       vendorEmail: "",
       vendorCategory: "",
-      hasCategory: false,
       vendorNotes: "",
     });
+
+    // destructure this.state
+    const {
+      vendorName,
+      vendorCompany,
+      vendorPhone,
+      vendorEmail,
+      vendorCategory,
+      vendorNotes,
+    } = this.state;
+
+    // create newVendor object
+    let newVendor = {
+      userId: this.props.userId,
+      vendorName,
+      vendorCompany,
+      vendorPhone,
+      vendorEmail,
+      vendorCategory,
+      vendorNotes,
+    };
+
+    axios
+      .post("/api/vendors", { newVendor })
+      .then(console.log("vendor added"))
+      .then(this.onShowAlert())
+      .catch(function(error) {
+        if (error) {
+          console.log(error);
+        }
+      });
   };
 
-  handleNewCategory = event => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
+  onShowAlert = () => {
+    this.setState({ visible: true }, () => {
+      window.setTimeout(() => {
+        this.setState({ visible: false });
+      }, 2000);
     });
-    console.log(this.state.vendorCategory);
-    console.log(this.state.vendorCategory === " Other");
-    if (this.state.vendorCategory === " Other") {
-      alert("new category needed");
-      this.setState({
-        hasCategory: true,
-      });
-    }
   };
+  // todo For future use in order to allow for adding categories
+  // handleNewCategory = event => {
+  //   event.preventDefault();
+  //   const { name, value } = event.target;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  //   console.log(this.state.vendorCategory);
+  //   console.log(this.state.vendorCategory === " Other");
+  //   if (this.state.vendorCategory === " Other") {
+  //     alert("new category needed");
+  //     this.setState({
+  //       hasCategory: true,
+  //     });
+  //   }
+  // };
 
   render() {
+    // console.log(this.props);
     return (
       <div>
         <div className="container">
@@ -73,7 +118,7 @@ export default class AddVendor extends Component {
             <div className="card-body mt-2">
               <form>
                 <div className="form-group">
-                  <label for="vendorName">Vendor Name</label>
+                  <label>Vendor Name</label>
                   <input
                     type="text"
                     className="form-control"
@@ -86,7 +131,7 @@ export default class AddVendor extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label for="vendorCompany">Vendor Company</label>
+                  <label>Vendor Company</label>
                   <input
                     type="text"
                     className="form-control"
@@ -98,7 +143,7 @@ export default class AddVendor extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="vendorPhone">Vendor Phone</label>
+                  <label>Vendor Phone</label>
                   <input
                     type="text"
                     className="form-control"
@@ -110,7 +155,7 @@ export default class AddVendor extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="vendorEmail">Vendor Email</label>
+                  <label>Vendor Email</label>
                   <input
                     type="email"
                     className="form-control"
@@ -122,15 +167,16 @@ export default class AddVendor extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="vendor">Vendor Category</label>
+                  <label>Vendor Category</label>
                   <select
                     className="form-control"
                     id="vendorCategory"
                     value={this.state.vendorCategory}
                     name="vendorCategory"
-                    onChange={this.handleNewCategory}
+                    onChange={this.handleInputChange}
+                    default="Plumber"
                   >
-                    <option>Plumber</option>
+                    <option selected="selected">Plumber</option>
                     <option>Carpet Cleaner</option>
                     <option>House Cleaner </option>
                     <option>Electrician</option>
@@ -145,7 +191,7 @@ export default class AddVendor extends Component {
                 </div>
                 {this.state.hasCategory ? (
                   <div className="form-group">
-                    <label for="addCategory">Add Category</label>
+                    <label>Add Category</label>
                     <input
                       className="form-control"
                       id="addCategory"
@@ -160,7 +206,7 @@ export default class AddVendor extends Component {
                 )}
 
                 <div className="form-group">
-                  <label for="vendorNotes">Notes</label>
+                  <label>Notes</label>
                   <textarea
                     className="form-control"
                     id="vendorNotes"
@@ -181,6 +227,11 @@ export default class AddVendor extends Component {
                   May not make the final Cut!
                 </label>
               </div> */}
+
+                {/*Create Vendor in DB */}
+                <Alert className="alert-alert mt-2" isOpen={this.state.visible}>
+                  Vendor Added!
+                </Alert>
                 <button
                   onClick={this.handleFormSubmit}
                   className="btn btn-block btn-info mt-5"
@@ -189,15 +240,6 @@ export default class AddVendor extends Component {
                 </button>
               </form>
             </div>
-          </div>
-
-          <div className="card pl-5">
-            <h4>Vendor: {this.state.vendorName}</h4>
-            <p>Company: {this.state.vendorCompany}</p>
-            <p>Phone: {this.state.vendorPhone}</p>
-            <p>Email: {this.state.vendorEmail}</p>
-            <p>Category: {this.state.vendorCategory}</p>
-            <p>Notes: {this.state.vendorNotes}</p>
           </div>
         </div>
       </div>

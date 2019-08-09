@@ -40,7 +40,7 @@ export default function Info() {
               ab excepturi doloribus maiores?
             </p>
             <img
-              class="image1"
+              className="image1"
               src="https://img.huffingtonpost.com/asset/5bb24108200000e500ffdbeb.jpeg?ops=crop_0_265_3865_1568%2Cscalefit_720_noupscale&format=webp"
               alt=""
             />
@@ -65,7 +65,7 @@ export default function Info() {
               a, accusamus eius facilis error rem.
             </p>
             <img
-              class="image2"
+              className="image2"
               src="https://phantaruk.com/wp-content/uploads/2018/10/House-for-Purchase-735x400.jpg"
               alt=""
             />
@@ -84,20 +84,20 @@ export default function Info() {
               error.
             </p>
             <hr />
-            <h2 class="text-center">Features</h2>
+            <h2 className="text-center">Features</h2>
 
-            <div class="row text-center">
-              <div class="col-4 mb-3 mt-5">
-                <div class="card">
+            <div className="row text-center">
+              <div className="col-4 mb-3 mt-5">
+                <div className="card">
                   <img
                     src="https://media.noria.com/sites/Uploads/2018/12/20/73c77e51-97d0-4ec5-81dc-e80c0b265dcf_Images_ProactiveMaintenanceApproach_31035_1234x694_large.jpeg"
-                    class="img-fluid"
+                    className="img-fluid"
                     style={{ width: "100%" }}
                     alt="calendar-reminder"
                   />
-                  <div class="card-body">
-                    <h5 class="card-title">Get Calendar Reminders</h5>
-                    <p class="card-text">
+                  <div className="card-body">
+                    <h5 className="card-title">Get Calendar Reminders</h5>
+                    <p className="card-text">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Alias quaerat perferendis obcaecati, autem hic explicabo,
                       saepe at sequi architecto placeat ducimus id fugit optio
@@ -107,17 +107,19 @@ export default function Info() {
                 </div>
               </div>
               {/* <!-- card --> */}
-              <div class="col-4 mb-3 mt-5">
-                <div class="card">
+              <div className="col-4 mb-3 mt-5">
+                <div className="card">
                   <img
                     src="https://media.noria.com/sites/Uploads/2018/12/20/73c77e51-97d0-4ec5-81dc-e80c0b265dcf_Images_ProactiveMaintenanceApproach_31035_1234x694_large.jpeg"
-                    class="img-fluid"
+                    className="img-fluid"
                     style={{ width: "100%" }}
                     alt="preventative-maintenance"
                   />
-                  <div class="card-body">
-                    <h5 class="card-title">Track Repairs and Maintenance</h5>
-                    <p class="card-text">
+                  <div className="card-body">
+                    <h5 className="card-title">
+                      Track Repairs and Maintenance
+                    </h5>
+                    <p className="card-text">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Alias quaerat perferendis obcaecati, autem hic explicabo,
                       saepe at sequi architecto placeat ducimus id fugit optio
@@ -127,17 +129,17 @@ export default function Info() {
                 </div>
               </div>
               {/* <!-- card --> */}
-              <div class="col-4 mb-3 mt-5">
-                <div class="card">
+              <div className="col-4 mb-3 mt-5">
+                <div className="card">
                   <img
                     src="https://media.noria.com/sites/Uploads/2018/12/20/73c77e51-97d0-4ec5-81dc-e80c0b265dcf_Images_ProactiveMaintenanceApproach_31035_1234x694_large.jpeg"
-                    class="img-fluid"
+                    className="img-fluid"
                     style={{ width: "100%" }}
                     alt="document-management"
                   />
-                  <div class="card-body">
-                    <h5 class="card-title">Documents and Contacts</h5>
-                    <p class="card-text">
+                  <div className="card-body">
+                    <h5 className="card-title">Documents and Contacts</h5>
+                    <p className="card-text">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Alias quaerat perferendis obcaecati, autem hic explicabo,
                       saepe at sequi architecto placeat ducimus id fugit optio
@@ -148,7 +150,7 @@ export default function Info() {
               </div>
               {/* <!-- card --> */}
             </div>
-            <div class="form-group text-center">
+            <div className="form-group text-center">
               <a href="/Register/" className="btn btn-success mb-3">
                 Click Here to Register
               </a>

@@ -2,28 +2,31 @@ const db = require("../models");
 
 module.exports = {
   findAll: function(req, res) {
-    db.Repair.find(req.query)
+    db.Vendor.find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
-    db.Repair.findById(req.params.id) // only works for mongoose assigned _id.
+    db.Vendor.findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    db.Repair.create(req.body)
+    console.log("getting here", req.body);
+    db.Vendor.create(req.body.newVendor)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    db.Repair.findOneAndUpdate({ _id: req.params.id }, req.body)
+    db.Vendor.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    db.Repair.findOneAndDelete({ userId: req.params.id })
+    console.log(req.query);
+    db.Vendor.findByIdAndRemove({ _id: req.params.id })
+      .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

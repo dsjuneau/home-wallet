@@ -6,6 +6,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
 import rrulePlugin from '@fullcalendar/rrule';
+import { RRule, RRuleSet, rrulestr } from 'rrule'
 import moment from 'moment';
 import API from "../../utils/API";
 import './main.scss' // webpack must be configured to do this
@@ -38,7 +39,7 @@ export default class Calendar extends React.Component {
         editable: true,
         
         modal: false,
-        // detailModal: false,
+        detailModal: false,
     };
 
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -85,15 +86,48 @@ export default class Calendar extends React.Component {
       }));
     };
 
+    toggleDetailModal =() => {
+        this.setState(prevState => ({
+            detailModal: !prevState.detailModal,
+        }))
+    }
 
     // Want to create modal that shows event or repair details.
-    /* handleDateClick = (dateObj) => {
-        const {date} = dateObj;
-        const newEvents = this.state.events.filter (event => event.start === date);
+    handleDateClick = (dateObj) => {
+    //    Date: Mon Aug 05 2019 00:00:00 GMT-0500 (Central Daylight Time)
+    // Needs to match 2019-07-28 17:00:00.000Z
+
+         const {date} = dateObj;
+/*         const year = date.getFullYear(); // 2019
+        const month = date.getMonth(); // 7
+        const dayOfMonth = date.getDate(); // 5 */
+
+
+// Use this with rrule.all method to create an array of date strings on the repair schema.
+       /*  var formatDate = new Date(date);
+        var momentObj = moment(formatDate);
+        var momentString = momentObj.format('YYYY-MM-DD');
+
+        console.log("momentString: " + momentString); */
+        
+
+/*         const newEvents = this.state.events.filter (event => event.start === selectedDate);
         console.log("this.state.events: " + this.state.events);
         console.log("Date: " + date);
+        console.log(newEvents); */
+
+        // From Henry //
+
+     /*    console.log(this.state.events)
+        const dateStr = dateObj.date.dateStr;
+        console.log(dateStr);
+        const newEvents = this.state.events.filter(event => event.date === date);
         console.log(newEvents);
-    } */
+         this.setState({
+            detailEvents: newEvents,
+            detailModal: true
+        }) */
+    }
    
     handleNewEvent = (arg) => {                            // handleDateClick = 
   //    console.log(this.props.user_id);  // working
@@ -126,24 +160,6 @@ export default class Calendar extends React.Component {
     handleFormSubmit = event => {
       // Preventing the default behavior of the form submit (which is to refresh the page)
       event.preventDefault();
-
-      //   Sample:  2018-06-01T12:30:00
-
-
-/* //      let parsedRecurrenceEndDate = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
-        console.log("this.state.startTime: " + this.state.startTime);
-        console.log(typeof this.state.startTime);
-       let momentDate = moment().format(this.state.startDate + " " + this.state.startTime);
-      console.log("momentDate: " + momentDate);
-      console.log(typeof momentDate); // string
-   
-      let newDateDate = new Date(parsedStart);
-      console.log("newDateDate: " + newDateDate);
-      console.log(typeof newDateDate); // object */
-
-
-
-/////// I WAS HERE ///////
       
       let newEvent;
       
@@ -160,6 +176,7 @@ export default class Calendar extends React.Component {
 
       if (this.state.recurrencePeriod !== "never") {
 
+        // Create duration for FullCalendar recurring event.
         let momentStart = this.state.recurrenceStartDate + " " + this.state.startTime;
         let momentEnd = this.state.recurrenceStartDate + " " + this.state.endTime;
         let duration = moment
@@ -167,33 +184,33 @@ export default class Calendar extends React.Component {
         .diff(moment(momentStart, 'YYYY/MM/DD HH:mm'))
         ).asHours();
 
-        console.log("duration: " + duration);
+    //    console.log("duration: " + duration);
 
-        
-
-
+        // FullCalendar ready chosen start range date for recurrences
         let parsedRecurStart = this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
-    //    let parsedRecurEnd = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
 
             newRepair.recurrenceStartDate = parsedRecurStart;
-            
             newRepair.repeatDayOfWeek = this.state.repeatDayOfWeek;
             newRepair.recurrenceEndDate = this.state.recurrenceEndDate;
             newRepair.duration= duration;
 
             if (this.state.recurrencePeriod === "daily"){
 
-            /*     let momentDayInterval = moment
-                    .duration(moment(this.state.recurrenceEndDate, 'YYYY/MM/DD')
-                    .diff(moment(this.state.recurrenceStartDate, 'YYYY/MM/DD'))
-                    ).asDays();
-                
-                console.log("momentDayInterval: " + momentDayInterval); */
-
                 this.setState({
                     
                     repeatInterval: 1,
                   })
+
+                 /*  const dailyRule = new RRule({              // Not working
+                    freq: RRule.DAILY,
+                    interval: this.state.repeatInterval,
+                    dtstart: parsedRecurStart,
+                    until: this.state.recurrenceEndDate
+                  })
+
+                  const allDates = dailyRule.all();
+                  console.log("allDates: " + allDates); */
+
 
                 newRepair.repeatInterval = this.state.repeatInterval;
                 
@@ -212,6 +229,17 @@ export default class Calendar extends React.Component {
                    }
     
             }else if (this.state.recurrencePeriod === "weekly") {
+
+                /*  const weeklyRule = new RRule({                      // Not working
+                    freq: RRule.WEEKLY,
+                    interval: this.state.repeatInterval,
+                    byweekday: "RRule." + this.state.repeatDayOfWeek,
+                    dtstart: parsedRecurStart,
+                    until: this.state.recurrenceEndDate
+                  })
+
+                  const allDates = weeklyRule.all();
+                  console.log("allDates: " + allDates); */
 
                 newRepair.repeatInterval = this.state.repeatInterval;
 
@@ -294,27 +322,7 @@ export default class Calendar extends React.Component {
     };
 
 
-/*   loadEvents = (start, end, timezone, callback) => {
-      $.axios({
-           url: ‘myxmlfeed.php’,
-           dataType: ‘xml’,
-           data: {
-                           // our hypothetical feed requires UNIX timestamps
-                          start: start.unix(),
-                          end: end.unix()
-          },
-          success: function(doc) {
-               var events = [];
-                          $(doc).find(‘event’).each(function() {
-                               events.push({
-                                    title: $(this).attr(‘title’),
-                                    start: $(this).attr(‘start’) // will be parsed
-                    });
-                        });
-                       callback(events);
-                    }
-    });
- } */
+
 
 render() {
   return (
@@ -327,8 +335,7 @@ render() {
     <FullCalendar
     defaultView="dayGridMonth"
     dateClick={this.handleDateClick }
-    /* this.handleDateClick */
-    
+     
     header={{
               left: 'prev,next today',
               center: 'title',

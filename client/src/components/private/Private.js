@@ -198,9 +198,8 @@ export class Private extends Component {
             component={Calendar}
           />
           <Route
-            userId={this.props.user.id}
             path="/Vendors/"
-            component={Vendors}
+            render={props => <Vendors {...props} userId={this.props.user.id} />}
           />
           <Route
             userId={this.props.user.id}
@@ -213,9 +212,10 @@ export class Private extends Component {
             component={Documents}
           />
           <Route
-            userId={this.props.user.id}
             path="/AddVendor/"
-            component={AddVendor}
+            render={props => (
+              <AddVendor {...props} userId={this.props.user.id} />
+            )}
           />
           <Route
             userId={this.props.user.id}
@@ -223,9 +223,10 @@ export class Private extends Component {
             component={AddRepair}
           />
           <Route
-            userId={this.props.user.id}
             path="/AddDocument/"
-            component={AddDocument}
+            render={props => (
+              <AddDocument {...props} userId={this.props.user.id} />
+            )}
           />
         </Router>
         <Footer />

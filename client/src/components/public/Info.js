@@ -5,13 +5,27 @@ export default function Info() {
     <div>
       <div className="container mt-5">
         <div className="card">
-          <div className="card-header mb-4 bg-secondary text-white">
-            <h3 className="text-center mt-4 ">Welcome to My Home Wallet</h3>
+          <div className="card-header mb-2 bg-secondary text-white text-center">
+            <h3 className="mt-4 ">Welcome to My Home Wallet</h3>
           </div>
           <div className="card-body" />
 
           <form>
-            <h1>About My Home Wallet</h1>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt
+              recusandae nesciunt, animi, ipsum ratione incidunt eligendi
+              impedit distinctio natus pariatur nemo iusto nihil amet ullam
+              magni adipisci dicta eaque minus? Fuga, accusantium omnis
+              consequatur, quod totam debitis repellendus pariatur architecto
+              natus hic aut? Quae repellendus reiciendis explicabo in fugiat
+              doloremque.{" "}
+            </p>
+            <img
+              src="https://img.huffingtonpost.com/asset/5bb24108200000e500ffdbeb.jpeg?ops=crop_0_265_3865_1568%2Cscalefit_720_noupscale&format=webp"
+              alt=""
+              style={{ maxHeight: "200px", float: "right" }}
+              className="ml-3"
+            />
             <p>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum
               adipisci provident nesciunt inventore maxime officiis fuga at
@@ -31,19 +45,8 @@ export default function Info() {
               doloribus magnam ut repellat rem perferendis aliquid porro non ab
               minima natus. Assumenda sit aspernatur beatae nemo maiores
               dignissimos dolorum exercitationem cum, in enim libero eligendi
-              ullam! Autem rerum harum, eum voluptatum voluptates architecto
-              sunt eveniet quae voluptatibus repellat ut, sequi ad dolorem
-              totam, ipsum delectus fuga explicabo distinctio voluptate
-              blanditiis? Neque quibusdam voluptate eveniet dolorem et
-              perspiciatis tempora voluptatibus praesentium iusto at laborum
-              fugit placeat quos repudiandae cupiditate fuga facilis, accusamus
-              ab excepturi doloribus maiores?
+              ullam!
             </p>
-            <img
-              className="image1"
-              src="https://img.huffingtonpost.com/asset/5bb24108200000e500ffdbeb.jpeg?ops=crop_0_265_3865_1568%2Cscalefit_720_noupscale&format=webp"
-              alt=""
-            />
             <p>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio,
               mollitia autem! Tempora atque, nesciunt consectetur sit optio
@@ -56,18 +59,35 @@ export default function Info() {
               minima deserunt, pariatur totam earum atque commodi tenetur?
               Impedit excepturi praesentium, nostrum iste tempora eaque officiis
               laudantium non, quo animi maxime asperiores reprehenderit libero
-              at incidunt possimus hic? Tempora, necessitatibus beatae. At illo
-              odio placeat, excepturi dolor libero, odit vero illum in laborum
+              at incidunt{" "}
+            </p>{" "}
+            <img
+              src="./images/wallet.jpg"
+              alt="Home Wallet"
+              style={{ maxHeight: "200px", float: "left" }}
+              className="mr-3"
+            />
+            <p>
+              possimus hic? Tempora, necessitatibus beatae. At illo odio
+              placeat, excepturi dolor libero, odit vero illum in laborum
               architecto repellat eius ducimus pariatur, id veritatis soluta
               expedita dignissimos labore provident. Eveniet doloremque ea
               minima quisquam nesciunt alias necessitatibus, adipisci ex nisi!
               Itaque praesentium quod alias nesciunt tempore, magnam recusandae
-              a, accusamus eius facilis error rem.
+              a, accusamus eius facilis error rem. possimus hic? Tempora,
+              necessitatibus beatae. At illo odio placeat, excepturi dolor
+              libero, odit vero illum in laborum architecto repellat eius
+              ducimus pariatur, id veritatis soluta expedita dignissimos labore
+              provident. Eveniet doloremque ea minima quisquam nesciunt alias
+              necessitatibus, adipisci ex nisi! Itaque praesentium quod alias
+              nesciunt tempore, magnam recusandae a, accusamus eius facilis
+              error rem.
             </p>
             <img
-              className="image2"
               src="https://phantaruk.com/wp-content/uploads/2018/10/House-for-Purchase-735x400.jpg"
               alt=""
+              style={{ maxHeight: "200px", float: "right" }}
+              className="ml3-3"
             />
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
@@ -83,9 +103,7 @@ export default function Info() {
               vero quo maxime sed laboriosam explicabo cum. Velit eius ullam
               error.
             </p>
-            <hr />
-            <h2 className="text-center">Features</h2>
-
+            <h2 className="text-center mt-5">Features</h2>
             <div className="row text-center">
               <div className="col-4 mb-3 mt-5">
                 <div className="card">

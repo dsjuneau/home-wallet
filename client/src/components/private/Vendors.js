@@ -31,7 +31,7 @@ export default class Vendors extends React.Component {
 
   deleteVendor = id => {
     axios
-      .delete("../api/vendors/" + id)
+      .delete(`/api/vendors/${id}`)
       .then(this.onShowAlert())
       .then((window.location = "/Vendors/"))
       .catch(err => console.log(err));

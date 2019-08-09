@@ -99,6 +99,12 @@ export default class Nav extends React.Component {
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <DropdownToggle caret>Options</DropdownToggle>
               <DropdownMenu>
+                {/* <DropdownItem> */}
+                <p className="text-center bg-dark text-white">
+                  {" "}
+                  Welcome {this.props.userName}
+                </p>
+                {/* </DropdownItem> */}
                 <DropdownItem>
                   <a className="dropdown-item" href="/">
                     <i className="fas fa-home" /> Main
@@ -140,9 +146,9 @@ export default class Nav extends React.Component {
         {this.props.hasZillow && this.props.hasHomeProfile ? (
           <div className="container mb-5">
             <div className="card">
-              <div className="container text-center bg-dark text-white">
+              {/* <div className="container text-center bg-dark text-white">
                 <h5>Welcome {this.props.userName}</h5>
-              </div>
+              </div> */}
               {currentProfile ? (
                 <div>
                   <div className="row mt-2">

@@ -53,7 +53,6 @@ export class Private extends Component {
       hasPool,
       hasFence,
       parking,
-      city,
       hasHomeProfile,
       hasZillow,
     } = this.state;
@@ -63,7 +62,6 @@ export class Private extends Component {
       hasHomeProfile,
       hasZillow,
       streetAddress,
-      city,
       zipCode,
       hasPool,
       hasFence,

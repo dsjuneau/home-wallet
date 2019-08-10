@@ -20,12 +20,15 @@ export default class Nav extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.toggle2 = this.toggle.bind(this);
+    this.toggleProfile = this.toggleProfile.bind(this);
 
     this.state = {
       dropdownOpen: false,
+      profileOpen: false,
       modal: false,
       modal2: false,
       homeProfile: {},
+      isHidden: true,
     };
   }
   handleClick = () => {
@@ -45,15 +48,28 @@ export default class Nav extends React.Component {
     }));
   }
 
+  toggleProfile() {
+    this.setState(prevState => ({
+      profileOpen: !prevState.profileOpen,
+    }));
+  }
+
   reloadwindow() {
     window.location = "/";
   }
 
+  checkForHomeProfile() {
+    if (this.props.newHomeProfile.length) {
+      console.log("got props");
+    }
+    console.log("no newHomeProfile");
+  }
+
   componentDidMount() {
+    this.checkForHomeProfile();
+
     const { userId } = this.props;
-
     Axios.get(`/api/home/${userId}`)
-
       .then(response => {
         this.setState({
           homeProfile: response.data,
@@ -83,6 +99,12 @@ export default class Nav extends React.Component {
         modal2: true,
       });
     }
+  }
+
+  toggleHidden() {
+    this.setState({
+      isHidden: !this.state.isHidden,
+    });
   }
 
   render() {
@@ -134,9 +156,9 @@ export default class Nav extends React.Component {
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem className="text-center">
-                  <button onClick={this.handleClick}>
-                    <i class="fas fa-sign-out-alt" /> Logout
-                  </button>
+                  <a href="/Login/" onClick={this.handleClick}>
+                    <i className="fas fa-sign-out-alt" /> Logout
+                  </a>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -145,10 +167,16 @@ export default class Nav extends React.Component {
 
         {this.props.hasZillow && this.props.hasHomeProfile ? (
           <div className="container mb-5">
+            {/* <Dropdown
+              isOpen={this.state.profileOpen}
+              toggle={this.toggleProfile}
+            >
+              <DropdownToggle className="btn btn-light btn-block">
+                Profile
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem> */}
             <div className="card">
-              {/* <div className="container text-center bg-dark text-white">
-                <h5>Welcome {this.props.userName}</h5>
-              </div> */}
               {currentProfile ? (
                 <div>
                   <div className="row mt-2">
@@ -197,12 +225,13 @@ export default class Nav extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <button
+                    <a
+                      href="/"
                       className="btn btn-sm btn-danger ml-auto"
                       onClick={this.props.handleDeleteProfile}
                     >
-                      <i class="fas fa-trash-alt" /> Delete Profile
-                    </button>
+                      <i className="fas fa-trash-alt" /> Delete Profile
+                    </a>
                   </div>
                 </div>
               ) : (
@@ -216,6 +245,9 @@ export default class Nav extends React.Component {
                 </div>
               )}
             </div>
+            {/* </DropdownItem>
+              </DropdownMenu>
+            </Dropdown> */}
           </div>
         ) : (
           <div>

@@ -23,7 +23,6 @@ export default class Vendors extends React.Component {
           console.log("No Vendors Found");
         }
       })
-      .then(console.log(this.state.vendors))
       .catch(function(error) {
         console.log(error);
       });
@@ -70,7 +69,7 @@ export default class Vendors extends React.Component {
             {this.state.vendors.length ? (
               <div className="card mt-2">
                 {this.state.vendors.map(vendor => (
-                  <div>
+                  <div key={vendor._id}>
                     <div
                       className="card mx-auto mt-2"
                       style={{ width: "80%", border: "solid lightGrey" }}

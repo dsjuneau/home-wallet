@@ -22,7 +22,7 @@ export default class Calendar extends React.Component {
     //   search: "",
         repairType: "",
         title: "",
-        recurrencePeriod: "0",
+        recurrencePeriod: "never",
         repeatInterval: 1,
         repeatDayOfWeek: "",
         startDate: "",
@@ -31,8 +31,8 @@ export default class Calendar extends React.Component {
         startTime: "",
         endTime: "",
         cost: 0,
-        priority: "",
-        status: "",
+        priority: "low",
+        status: "Thinking about it!",
         isVendor: false,
         vendor: "",
         notes: "",
@@ -52,9 +52,9 @@ export default class Calendar extends React.Component {
 
     loadEvents = () => { 
 
-        API.getEvents()
+        API.getEvents(this.props.userId)
       .then(response => {
-    //    console.log(response);
+        console.log("On Load from getEvents: " + JSON.stringify(response.data));
         this.setState({ 
             events: response.data
           });
@@ -141,14 +141,11 @@ export default class Calendar extends React.Component {
       let newDateDate = new Date(parsedStart);
       console.log("newDateDate: " + newDateDate);
       console.log(typeof newDateDate); // object */
-
-
-
-/////// I WAS HERE ///////
-      
+     
       let newEvent;
       
       let newRepair = {
+        userId: this.props.userId,
         repairType: this.state.repairType,
         title: this.state.title,
         cost: this.state.cost,
@@ -157,6 +154,8 @@ export default class Calendar extends React.Component {
         recurrencePeriod: this.state.recurrencePeriod,
         vendor: this.state.vendor,
         notes: this.state.notes,
+        startTime: this.state.startTime,
+        endTime: this.state.endTime,
       }
 
       if (this.state.recurrencePeriod !== "never") {
@@ -231,40 +230,50 @@ export default class Calendar extends React.Component {
         
                    }
                 
-           
-          }else {
-            let parsedStart = this.state.startDate + "T" + this.state.startTime + ":00";
-            let parsedEnd = this.state.startDate + "T" + this.state.endTime + ":00";
+}
+}else {
+    let momentStart = this.state.startDate + " " + this.state.startTime;
+        let momentEnd = this.state.startDate + " " + this.state.endTime;
+        let duration = moment
+        .duration(moment(momentEnd, 'YYYY/MM/DD HH:mm')
+        .diff(moment(momentStart, 'YYYY/MM/DD HH:mm'))
+        ).asHours();
 
-            newRepair.startDate = parsedStart;
+        console.log("duration: " + duration);
 
-            newEvent = {
-                userId: this.props.userId,
-        //        category: this.state.repairType,
-                title: this.state.title,
-                start: parsedStart,
-                end: parsedEnd,
-                editable: true,
-            }
-    }
+        let parsedStart = this.state.startDate + "T" + this.state.startTime + ":00";
+        let parsedEnd = this.state.startDate + "T" + this.state.endTime + ":00";
+
+        newRepair.startDate = parsedStart;
+        newRepair.duration = duration;
+
+        newEvent = {
+            userId: this.props.userId,
+            category: this.state.repairType,
+            title: this.state.title,
+            start: parsedStart,
+            end: parsedEnd,
+            editable: true,
+        }
 }
 
 
       API.saveRepair(newRepair)
           .then(newRepair => {
-            console.log(newRepair);
+            console.log("newRepair: " + newRepair);
           })
           .catch(err => console.log(err));
 
       API.saveEvent(newEvent)
       .then(newEvent => {
+    //      console.log("newEvent in saveEvent: " + JSON.stringify(newEvent));
         this.toggle();
       })
       .catch(err => console.log(err));
 
-      API.getEvents()
+      API.getEvents(this.props.userId)
       .then(response => {
-    //    console.log(response);
+        console.log(response);
         this.setState({ 
             events: response.data
           });
@@ -276,15 +285,15 @@ export default class Calendar extends React.Component {
         title: "",
         startDate: "",
         recurrencePeriod: "never",
-        repeatInterval: "0",
+        repeatInterval: 1,
         repeatDayOfWeek: "",
         recurrenceStartDate: "",
         recurrenceEndDate: "",
         startTime: "",
         endTime: "",
         cost: 0,
-        priority: "",
-        status: "",
+        priority: "low",
+        status: "Thinking about it!",
         isVendor: false,
         vendor: "",
         notes: "",
@@ -540,7 +549,7 @@ export default class Calendar extends React.Component {
         type="number"
         /*  className="form-control" */
         id="repairCostInput"
-        placeholder="$35"
+       /*  placeholder={0} */
         value={this.state.cost}
         name="cost"
         onChange={this.handleInputChange}
@@ -558,7 +567,7 @@ export default class Calendar extends React.Component {
         name="priority"
         onChange={this.handleInputChange}
         >
-        <option selected>low</option>
+        <option>low</option>
         <option>medium</option>
         <option>high</option>
         </Input>
@@ -575,7 +584,7 @@ export default class Calendar extends React.Component {
         name="status"
         onChange={this.handleInputChange}
         >
-        <option selected>Thinking about it!</option>
+        <option>Thinking about it!</option>
         <option>Getting Bids</option>
         <option>In Progress</option>
         <option>Completed</option>

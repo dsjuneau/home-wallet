@@ -2,3 +2,13 @@
 .card {
   border: none;
 }
+
+.repair-card {
+  border: 1px '#333';
+  background:#f0f1f2;
+  margin: 15px;
+}
+
+.repair-card-textbox {
+  padding-left: 10px;
+}

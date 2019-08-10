@@ -7,7 +7,7 @@ const repairsController = require("../../controllers/repairsController");
 // Matches with "/api/repairs"
 router.route("/")
 
-  .get(repairsController.findAll)
+  .get(repairsController.findAll) // findByUserID
   .post(repairsController.create);
 
 // Matches with "/api/repairs/:id"

@@ -1,6 +1,3 @@
-// https://fullcalendar.io/docs/react // NOT DONE
-
-
 import React from 'react'
 import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card, CardHeader } from "reactstrap";
 import FullCalendar from '@fullcalendar/react'
@@ -9,7 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import rrulePlugin from '@fullcalendar/rrule';
 import moment from 'moment';
 import API from "../../utils/API";
-import './main.scss' // webpack must be configured to do this
+import './main.scss'
 
 export default class Calendar extends React.Component {
    constructor(props) {
@@ -19,6 +16,8 @@ export default class Calendar extends React.Component {
     this.calendarComponentRef = React.createRef()
     this.state = {
         events: [],
+        userId: this.props.userId,
+        repairId: "",
     //   search: "",
         repairType: "",
         title: "",
@@ -61,23 +60,6 @@ export default class Calendar extends React.Component {
       })
       .catch(err => console.log(err));
     };
-        
-       /*  API.getEvents()
-        .then(events => {
-    
-            const eventList =  events.data.map(item => ({
-                title: item.title,
-                start: item.start,
-                end: item.end,
-                editable: item.editable 
-            }))      
-       
-            this.setState({ 
-            events: eventList,
-            });
-        })
-        .catch(err => console.log(err));       
-        }; */
 
     
     toggle = () => {
@@ -96,8 +78,7 @@ export default class Calendar extends React.Component {
         console.log(newEvents);
     } */
    
-    handleNewEvent = (arg) => {                            // handleDateClick = 
-  //    console.log(this.props.user_id);  // working
+    handleNewEvent = (arg) => {
       this.setState(prevState => ({
         modal: !prevState.modal,
       })
@@ -127,25 +108,11 @@ export default class Calendar extends React.Component {
     handleFormSubmit = event => {
       // Preventing the default behavior of the form submit (which is to refresh the page)
       event.preventDefault();
-
-      //   Sample:  2018-06-01T12:30:00
-
-
-/* //      let parsedRecurrenceEndDate = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
-        console.log("this.state.startTime: " + this.state.startTime);
-        console.log(typeof this.state.startTime);
-       let momentDate = moment().format(this.state.startDate + " " + this.state.startTime);
-      console.log("momentDate: " + momentDate);
-      console.log(typeof momentDate); // string
-   
-      let newDateDate = new Date(parsedStart);
-      console.log("newDateDate: " + newDateDate);
-      console.log(typeof newDateDate); // object */
      
       let newEvent;
       
       let newRepair = {
-        userId: this.props.userId,
+        userId: this.state.userId,
         repairType: this.state.repairType,
         title: this.state.title,
         cost: this.state.cost,
@@ -157,7 +124,7 @@ export default class Calendar extends React.Component {
         startTime: this.state.startTime,
         endTime: this.state.endTime,
       }
-
+  
       if (this.state.recurrencePeriod !== "never") {
 
         let momentStart = this.state.recurrenceStartDate + " " + this.state.startTime;
@@ -168,9 +135,6 @@ export default class Calendar extends React.Component {
         ).asHours();
 
         console.log("duration: " + duration);
-
-        
-
 
         let parsedRecurStart = this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
     //    let parsedRecurEnd = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
@@ -183,12 +147,6 @@ export default class Calendar extends React.Component {
 
             if (this.state.recurrencePeriod === "daily"){
 
-            /*     let momentDayInterval = moment
-                    .duration(moment(this.state.recurrenceEndDate, 'YYYY/MM/DD')
-                    .diff(moment(this.state.recurrenceStartDate, 'YYYY/MM/DD'))
-                    ).asDays();
-                
-                console.log("momentDayInterval: " + momentDayInterval); */
 
                 this.setState({
                     
@@ -211,11 +169,11 @@ export default class Calendar extends React.Component {
         
                    }
     
-            }else if (this.state.recurrencePeriod === "weekly") {
+           }else if (this.state.recurrencePeriod === "weekly") {
 
                 newRepair.repeatInterval = this.state.repeatInterval;
 
-                newEvent = {
+                 newEvent = {
                     userId: this.props.userId,
                     title: this.state.title,
                     rrule: {
@@ -255,30 +213,23 @@ export default class Calendar extends React.Component {
             end: parsedEnd,
             editable: true,
         }
+       
 }
 
 
       API.saveRepair(newRepair)
           .then(newRepair => {
-            console.log("newRepair: " + newRepair);
-          })
-          .catch(err => console.log(err));
-
-      API.saveEvent(newEvent)
-      .then(newEvent => {
+            console.log("newRepair: " + JSON.stringify(newRepair.data._id));
+            return JSON.stringify(newRepair.data._id);
+          }).then(repairId => {
+              newEvent.repairId = repairId;
+            API.saveEvent(newEvent)
+          }).then(newEvent => {
     //      console.log("newEvent in saveEvent: " + JSON.stringify(newEvent));
-        this.toggle();
-      })
-      .catch(err => console.log(err));
+            this.toggle();
+            this.loadEvents();
+          }).catch(err => console.log(err));
 
-      API.getEvents(this.props.userId)
-      .then(response => {
-        console.log(response);
-        this.setState({ 
-            events: response.data
-          });
-      })
-      .catch(err => console.log(err));
 
       this.setState({
         repairType: "",
@@ -300,32 +251,9 @@ export default class Calendar extends React.Component {
         editable: true,
       })
 
-
     };
 
 
-/*   loadEvents = (start, end, timezone, callback) => {
-
-      $.axios({
-           url: ‘myxmlfeed.php’,
-           dataType: ‘xml’,
-           data: {
-                           // our hypothetical feed requires UNIX timestamps
-                          start: start.unix(),
-                          end: end.unix()
-          },
-          success: function(doc) {
-               var events = [];
-                          $(doc).find(‘event’).each(function() {
-                               events.push({
-                                    title: $(this).attr(‘title’),
-                                    start: $(this).attr(‘start’) // will be parsed
-                    });
-                        });
-                       callback(events);
-                    }
-    });
- } */
 
   render() {
     return (
@@ -374,8 +302,8 @@ export default class Calendar extends React.Component {
         <Label for="repairType">Type</Label>
         <Input
         type="select"
-        /* className="form-control" */
         id="repairTypeSelect"
+        defaultValue="Repair"
         value={this.state.repairType}
         name="repairType"
         onChange={this.handleInputChange}
@@ -389,7 +317,6 @@ export default class Calendar extends React.Component {
         <Label for="repairDescription">Description</Label>
         <Input
         type="text"
-        /*  className="form-control" */
         id="repairDescriptionInput"
         placeholder="mow grass"
         value={this.state.title}
@@ -402,11 +329,12 @@ export default class Calendar extends React.Component {
         <Label for="recurringPeriod">Repeat</Label>
         <Input
         type="select"
+        defaultValue="Never"
         value={this.state.recurrencePeriod}
         name="recurrencePeriod"
         onChange={this.handleInputChange}
         >
-        <option selected value="never">Never</option>    
+        <option value="never">Never</option>    
         <option value="daily">Daily</option>
         <option value="weekly">Weekly</option>
     {/*   <option>Monthly</option> */}
@@ -422,7 +350,6 @@ export default class Calendar extends React.Component {
             <Label for="recurrence-start-date-input">Start Date</Label>
             <Input
             type="date"
-            /* className="form-control" */
             id="recurrence-start-date-input"
             value={this.state.recurrenceStartDate}
             name="recurrenceStartDate"
@@ -435,7 +362,6 @@ export default class Calendar extends React.Component {
             <Label for="end-date-input">End By Date</Label>
         <Input
         type="date"
-        /* className="form-control" */
         id="end-date-input"
         value={this.state.recurrenceEndDate}
         name="recurrenceEndDate"
@@ -451,7 +377,6 @@ export default class Calendar extends React.Component {
             <Label for="start-date-input">Start Date</Label>
             <Input
             type="date"
-            /* className="form-control" */
             id="start-date-input"
             value={this.state.startDate}
             name="startDate"
@@ -462,14 +387,12 @@ export default class Calendar extends React.Component {
      </Row>
 )}
         
-       
         <Row form>
         <Col md={6}>
         <FormGroup>
         <Label for="start-time-input">Start Time</Label>
         <Input
         type="time"
-        /* className="form-control" */
         id="start-time-input"
         value={this.state.startTime}
         name="startTime"
@@ -482,7 +405,6 @@ export default class Calendar extends React.Component {
         <Label for="end-time-input">End Time</Label>
         <Input
         type="time"
-        /* className="form-control" */
         id="end-time-input"
         value={this.state.endTime}
         name="endTime"
@@ -490,9 +412,7 @@ export default class Calendar extends React.Component {
         />                  
         </FormGroup>
     </Col>
-    </Row>
-
-  
+    </Row> 
 
     {(this.state.recurrencePeriod === "weekly") ? (
         <div>
@@ -503,11 +423,11 @@ export default class Calendar extends React.Component {
         <Input
         type="select"
         name="repeatInterval"
-       
+        defaultValue={1}
         value={this.state.repeatInterval}
         onChange={this.handleInputChange}   
         >
-        <option selected value={1}>1</option>    
+        <option value={1}>1</option>    
         <option value={2}>2</option>
         <option value={3}>3</option>
         <option value={4}>4</option>
@@ -540,16 +460,14 @@ export default class Calendar extends React.Component {
         <p />
     )}
 
-       
     <Row form>
     <Col md={4}>
     <FormGroup>
         <Label for="repairCost"> Repair Cost</Label>
         <Input
         type="number"
-        /*  className="form-control" */
         id="repairCostInput"
-       /*  placeholder={0} */
+        defaultValue={0}
         value={this.state.cost}
         name="cost"
         onChange={this.handleInputChange}
@@ -561,8 +479,8 @@ export default class Calendar extends React.Component {
         <Label for="repairPriority">Repair Priority</Label>
         <Input
         type="select"
-        /* className="form-control" */
         id="repairPrioritySelect"
+        defaultValue= "low"
         value={this.state.priority}
         name="priority"
         onChange={this.handleInputChange}
@@ -578,8 +496,8 @@ export default class Calendar extends React.Component {
         <Label for="repairStatus">Repair Status</Label>
         <Input
         type="select"
-        /* className="form-control" */
         id="repairStatusSelect"
+        defaultValue="Thinking about it!"
         value={this.state.status}
         name="status"
         onChange={this.handleInputChange}
@@ -631,7 +549,6 @@ export default class Calendar extends React.Component {
         <Label for="repairNotes">Additional Notes/Instruction</Label>
         <Input
         type="textarea"
-        /* className="form-control" */
         id="repairNotesInput"
         rows="3"
         value={this.state.notes}

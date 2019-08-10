@@ -4,7 +4,6 @@ import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card
 import moment from 'moment';
 import API from "../../utils/API";
 
-/* export default function AddRepair() { */
   export default class Repair extends React.Component {
     constructor(props) {
      super(props)
@@ -39,12 +38,11 @@ import API from "../../utils/API";
 }
 
 loadRepairs = () => { 
-
+  console.log("Repairs.js this.props.userId: " + this.props.userId);
   API.getRepairs(this.props.userId)
   .then(repairs => {
+   
     console.log(repairs);
-
-
 
   const repairList =  repairs.data.map(item => ({
     repairId: item._id,
@@ -66,7 +64,6 @@ loadRepairs = () => {
     endTime: item.endTime,  
   }))
 
-  
     this.setState({ 
         repairs: repairList,
       });
@@ -85,31 +82,32 @@ toggle = () => {
 handleChangeRepair = (id) => {
       let changeRepair = this.state.repairs.filter(item => item.repairId === id);
       console.log("changeRepair: " + JSON.stringify(changeRepair));  // working
+
+      let formattedStartDate = moment(changeRepair[0].startDate, "YYYY-MM-DD");
+
       this.setState({ 
        
-      repairType: changeRepair.repairType,
-      title: changeRepair.title,
-      cost: changeRepair.cost,
-      priority: changeRepair.priority,
-      status: changeRepair.status,
-      isVendor: changeRepair.isVendor,
-      vendor: changeRepair.vendor,
-      notes: changeRepair.notes,
-      recurrencePeriod: changeRepair.recurrencePeriod,
-      repeatInterval: changeRepair.repeatInterval,
-      repeatDayOfWeek: changeRepair.repeatDayOfWeek,
-      startDate: changeRepair.startDate,
-      recurrenceStartDate: changeRepair.recurrenceStartDate,
-      recurrenceEndDate: changeRepair.recurrenceEndDate,
-      startTime: changeRepair.startTime,
-      endTime: changeRepair.endTime,
+      repairType: changeRepair[0].repairType,
+      title: changeRepair[0].title,
+      cost: changeRepair[0].cost,
+      priority: changeRepair[0].priority,
+      status: changeRepair[0].status,
+      isVendor: changeRepair[0].isVendor,
+      vendor: changeRepair[0].vendor,
+      notes: changeRepair[0].notes,
+      recurrencePeriod: changeRepair[0].recurrencePeriod,
+      repeatInterval: changeRepair[0].repeatInterval,
+      repeatDayOfWeek: changeRepair[0].repeatDayOfWeek,
+      startDate: changeRepair[0].startDate,
+      recurrenceStartDate: changeRepair[0].recurrenceStartDate,
+      recurrenceEndDate: changeRepair[0].recurrenceEndDate,
+      startTime: changeRepair[0].startTime,
+      endTime: changeRepair[0].endTime,
 
        });
 
-      this.setState(prevState => ({
-        modal: !prevState.modal,
-      })
-      );
+       this.toggle();
+
     }
 
 
@@ -145,7 +143,6 @@ handleDeleteRepair (id) {
 };
 
 
-
 //// NOT COMPLETE ////
 handleFormSubmit = event => {
   // Preventing the default behavior of the form submit (which is to refresh the page)
@@ -178,14 +175,10 @@ handleFormSubmit = event => {
 
     console.log("duration: " + duration);
 
-    
-
-
     let parsedRecurStart = this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
 //    let parsedRecurEnd = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
 
         modifiedRepair.recurrenceStartDate = parsedRecurStart;
-        
         modifiedRepair.repeatDayOfWeek = this.state.repeatDayOfWeek;
         modifiedRepair.recurrenceEndDate = this.state.recurrenceEndDate;
         modifiedRepair.duration= duration;
@@ -267,22 +260,22 @@ let momentStart = this.state.startDate + " " + this.state.startTime;
 }
 
 
-  API.saveRepair(modifiedRepair)
+  API.changeRepair(modifiedRepair)
       .then(modifiedRepair => {
-        console.log("newRepair: " + modifiedRepair);
+        console.log("changeRepair: " + modifiedRepair);
       })
       .catch(err => console.log(err));
 
-  API.saveEvent(modifiedEvent)
+  API.changeEvent(modifiedEvent)
   .then(modifiedEvent => {
-//      console.log("newEvent in saveEvent: " + JSON.stringify(newEvent));
+      console.log("changeEvent in changeEvent: " + JSON.stringify(modifiedEvent));
     this.toggle();
   })
   .catch(err => console.log(err));
 
   API.getRepairs(this.props.userId)
   .then(response => {
-    console.log(response);
+  //  console.log(response);
     this.setState({ 
         events: response.data
       });

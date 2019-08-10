@@ -11,9 +11,14 @@ export default {
     return axios.post("/api/events", eventData);
   },
 
+  // Modifies one event
+  changeEvent: function(eventData) {
+    return axios.put("/api/events/" + eventData._id, eventData);
+  },
+
   //  Gets all events from database
-  getEvents: function() {
-    return axios.get("/api/events");
+  getEvents: function(id) {
+    return axios.get("/api/events/user/" + id);
   },
     // Gets the event with the given id
   getEvent: function(id) {
@@ -32,13 +37,18 @@ export default {
   },
 
   //  Gets all repairs from database
-  getRepairs: function() {
-    return axios.get("/api/repairs");
+  getRepairs: function(id) {
+    console.log("API.getRepairs: " + id);
+    return axios.get("/api/repairs/user/" + id);
   },
-
+ 
   // Gets the repair with the given id
   getRepair: function(id) {
     return axios.get("/api/repairs/" + id);
+  },
+  // Modifies one repair
+  changeRepair: function(repairData) {
+    return axios.put("/api/repairs/" + repairData.repairId, repairData);
   },
   // Deletes the repair with the given id
   deleteRepair: function(id) {

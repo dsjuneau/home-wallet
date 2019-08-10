@@ -308,8 +308,8 @@ export default class Calendar extends React.Component {
     return (
       <div>
         <div className="container">
-          <button onClick={this.handleNewEvent}>
-            <h3>Add Event</h3>
+          <button className="btn btn-info mb-2" onClick={this.handleNewEvent}>
+            Add Event
           </button>
           &nbsp;
           <div className="calendar-container">

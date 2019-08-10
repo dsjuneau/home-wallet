@@ -44,141 +44,161 @@ export default class Repairs extends Component {
     alert(`${this.state.repairType} Added`);
     let newEvent;
       
-    let newRepair = {
-      repairType: this.state.repairType,
-      title: this.state.title,
-      cost: this.state.cost,
-      priority: this.state.priority,
-      status: this.state.status,
-      recurrencePeriod: this.state.recurrencePeriod,
-      vendor: this.state.vendor,
-      notes: this.state.notes,
-    }
+      let newRepair = {
+        userId: this.props.userId,
+        repairType: this.state.repairType,
+        title: this.state.title,
+        cost: this.state.cost,
+        priority: this.state.priority,
+        status: this.state.status,
+        recurrencePeriod: this.state.recurrencePeriod,
+        vendor: this.state.vendor,
+        notes: this.state.notes,
+        startTime: this.state.startTime,
+        endTime: this.state.endTime,
+      }
 
-    if (this.state.recurrencePeriod !== "never") {
+      if (this.state.recurrencePeriod !== "never") {
 
-      let momentStart = this.state.recurrenceStartDate + " " + this.state.startTime;
-      let momentEnd = this.state.recurrenceStartDate + " " + this.state.endTime;
-      let duration = moment
-      .duration(moment(momentEnd, 'YYYY/MM/DD HH:mm')
-      .diff(moment(momentStart, 'YYYY/MM/DD HH:mm'))
-      ).asHours();
+        let momentStart = this.state.recurrenceStartDate + " " + this.state.startTime;
+        let momentEnd = this.state.recurrenceStartDate + " " + this.state.endTime;
+        let duration = moment
+        .duration(moment(momentEnd, 'YYYY/MM/DD HH:mm')
+        .diff(moment(momentStart, 'YYYY/MM/DD HH:mm'))
+        ).asHours();
 
-      console.log("duration: " + duration);
+        console.log("duration: " + duration);
 
-      
+        
 
 
-      let parsedRecurStart = this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
-  //    let parsedRecurEnd = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
+        let parsedRecurStart = this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
+    //    let parsedRecurEnd = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
 
-          newRepair.recurrenceStartDate = parsedRecurStart;
-          
-          newRepair.repeatDayOfWeek = this.state.repeatDayOfWeek;
-          newRepair.recurrenceEndDate = this.state.recurrenceEndDate;
-          newRepair.duration= duration;
+            newRepair.recurrenceStartDate = parsedRecurStart;
+            
+            newRepair.repeatDayOfWeek = this.state.repeatDayOfWeek;
+            newRepair.recurrenceEndDate = this.state.recurrenceEndDate;
+            newRepair.duration= duration;
 
-          if (this.state.recurrencePeriod === "daily"){
+            if (this.state.recurrencePeriod === "daily"){
 
-              this.setState({
-                  
-                  repeatInterval: 1,
-                })
+            /*     let momentDayInterval = moment
+                    .duration(moment(this.state.recurrenceEndDate, 'YYYY/MM/DD')
+                    .diff(moment(this.state.recurrenceStartDate, 'YYYY/MM/DD'))
+                    ).asDays();
+                
+                console.log("momentDayInterval: " + momentDayInterval); */
 
-              newRepair.repeatInterval = this.state.repeatInterval;
-              
-              newEvent = {
-                  userId: this.props.userId,
-                  title: this.state.title,
-                  rrule: {
-                      freq: this.state.recurrencePeriod,
-                      interval: this.state.repeatInterval,
-                      dtstart: parsedRecurStart,
-                      until: this.state.recurrenceEndDate,
-                  },
-                  duration: duration,
-                  backgroundColor: "yellow",
-      
-                 }
-  
-          }else if (this.state.recurrencePeriod === "weekly") {
+                this.setState({
+                    
+                    repeatInterval: 1,
+                  })
 
-              newRepair.repeatInterval = this.state.repeatInterval;
+                newRepair.repeatInterval = this.state.repeatInterval;
+                
+                newEvent = {
+                    userId: this.props.userId,
+                    title: this.state.title,
+                    rrule: {
+                        freq: this.state.recurrencePeriod,
+                        interval: this.state.repeatInterval,
+                        dtstart: parsedRecurStart,
+                        until: this.state.recurrenceEndDate,
+                    },
+                    duration: duration,
+                    backgroundColor: "yellow",
+        
+                   }
+    
+            }else if (this.state.recurrencePeriod === "weekly") {
 
-              newEvent = {
-                  userId: this.props.userId,
-                  title: this.state.title,
-                  rrule: {
-                      freq: this.state.recurrencePeriod,
-                      interval: this.state.repeatInterval,
-                      byweekday: this.state.repeatDayOfWeek,
-                      dtstart: parsedRecurStart,
-                      until: this.state.recurrenceEndDate,
-                  },
-                  duration: duration,
-                  backgroundColor: "green",
-      
-                 }
-              
-         
-        }else {
-          let parsedStart = this.state.startDate + "T" + this.state.startTime + ":00";
-          let parsedEnd = this.state.startDate + "T" + this.state.endTime + ":00";
+                newRepair.repeatInterval = this.state.repeatInterval;
 
-          newRepair.startDate = parsedStart;
+                newEvent = {
+                    userId: this.props.userId,
+                    title: this.state.title,
+                    rrule: {
+                        freq: this.state.recurrencePeriod,
+                        interval: this.state.repeatInterval,
+                        byweekday: this.state.repeatDayOfWeek,
+                        dtstart: parsedRecurStart,
+                        until: this.state.recurrenceEndDate,
+                    },
+                    duration: duration,
+                    backgroundColor: "green",
+        
+                   }
+                
+}
+}else {
+    let momentStart = this.state.startDate + " " + this.state.startTime;
+        let momentEnd = this.state.startDate + " " + this.state.endTime;
+        let duration = moment
+        .duration(moment(momentEnd, 'YYYY/MM/DD HH:mm')
+        .diff(moment(momentStart, 'YYYY/MM/DD HH:mm'))
+        ).asHours();
 
-          newEvent = {
-              userId: this.props.userId,
-      //        category: this.state.repairType,
-              title: this.state.title,
-              start: parsedStart,
-              end: parsedEnd,
-              editable: true,
-          }
-  }
+        console.log("duration: " + duration);
+
+        let parsedStart = this.state.startDate + "T" + this.state.startTime + ":00";
+        let parsedEnd = this.state.startDate + "T" + this.state.endTime + ":00";
+
+        newRepair.startDate = parsedStart;
+        newRepair.duration = duration;
+
+        newEvent = {
+            userId: this.props.userId,
+            category: this.state.repairType,
+            title: this.state.title,
+            start: parsedStart,
+            end: parsedEnd,
+            editable: true,
+        }
 }
 
 
-    API.saveRepair(newRepair)
-        .then(newRepair => {
-          console.log(newRepair);
-        })
-        .catch(err => console.log(err));
+      API.saveRepair(newRepair)
+          .then(newRepair => {
+            console.log("newRepair: " + newRepair);
+          })
+          .catch(err => console.log(err));
 
-    API.saveEvent(newEvent)
-    .then(newEvent => {
-      this.toggle();
-    })
-    .catch(err => console.log(err));
+      API.saveEvent(newEvent)
+      .then(newEvent => {
+    //      console.log("newEvent in saveEvent: " + JSON.stringify(newEvent));
+        this.toggle();
+      })
+      .catch(err => console.log(err));
 
-    API.getEvents()
-    .then(response => {
-  //    console.log(response);
-      this.setState({ 
-          events: response.data
-        });
-    })
-    .catch(err => console.log(err));
+      API.getEvents(this.props.userId)
+      .then(response => {
+        console.log(response);
+        this.setState({ 
+            events: response.data
+          });
+      })
+      .catch(err => console.log(err));
 
-    this.setState({
-      repairType: "",
-      title: "",
-      startDate: "",
-      recurrencePeriod: "never",
-      repeatInterval: "0",
-      repeatDayOfWeek: "",
-      recurrenceStartDate: "",
-      recurrenceEndDate: "",
-      startTime: "",
-      endTime: "",
-      cost: 0,
-      priority: "",
-      status: "",
-      isVendor: false,
-      vendor: "",
-      notes: "",
-      editable: true,
-    })
+      this.setState({
+        repairType: "",
+        title: "",
+        startDate: "",
+        recurrencePeriod: "never",
+        repeatInterval: 1,
+        repeatDayOfWeek: "",
+        recurrenceStartDate: "",
+        recurrenceEndDate: "",
+        startTime: "",
+        endTime: "",
+        cost: 0,
+        priority: "low",
+        status: "Thinking about it!",
+        isVendor: false,
+        vendor: "",
+        notes: "",
+        editable: true,
+      })
   };
 
 

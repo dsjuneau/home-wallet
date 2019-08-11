@@ -10,6 +10,7 @@ import API from "../../utils/API";
 
      this.state = {
       repairs: [],
+      changeRepairId: "",
       modal: false,
       repairType: "",
       title: "",
@@ -83,10 +84,13 @@ handleChangeRepair = (id) => {
       let changeRepair = this.state.repairs.filter(item => item.repairId === id);
       console.log("changeRepair: " + JSON.stringify(changeRepair));  // working
 
-      let formattedStartDate = moment(changeRepair[0].startDate, "YYYY-MM-DD");
+      let formatStartDate = moment(changeRepair[0].startDate).format("YYYY-MM-DD");
+      let formatRecurStartDate = moment(changeRepair[0].recurrenceStartDate).format("YYYY-MM-DD");
+      let formatRecurEndDate = moment(changeRepair[0].recurrenceEndDate).format("YYYY-MM-DD");
 
-      this.setState({ 
-       
+
+      this.setState({
+      changeRepairId: changeRepair[0].repairId,
       repairType: changeRepair[0].repairType,
       title: changeRepair[0].title,
       cost: changeRepair[0].cost,
@@ -98,9 +102,9 @@ handleChangeRepair = (id) => {
       recurrencePeriod: changeRepair[0].recurrencePeriod,
       repeatInterval: changeRepair[0].repeatInterval,
       repeatDayOfWeek: changeRepair[0].repeatDayOfWeek,
-      startDate: changeRepair[0].startDate,
-      recurrenceStartDate: changeRepair[0].recurrenceStartDate,
-      recurrenceEndDate: changeRepair[0].recurrenceEndDate,
+      startDate: formatStartDate,
+      recurrenceStartDate: formatRecurStartDate,
+      recurrenceEndDate: formatRecurEndDate,
       startTime: changeRepair[0].startTime,
       endTime: changeRepair[0].endTime,
 
@@ -115,6 +119,18 @@ handleChangeRepair = (id) => {
         this.setState({ isVendor: !this.state.isVendor });
     };
 
+
+  /*   handleInputChange = event => {
+      // Getting the value and name of the input which triggered the change
+      const { name, value } = event.target;
+           console.log(event.target);
+      // Updating the input's state
+      this.setState({
+       
+        [name]: value,
+      
+      });
+    }; */
 
     handleInputChange = event => {
       // Getting the value and name of the input which triggered the change
@@ -148,10 +164,13 @@ handleFormSubmit = event => {
   // Preventing the default behavior of the form submit (which is to refresh the page)
   event.preventDefault();
  
-  let modifiedEvent;
+  let modifiedEvent = {};
+
+  modifiedEvent.repairId = this.state.changeRepairId;
   
   let modifiedRepair = {
     userId: this.props.userId,
+    repairId: this.state.changeRepairId,
     repairType: this.state.repairType,
     title: this.state.title,
     cost: this.state.cost,
@@ -163,6 +182,7 @@ handleFormSubmit = event => {
     startTime: this.state.startTime,
     endTime: this.state.endTime,
   }
+
 
   if (this.state.recurrencePeriod !== "never") {
 
@@ -261,6 +281,7 @@ let momentStart = this.state.startDate + " " + this.state.startTime;
 
 
   API.changeRepair(modifiedRepair)
+
       .then(modifiedRepair => {
         console.log("changeRepair: " + modifiedRepair);
       })
@@ -277,7 +298,7 @@ let momentStart = this.state.startDate + " " + this.state.startTime;
   .then(response => {
   //  console.log(response);
     this.setState({ 
-        events: response.data
+        repairs: response.data
       });
   })
   .catch(err => console.log(err));
@@ -422,7 +443,8 @@ render() {
         type="select"
         id="repairTypeSelect"
         defaultValue= {this.state.changeRepairType}
-        value={this.state.repairType}
+        //value={this.state.repairType}
+
         name="repairType"
         onChange={this.handleInputChange}
         >
@@ -435,10 +457,9 @@ render() {
         <Label for="repairDescription">Description</Label>
         <Input
         type="text"
-        /*  className="form-control" */
         id="repairDescriptionInput"
         defaultValue= {this.state.title}
-        value={this.state.title}
+    //    value={this.state.title}
         name="title"
         onChange={this.handleInputChange}
         />
@@ -449,7 +470,7 @@ render() {
         <Input
         type="select"
         defaultValue={this.state.recurrencePeriod}
-        value={this.state.recurrencePeriod}
+    //    value={this.state.recurrencePeriod}
         name="recurrencePeriod"
         onChange={this.handleInputChange}
         >
@@ -471,7 +492,7 @@ render() {
             type="date"
             id="recurrence-start-date-input"
             defaultValue={this.state.recurrenceStartDate}
-            value={this.state.recurrenceStartDate}
+    //        value={this.state.recurrenceStartDate}
             name="recurrenceStartDate"
             onChange={this.handleInputChange}
             />
@@ -484,7 +505,7 @@ render() {
         type="date"
         id="end-date-input"
         defaultValue={this.state.recurrenceEndDate}
-        value={this.state.recurrenceEndDate}
+    //    value={this.state.recurrenceEndDate}
         name="recurrenceEndDate"
         onChange={this.handleInputChange}
         />
@@ -500,7 +521,7 @@ render() {
             type="date"
             id="start-date-input"
             defaultValue={this.state.startDate}
-            value={this.state.startDate}
+    //        value={this.state.startDate}
             name="startDate"
             onChange={this.handleInputChange}
             />
@@ -517,7 +538,7 @@ render() {
         type="time"
         id="start-time-input"
         defaultValue={this.state.startTime}
-        value={this.state.startTime}
+   //     value={this.state.startTime}
         name="startTime"
         onChange={this.handleInputChange}
         />                  
@@ -530,7 +551,7 @@ render() {
         type="time"
         id="end-time-input"
         defaultValue={this.state.endTime}
-        value={this.state.endTime}
+    //    value={this.state.endTime}
         name="endTime"
         onChange={this.handleInputChange}
         />                  
@@ -548,7 +569,7 @@ render() {
         type="select"
         name="repeatInterval"
         defaultValue={this.state.repeatInterval}
-        value={this.state.repeatInterval}
+   //     value={this.state.repeatInterval}
         onChange={this.handleInputChange}   
         >
         <option value={1}>1</option>    
@@ -565,7 +586,7 @@ render() {
         <Input
         type="select"
         defaultValue={this.state.repeatDayOfWeek}
-        value={this.state.repeatDayOfWeek}
+    //    value={this.state.repeatDayOfWeek}
         name="repeatDayOfWeek"
         onChange={this.handleInputChange}
         >
@@ -593,7 +614,7 @@ render() {
         type="number"
         id="repairCostInput"
         defaultValue={this.state.cost}
-        value={this.state.cost}
+    //    value={this.state.cost}
         name="cost"
         onChange={this.handleInputChange}
         />
@@ -606,7 +627,7 @@ render() {
         type="select"
         id="repairPrioritySelect"
         defaultValue={this.state.priority}
-        value={this.state.priority}
+    //    value={this.state.priority}
         name="priority"
         onChange={this.handleInputChange}
         >
@@ -623,7 +644,7 @@ render() {
         type="select"
         id="repairStatusSelect"
         defaultValue={this.state.status}
-        value={this.state.status}
+    //    value={this.state.status}
         name="status"
         onChange={this.handleInputChange}
         >
@@ -657,7 +678,7 @@ render() {
         <Input
             type="select"
             id="repairVendorSelect"
-            defaultValue={this.state.vendor}
+    //        defaultValue={this.state.vendor}
             value={this.state.vendor}
             name="vendor"
             onChange={this.handleInputChange}
@@ -677,7 +698,7 @@ render() {
         id="repairNotesInput"
         rows="3"
         defaultValue={this.state.notes}
-        value={this.state.notes}
+    //    value={this.state.notes}
         name="notes"
         onChange={this.handleInputChange}
         />

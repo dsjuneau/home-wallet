@@ -29,7 +29,7 @@ module.exports = {
     },
     update: function(req, res) {
       db.Event
-        .findOneAndUpdate({ _id: req.params.id }, req.body)
+        .findOneAndUpdate({ repairId: req.params.repairId }, req.body)
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     },

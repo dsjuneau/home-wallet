@@ -13,7 +13,7 @@ export default {
 
   // Modifies one event
   changeEvent: function(eventData) {
-    return axios.put("/api/events/" + eventData._id, eventData);
+    return axios.put("/api/events/" + eventData.repairId, eventData);
   },
 
   //  Gets all events from database
@@ -39,7 +39,8 @@ export default {
   //  Gets all repairs from database
   getRepairs: function(id) {
     console.log("API.getRepairs: " + id);
-    return axios.get("/api/repairs/user/" + id);
+//    return axios.get("/api/repairs/user/" + id);
+    return axios.get("/api/repairs/");
   },
  
   // Gets the repair with the given id

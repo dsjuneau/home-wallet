@@ -4,45 +4,54 @@ import axios from "axios";
 
 export default {  
 
- /*   // Google Books API Call //
-  callEvents: function (term) {
-    return axios.post("/api/books/search", term);
-  }, */
   
-  // Saves a book to the database
+  // Saves a event to the database
   saveEvent: function(eventData) {
     console.log("saveEvent axios: " + JSON.stringify(eventData));
     return axios.post("/api/events", eventData);
   },
 
-  //  Gets all books from database
-  getEvents: function() {
-    return axios.get("/api/events");
+  // Modifies one event
+  changeEvent: function(eventData) {
+    return axios.put("/api/events/" + eventData.repairId, eventData);
   },
-    // Gets the book with the given id
+
+  //  Gets all events from database
+  getEvents: function(id) {
+    return axios.get("/api/events/user/" + id);
+  },
+    // Gets the event with the given id
   getEvent: function(id) {
     return axios.get("/api/events/" + id);
   },
-  // Deletes the book with the given id
+  // Deletes the event with the given id
   deleteEvent: function(id) {
     console.log("from deleteEvent: " + id);
     return axios.delete("/api/events/" + id);
   },
+
 
   saveRepair: function(repairData) {
     console.log("saveRepair axios: " + JSON.stringify(repairData));
     return axios.post("/api/repairs", repairData);
   },
 
-  //  Gets all books from database
-  getRepairs: function() {
-    return axios.get("/api/repairs");
+  //  Gets all repairs from database
+  getRepairs: function(id) {
+    console.log("API.getRepairs: " + id);
+    return axios.get("/api/repairs/user/" + id);
+//    return axios.get("/api/repairs/");
   },
-    // Gets the book with the given id
+ 
+  // Gets the repair with the given id
   getRepair: function(id) {
     return axios.get("/api/repairs/" + id);
   },
-  // Deletes the book with the given id
+  // Modifies one repair
+  changeRepair: function(repairData) {
+    return axios.put("/api/repairs/" + repairData.repairId, repairData);
+  },
+  // Deletes the repair with the given id
   deleteRepair: function(id) {
   console.log("from deleteRepair: " + id);
   return axios.delete("/api/repairs/" + id);

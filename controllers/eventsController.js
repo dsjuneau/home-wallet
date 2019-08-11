@@ -8,6 +8,13 @@ module.exports = {
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     },
+    findByUserId: function(req, res) {
+  //    console.log("req in findByUserID: " + req);
+      db.Event
+        .find({ userId: req.params.id })
+        .then(dbModel => res.json(dbModel))
+        .catch(err => res.status(422).json(err));
+      },
     findById: function(req, res) {
       db.Event
         .findById(req.params.id)  // only works for mongoose assigned _id.
@@ -22,14 +29,14 @@ module.exports = {
     },
     update: function(req, res) {
       db.Event
-        .findOneAndUpdate({ _id: req.params.id }, req.body)
+        .findOneAndUpdate({ repairId: req.params.repairId }, req.body)
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     },
     remove: function(req, res) {
-  //    console.log("from bookcontroller: " + req.params.id);
+  //    console.log("from eventscontroller: " + req.params.id);
       db.Event
-        .findOneAndDelete({ book_id: req.params.id })
+        .findOneAndDelete({ _id: req.params.id })
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     }

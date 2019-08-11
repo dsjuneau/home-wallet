@@ -43,6 +43,7 @@ export default class Vendors extends React.Component {
       }, 4000);
     });
   };
+
   render() {
     return (
       <div>

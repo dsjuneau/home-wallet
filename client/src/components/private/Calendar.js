@@ -28,11 +28,11 @@ export default class Calendar extends React.Component {
       userId: this.props.userId,
       repairId: "",
       //   search: "",
-      repairType: "",
+      repairType: "Repair",
       title: "",
       recurrencePeriod: "never",
       repeatInterval: 1,
-      repeatDayOfWeek: "SU",
+      repeatDayOfWeek: "",
       startDate: "",
       recurrenceStartDate: "",
       recurrenceEndDate: "",
@@ -61,7 +61,7 @@ export default class Calendar extends React.Component {
   loadEvents = () => {
     API.getEvents(this.props.userId)
       .then(response => {
-        // console.log("On Load from getEvents: " + JSON.stringify(response.data));
+        //    console.log("On Load from getEvents: " + JSON.stringify(response.data));
         this.setState({
           events: response.data,
         });
@@ -97,7 +97,7 @@ export default class Calendar extends React.Component {
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
-    console.log(event.target.value);
+    // console.log(event.target);
     // Updating the input's state
     this.setState({
       [name]: value,
@@ -216,7 +216,7 @@ export default class Calendar extends React.Component {
 
     API.saveRepair(newRepair)
       .then(newRepair => {
-        console.log("newRepair: " + JSON.stringify(newRepair.data._id));
+        //        console.log("newRepair: " + JSON.stringify(newRepair.data._id));
         return JSON.stringify(newRepair.data._id);
       })
       .then(repairId => {
@@ -231,12 +231,12 @@ export default class Calendar extends React.Component {
       .catch(err => console.log(err));
 
     this.setState({
-      repairType: "Repair",
+      repairType: "",
       title: "",
       startDate: "",
       recurrencePeriod: "never",
       repeatInterval: 1,
-      repeatDayOfWeek: "",
+      repeatDayOfWeek: "SU",
       recurrenceStartDate: "",
       recurrenceEndDate: "",
       startTime: "",
@@ -261,7 +261,7 @@ export default class Calendar extends React.Component {
           >
             Add Event
           </button>
-          &nbsp;
+
           <div className="calendar-container">
             <div className="calendar-top" />
             <div className="calendar" />
@@ -296,7 +296,6 @@ export default class Calendar extends React.Component {
                     <Input
                       type="select"
                       id="repairTypeSelect"
-                      // defaultValue="Repair"
                       value={this.state.repairType}
                       name="repairType"
                       onChange={this.handleInputChange}
@@ -307,7 +306,7 @@ export default class Calendar extends React.Component {
                     </Input>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="repairDescription">Description</Label>
+                    <Label htmlFor="repairDescription">Description</Label>
                     <Input
                       type="text"
                       id="repairDescriptionInput"
@@ -322,7 +321,6 @@ export default class Calendar extends React.Component {
                     <Label htmlFor="recurringPeriod">Repeat</Label>
                     <Input
                       type="select"
-                      // defaultValue="Never"
                       value={this.state.recurrencePeriod}
                       name="recurrencePeriod"
                       onChange={this.handleInputChange}
@@ -418,7 +416,6 @@ export default class Calendar extends React.Component {
                             <Input
                               type="select"
                               name="repeatInterval"
-                              // defaultValue={1}
                               value={this.state.repeatInterval}
                               onChange={this.handleInputChange}
                             >
@@ -462,7 +459,6 @@ export default class Calendar extends React.Component {
                         <Input
                           type="number"
                           id="repairCostInput"
-                          // defaultValue={0}
                           value={this.state.cost}
                           name="cost"
                           onChange={this.handleInputChange}
@@ -475,7 +471,6 @@ export default class Calendar extends React.Component {
                         <Input
                           type="select"
                           id="repairPrioritySelect"
-                          // defaultValue="low"
                           value={this.state.priority}
                           name="priority"
                           onChange={this.handleInputChange}
@@ -492,7 +487,6 @@ export default class Calendar extends React.Component {
                         <Input
                           type="select"
                           id="repairStatusSelect"
-                          // defaultValue="Thinking about it!"
                           value={this.state.status}
                           name="status"
                           onChange={this.handleInputChange}
@@ -508,7 +502,7 @@ export default class Calendar extends React.Component {
                   <FormGroup>
                     <Row form>
                       <Col md={4}>
-                        <Label for="isVendor">
+                        <Label htmlFor="isVendor">
                           Assign a Contractor/Vendor?
                         </Label>
                       </Col>
@@ -525,7 +519,7 @@ export default class Calendar extends React.Component {
 
                   {this.state.isVendor ? (
                     <FormGroup>
-                      <Label for="repairVendor" />
+                      <Label htmlFor="repairVendor" />
                       <Input
                         type="select"
                         className="form-control"
@@ -543,7 +537,7 @@ export default class Calendar extends React.Component {
                   )}
 
                   <FormGroup>
-                    <Label for="repairNotes">
+                    <Label htmlFor="repairNotes">
                       Additional Notes/Instruction
                     </Label>
                     <Input
@@ -555,13 +549,12 @@ export default class Calendar extends React.Component {
                       onChange={this.handleInputChange}
                     />
                   </FormGroup>
-
-                  <button
+                  <Button
                     onClick={this.handleFormSubmit}
                     className="btn btn-block btn-success mt-3"
                   >
                     Add
-                  </button>
+                  </Button>
                 </Form>
               </ModalBody>
             </Modal>

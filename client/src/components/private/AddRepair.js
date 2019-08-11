@@ -5,15 +5,11 @@ import API from "../../utils/API";
 
 export default class AddRepair extends Component {
   state = {
+    userId: this.props.userId,
+    repairId: "",
     repairType: "Repair",
     title: "",
-    cost: 0,
-    priority: "low",
-    status: "Thinking about it!",
-    isVendor: false,
-    vendor: "",
-    notes: "",
-    recurrencePeriod: "0",
+    recurrencePeriod: "never",
     repeatInterval: 1,
     repeatDayOfWeek: "SU",
     startDate: "",
@@ -21,6 +17,15 @@ export default class AddRepair extends Component {
     recurrenceEndDate: "",
     startTime: "",
     endTime: "",
+    cost: 0,
+    priority: "low",
+    status: "Thinking about it!",
+    isVendor: false,
+    vendor: "",
+    notes: "",
+    editable: true,
+
+    modal: false,
   };
 
   handleInputChange = event => {
@@ -37,12 +42,10 @@ export default class AddRepair extends Component {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
-    // Alert the user their first and last name, clear `this.state.firstName` and `this.state.lastName`, clearing the inputs
-    alert(`${this.state.repairType} Added`);
     let newEvent;
 
     let newRepair = {
-      userId: this.props.userId,
+      userId: this.state.userId,
       repairType: this.state.repairType,
       title: this.state.title,
       cost: this.state.cost,
@@ -74,19 +77,11 @@ export default class AddRepair extends Component {
       //    let parsedRecurEnd = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
 
       newRepair.recurrenceStartDate = parsedRecurStart;
-
       newRepair.repeatDayOfWeek = this.state.repeatDayOfWeek;
       newRepair.recurrenceEndDate = this.state.recurrenceEndDate;
       newRepair.duration = duration;
 
       if (this.state.recurrencePeriod === "daily") {
-        /*     let momentDayInterval = moment
-                    .duration(moment(this.state.recurrenceEndDate, 'YYYY/MM/DD')
-                    .diff(moment(this.state.recurrenceStartDate, 'YYYY/MM/DD'))
-                    ).asDays();
-                
-                console.log("momentDayInterval: " + momentDayInterval); */
-
         this.setState({
           repeatInterval: 1,
         });
@@ -154,23 +149,15 @@ export default class AddRepair extends Component {
 
     API.saveRepair(newRepair)
       .then(newRepair => {
-        console.log("newRepair: " + newRepair);
+        //        console.log("newRepair: " + JSON.stringify(newRepair.data._id));
+        return JSON.stringify(newRepair.data._id);
       })
-      .catch(err => console.log(err));
-
-    API.saveEvent(newEvent)
+      .then(repairId => {
+        newEvent.repairId = repairId;
+        API.saveEvent(newEvent);
+      })
       .then(newEvent => {
         //      console.log("newEvent in saveEvent: " + JSON.stringify(newEvent));
-        this.toggle();
-      })
-      .catch(err => console.log(err));
-
-    API.getEvents(this.props.userId)
-      .then(response => {
-        console.log(response);
-        this.setState({
-          events: response.data,
-        });
       })
       .catch(err => console.log(err));
 
@@ -220,7 +207,6 @@ export default class AddRepair extends Component {
                 <Label htmlFor="repairType">Type</Label>
                 <Input
                   type="select"
-                  /* className="form-control" */
                   id="repairTypeSelect"
                   value={this.state.repairType}
                   name="repairType"
@@ -270,7 +256,6 @@ export default class AddRepair extends Component {
                       </Label>
                       <Input
                         type="date"
-                        /* className="form-control" */
                         id="recurrence-start-date-input"
                         value={this.state.recurrenceStartDate}
                         name="recurrenceStartDate"
@@ -283,7 +268,6 @@ export default class AddRepair extends Component {
                       <Label htmlFor="end-date-input">End By Date</Label>
                       <Input
                         type="date"
-                        /* className="form-control" */
                         id="end-date-input"
                         value={this.state.recurrenceEndDate}
                         name="recurrenceEndDate"
@@ -299,7 +283,6 @@ export default class AddRepair extends Component {
                       <Label htmlFor="start-date-input">Start Date</Label>
                       <Input
                         type="date"
-                        /* className="form-control" */
                         id="start-date-input"
                         value={this.state.startDate}
                         name="startDate"
@@ -316,7 +299,6 @@ export default class AddRepair extends Component {
                     <Label htmlFor="start-time-input">Start Time</Label>
                     <Input
                       type="time"
-                      /* className="form-control" */
                       id="start-time-input"
                       value={this.state.startTime}
                       name="startTime"
@@ -329,7 +311,6 @@ export default class AddRepair extends Component {
                     <Label htmlFor="end-time-input">End Time</Label>
                     <Input
                       type="time"
-                      /* className="form-control" */
                       id="end-time-input"
                       value={this.state.endTime}
                       name="endTime"
@@ -344,7 +325,7 @@ export default class AddRepair extends Component {
                   <Row form>
                     <Col md={6}>
                       <FormGroup>
-                        <Label htmlFor="repeatInterval">every</Label>
+                        <Label for="repeatInterval">every</Label>
                         <Input
                           type="select"
                           name="repeatInterval"
@@ -361,7 +342,7 @@ export default class AddRepair extends Component {
                     </Col>
                     <Col md={6}>
                       <FormGroup>
-                        <Label htmlFor="repeatDayOfWeek">on</Label>
+                        <Label for="repeatDayOfWeek">on</Label>
                         <Input
                           type="select"
                           value={this.state.repeatDayOfWeek}
@@ -387,12 +368,10 @@ export default class AddRepair extends Component {
               <Row form>
                 <Col md={4}>
                   <FormGroup>
-                    <Label htmlFor="repairCost"> Repair Cost</Label>
+                    <Label for="repairCost"> Repair Cost</Label>
                     <Input
                       type="number"
-                      /*  className="form-control" */
                       id="repairCostInput"
-                      placeholder="$35"
                       value={this.state.cost}
                       name="cost"
                       onChange={this.handleInputChange}
@@ -401,10 +380,9 @@ export default class AddRepair extends Component {
                 </Col>
                 <Col md={4}>
                   <FormGroup>
-                    <Label htmlFor="repairPriority">Repair Priority</Label>
+                    <Label for="repairPriority">Repair Priority</Label>
                     <Input
                       type="select"
-                      /* className="form-control" */
                       id="repairPrioritySelect"
                       value={this.state.priority}
                       name="priority"
@@ -418,10 +396,9 @@ export default class AddRepair extends Component {
                 </Col>
                 <Col md={4}>
                   <FormGroup>
-                    <Label htmlFor="repairStatus">Repair Status</Label>
+                    <Label for="repairStatus">Repair Status</Label>
                     <Input
                       type="select"
-                      /* className="form-control" */
                       id="repairStatusSelect"
                       value={this.state.status}
                       name="status"
@@ -438,9 +415,7 @@ export default class AddRepair extends Component {
               <FormGroup>
                 <Row form>
                   <Col md={4}>
-                    <Label htmlFor="isVendor">
-                      Assign a Contractor/Vendor?
-                    </Label>
+                    <Label for="isVendor">Assign a Contractor/Vendor?</Label>
                   </Col>
                   <Col md={4}>
                     <input
@@ -478,7 +453,6 @@ export default class AddRepair extends Component {
                 </Label>
                 <Input
                   type="textarea"
-                  /* className="form-control" */
                   id="repairNotesInput"
                   rows="3"
                   value={this.state.notes}

@@ -15,7 +15,7 @@ router
 router
   .route("/:id")
   .get(eventsController.findById)
-  .put(eventsController.update)
+  .put(eventsController.update)  // using repairId
   .delete(eventsController.remove);
 
 module.exports = router; // Needed?

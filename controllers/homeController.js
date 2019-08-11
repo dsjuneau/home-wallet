@@ -14,7 +14,7 @@ module.exports = {
   },
   create: function(req, res) {
     console.log("getting here", req.body);
-    db.Home.create(req.body.homeProfile)
+    db.Home.create(req.body.formProfile)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

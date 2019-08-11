@@ -3,7 +3,7 @@ import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card
 import moment from 'moment';
 import API from "../../utils/API";
 
-export default class Repairs extends Component {
+export default class AddRepair extends Component {
   state = {
     repairType: "",
     title: "",

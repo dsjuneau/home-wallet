@@ -141,7 +141,7 @@ handleDeleteRepair (id) {
   API.deleteRepair(id)
     .then(this.loadRepairs())
     .catch(err => console.log(err));
-  API.deleteEvent(id)
+  API.deleteEvent(JSON.stringify(id))
   .then()
   .catch(err => console.log(err));
 };
@@ -346,51 +346,50 @@ render() {
           <CardSubtitle><h5>{item.priority} priority</h5></CardSubtitle>
           <CardText className= "repair-card-textbox">
             <Row>
-            <Col md={4}>
-              <p>Notes: {item.notes}</p>
-            </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <p>Cost: ${item.cost}</p>
-              </Col>
-              <Col md={6}>
-                <p>Status: {item.status}</p>
-              </Col>
-            </Row>
-            <Row>
             <Col md={6}>
-              <p>Vendor: {item.vendor}</p>
+              <h5>Notes: {item.notes}</h5>
             </Col>
             
+              <Col md={6}>
+              <Row>
+                <p>Cost: ${item.cost}</p>
+                </Row>
+                <Row>
+                <p>Status: {item.status}</p>
+                </Row>
+
+                <Row>
+              <p>Vendor: {item.vendor}</p>
+              </Row>
+            
             {((item.recurrencePeriod === "never") ? (
-            <Col md={6}>
+            <Row>
               <p>Scheduled For: {moment(item.startDate).format('MM/DD/YYYY')}  </p>
-            </Col>
+              </Row>
             ) : (
-              <p/>
+              <span/>
               )
             )}
 
             {((item.recurrencePeriod === "weekly") ? (
-            <Col md={6}>
+             <Row>
               <p>Scheduled every {item.repeatInterval} week(s) from {moment(item.recurrenceStartDate).format('MM/DD/YYYY')} to {moment(item.recurrenceEndDate).format('MM/DD/YYYY')}</p>
-            </Col>
+              </Row>
              ) : (
-              <p/>
+              <span/>
               )
             )}
 
             {((item.recurrencePeriod === "daily") ? (
-            <Col md={6}>
+             <Row>
               <p>Scheduled from: {moment(item.recurrenceStartDate).format('MM/DD/YYYY')} to {moment(item.recurrenceEndDate).format('MM/DD/YYYY')}</p>
-            </Col>
+              </Row>
              ) : (
-              <p/>
+              <span/>
               )
             )}
             
-         
+            </Col>
             </Row>              
           </CardText>
           <Button

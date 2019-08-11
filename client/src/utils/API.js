@@ -27,7 +27,7 @@ export default {
   },
   // Deletes the event with the given id
   deleteEvent: function(id) {
-//    console.log("from deleteEvent: " + id);
+    console.log("from deleteEvent: " + id);
     return axios.delete("/api/events/" + id);
   },
 

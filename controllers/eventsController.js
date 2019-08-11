@@ -37,7 +37,7 @@ module.exports = {
     remove: function(req, res) {
   //    console.log("from eventscontroller: " + req.params.id);
       db.Event
-        .findOneAndDelete({ _id: req.params.id })
+        .findOneAndDelete({ repairId: req.params.id })
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     }

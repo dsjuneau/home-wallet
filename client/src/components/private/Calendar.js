@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card, CardHeader } from "reactstrap";
+import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
@@ -19,7 +19,7 @@ export default class Calendar extends React.Component {
         userId: this.props.userId,
         repairId: "",
     //   search: "",
-        repairType: "",
+        repairType: "Repair",
         title: "",
         recurrencePeriod: "never",
         repeatInterval: 1,
@@ -53,7 +53,7 @@ export default class Calendar extends React.Component {
 
         API.getEvents(this.props.userId)
       .then(response => {
-        console.log("On Load from getEvents: " + JSON.stringify(response.data));
+    //    console.log("On Load from getEvents: " + JSON.stringify(response.data));
         this.setState({ 
             events: response.data
           });
@@ -219,7 +219,7 @@ export default class Calendar extends React.Component {
 
       API.saveRepair(newRepair)
           .then(newRepair => {
-            console.log("newRepair: " + JSON.stringify(newRepair.data._id));
+    //        console.log("newRepair: " + JSON.stringify(newRepair.data._id));
             return JSON.stringify(newRepair.data._id);
           }).then(repairId => {
               newEvent.repairId = repairId;
@@ -303,7 +303,6 @@ export default class Calendar extends React.Component {
         <Input
         type="select"
         id="repairTypeSelect"
-        defaultValue="Repair"
         value={this.state.repairType}
         name="repairType"
         onChange={this.handleInputChange}
@@ -329,7 +328,6 @@ export default class Calendar extends React.Component {
         <Label for="recurringPeriod">Repeat</Label>
         <Input
         type="select"
-        defaultValue="Never"
         value={this.state.recurrencePeriod}
         name="recurrencePeriod"
         onChange={this.handleInputChange}
@@ -423,7 +421,6 @@ export default class Calendar extends React.Component {
         <Input
         type="select"
         name="repeatInterval"
-        defaultValue={1}
         value={this.state.repeatInterval}
         onChange={this.handleInputChange}   
         >
@@ -444,7 +441,7 @@ export default class Calendar extends React.Component {
         name="repeatDayOfWeek"
         onChange={this.handleInputChange}
         >
-        <option selected value="SU">Sunday</option>
+        <option value="SU">Sunday</option>
         <option value="MO">Monday</option>
         <option value="TU">Tuesday</option>
         <option value="WE">Wednesday</option>
@@ -467,7 +464,6 @@ export default class Calendar extends React.Component {
         <Input
         type="number"
         id="repairCostInput"
-        defaultValue={0}
         value={this.state.cost}
         name="cost"
         onChange={this.handleInputChange}
@@ -480,7 +476,6 @@ export default class Calendar extends React.Component {
         <Input
         type="select"
         id="repairPrioritySelect"
-        defaultValue= "low"
         value={this.state.priority}
         name="priority"
         onChange={this.handleInputChange}
@@ -497,7 +492,6 @@ export default class Calendar extends React.Component {
         <Input
         type="select"
         id="repairStatusSelect"
-        defaultValue="Thinking about it!"
         value={this.state.status}
         name="status"
         onChange={this.handleInputChange}
@@ -556,15 +550,12 @@ export default class Calendar extends React.Component {
         onChange={this.handleInputChange}
         />
         </FormGroup>
-
-
-
-    <button
+    <Button
         onClick={this.handleFormSubmit}
         className="btn btn-block btn-success mt-3"
     >
         Add
-    </button>
+    </Button>
     </Form>
         </ModalBody>
         </Modal>

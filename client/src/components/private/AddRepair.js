@@ -457,12 +457,12 @@ export default class AddRepair extends Component {
                   onChange={this.handleInputChange}
                 />
               </FormGroup>
-              <button
+              <Button
                 onClick={this.handleFormSubmit}
                 className="btn btn-block btn-success mt-3"
               >
                 Add
-              </button>
+              </Button>
             </Form>
           </div>
         </div>

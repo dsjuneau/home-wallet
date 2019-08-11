@@ -550,12 +550,12 @@ export default class Calendar extends React.Component {
         onChange={this.handleInputChange}
         />
         </FormGroup>
-    <button
+    <Button
         onClick={this.handleFormSubmit}
         className="btn btn-block btn-success mt-3"
     >
         Add
-    </button>
+    </Button>
     </Form>
         </ModalBody>
         </Modal>

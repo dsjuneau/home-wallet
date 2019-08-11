@@ -719,12 +719,12 @@ export default class Repair extends React.Component {
                   />
                 </FormGroup>
 
-                <button
+                <Button
                   onClick={this.handleFormSubmit}
                   className="btn btn-block btn-success mt-3"
                 >
                   Update
-                </button>
+                </Button>
               </Form>
             </ModalBody>
           </Modal>

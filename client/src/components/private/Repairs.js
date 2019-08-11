@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card, CardHeader, CardText, CardBody,
+import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card, CardText, CardBody,
   CardTitle, CardSubtitle, } from "reactstrap";
 import moment from 'moment';
 import API from "../../utils/API";
@@ -29,7 +29,6 @@ import API from "../../utils/API";
       recurrenceEndDate: "",
       startTime: "",
       endTime: "",
-      changeRepairType: "",
      
     };
   }
@@ -121,18 +120,6 @@ handleChangeRepair = (id) => {
     };
 
 
-  /*   handleInputChange = event => {
-      // Getting the value and name of the input which triggered the change
-      const { name, value } = event.target;
-           console.log(event.target);
-      // Updating the input's state
-      this.setState({
-       
-        [name]: value,
-      
-      });
-    }; */
-
     handleInputChange = event => {
       // Getting the value and name of the input which triggered the change
       const { name, value } = event.target;
@@ -166,8 +153,6 @@ handleFormSubmit = event => {
   event.preventDefault();
  
   let modifiedEvent = {};
-
-  modifiedEvent.repairId = this.state.changeRepairId;
   
   let modifiedRepair = {
     userId: this.props.userId,
@@ -222,6 +207,7 @@ handleFormSubmit = event => {
             
             modifiedEvent = {
                 userId: this.props.userId,
+                repairId: JSON.stringify(this.state.changeRepairId),
                 title: this.state.title,
                 rrule: {
                     freq: this.state.recurrencePeriod,
@@ -240,6 +226,7 @@ handleFormSubmit = event => {
 
             modifiedEvent = {
                 userId: this.props.userId,
+                repairId: JSON.stringify(this.state.changeRepairId),
                 title: this.state.title,
                 rrule: {
                     freq: this.state.recurrencePeriod,
@@ -272,6 +259,7 @@ let momentStart = this.state.startDate + " " + this.state.startTime;
 
     modifiedEvent = {
         userId: this.props.userId,
+        repairId: JSON.stringify(this.state.changeRepairId),
         category: this.state.repairType,
         title: this.state.title,
         start: parsedStart,
@@ -282,15 +270,14 @@ let momentStart = this.state.startDate + " " + this.state.startTime;
 
 
   API.changeRepair(modifiedRepair)
-
-      .then(modifiedRepair => {
-        console.log("changeRepair: " + modifiedRepair);
+      .then(res => {
+//        console.log("changeRepair: " + JSON.stringify(res));
       })
       .catch(err => console.log(err));
 
   API.changeEvent(modifiedEvent)
-  .then(modifiedEvent => {
-      console.log("changeEvent in changeEvent: " + JSON.stringify(modifiedEvent));
+  .then(res => {
+//      console.log("changeEvent in changeEvent: " + JSON.stringify(res));
     this.toggle();
   })
   .catch(err => console.log(err));
@@ -305,6 +292,7 @@ let momentStart = this.state.startDate + " " + this.state.startTime;
   .catch(err => console.log(err));
 
   this.setState({
+    changeRepairId: "",
     repairType: "",
     title: "",
     startDate: "",
@@ -444,7 +432,7 @@ render() {
         <Input
         type="select"
         id="repairTypeSelect"
-        defaultValue= {this.state.changeRepairType}
+        defaultValue= {this.state.repairType}
         //value={this.state.repairType}
 
         name="repairType"

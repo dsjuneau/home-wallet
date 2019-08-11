@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card, CardHeader } from "reactstrap";
+import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
@@ -53,7 +53,7 @@ export default class Calendar extends React.Component {
 
         API.getEvents(this.props.userId)
       .then(response => {
-        console.log("On Load from getEvents: " + JSON.stringify(response.data));
+    //    console.log("On Load from getEvents: " + JSON.stringify(response.data));
         this.setState({ 
             events: response.data
           });
@@ -219,7 +219,7 @@ export default class Calendar extends React.Component {
 
       API.saveRepair(newRepair)
           .then(newRepair => {
-            console.log("newRepair: " + JSON.stringify(newRepair.data._id));
+    //        console.log("newRepair: " + JSON.stringify(newRepair.data._id));
             return JSON.stringify(newRepair.data._id);
           }).then(repairId => {
               newEvent.repairId = repairId;

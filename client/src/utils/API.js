@@ -1,10 +1,6 @@
-
 import axios from "axios";
 
-
-export default {  
-
-  
+export default {
   // Saves a event to the database
   saveEvent: function(eventData) {
     console.log("saveEvent axios: " + JSON.stringify(eventData));
@@ -20,7 +16,7 @@ export default {
   getEvents: function(id) {
     return axios.get("/api/events/user/" + id);
   },
-    // Gets the event with the given id
+  // Gets the event with the given id
   getEvent: function(id) {
     return axios.get("/api/events/" + id);
   },
@@ -30,7 +26,6 @@ export default {
     return axios.delete("/api/events/" + id);
   },
 
-
   saveRepair: function(repairData) {
     console.log("saveRepair axios: " + JSON.stringify(repairData));
     return axios.post("/api/repairs", repairData);
@@ -38,11 +33,11 @@ export default {
 
   //  Gets all repairs from database
   getRepairs: function(id) {
-    console.log("API.getRepairs: " + id);
+    // console.log("API.getRepairs: " + id);
     return axios.get("/api/repairs/user/" + id);
-//    return axios.get("/api/repairs/");
+    //    return axios.get("/api/repairs/");
   },
- 
+
   // Gets the repair with the given id
   getRepair: function(id) {
     return axios.get("/api/repairs/" + id);
@@ -53,8 +48,7 @@ export default {
   },
   // Deletes the repair with the given id
   deleteRepair: function(id) {
-  console.log("from deleteRepair: " + id);
-  return axios.delete("/api/repairs/" + id);
-  }
-
+    console.log("from deleteRepair: " + id);
+    return axios.delete("/api/repairs/" + id);
+  },
 };

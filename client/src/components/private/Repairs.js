@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card, CardHeader, CardText, CardBody,
+import { Button, Modal, ModalBody, Row, Col, Form, FormGroup, Label, Input, Card, CardText, CardBody,
   CardTitle, CardSubtitle, } from "reactstrap";
 import moment from 'moment';
 import API from "../../utils/API";
@@ -40,11 +40,11 @@ import API from "../../utils/API";
 }
 
 loadRepairs = () => { 
-  console.log("Repairs.js this.props.userId: " + this.props.userId);
+  // console.log("Repairs.js this.props.userId: " + this.props.userId);
   API.getRepairs(this.props.userId)
   .then(repairs => {
    
-    console.log(repairs);
+    // console.log(repairs);
 
   const repairList =  repairs.data.map(item => ({
     repairId: item._id,
@@ -344,7 +344,7 @@ render() {
         <div className="card-body">
           <div className="text-right">
             <a className="btn btn-info" href="/AddRepair/">
-              <i class="fa fa-plus-circle" aria-hidden="true" /> &nbsp; Add
+              <i className="fa fa-plus-circle" aria-hidden="true" /> &nbsp; Add
               Task
             </a>
           </div>
@@ -411,6 +411,7 @@ render() {
           >Delete</Button>
            <Button
           color="success"
+          className="ml-2"
           onClick={() =>this.handleChangeRepair(item.repairId)}
           >Modify</Button>
         </CardBody>

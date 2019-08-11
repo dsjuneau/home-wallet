@@ -11,7 +11,7 @@ export default class AddVendor extends Component {
       vendorCompany: "",
       vendorPhone: "",
       vendorEmail: "",
-      vendorCategory: "none selected",
+      vendorCategory: "Plumber",
       hasCategory: false,
       vendorNotes: "",
       visible: false,
@@ -174,9 +174,9 @@ export default class AddVendor extends Component {
                     value={this.state.vendorCategory}
                     name="vendorCategory"
                     onChange={this.handleInputChange}
-                    default="Plumber"
+                    // default="Plumber"
                   >
-                    <option selected="selected">Plumber</option>
+                    <option>Plumber</option>
                     <option>Carpet Cleaner</option>
                     <option>House Cleaner </option>
                     <option>Electrician</option>

@@ -13,7 +13,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log("getting here", req.body);
+    // console.log("getting here", req.body);
     db.Home.create(req.body.formProfile)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
@@ -30,7 +30,7 @@ module.exports = {
   },
   findProfile: function(req, res) {
     const string = req.params.id.toString();
-    console.log(string);
+    // console.log(string);
     db.Home.find({ userId: string })
       .then(dbModel => {
         console.log(dbModel);

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Alert } from "reactstrap";
 import axios from "axios";
 
 export default class Profile extends Component {
@@ -22,20 +23,13 @@ export default class Profile extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-
-    //need to set up a Route and Profile Schema to post once completed.  Then on load get that data once set up.???
-
-    // Alert that the profile has been created, set hasProfile to True
-    alert(`Profile Created`);
     this.setState({
-      // city: "",
-      // state: "",
-      // zip: "",
-      // hasPool: false,
-      // hasFence: false,
+      city: "",
+      zipCode: "",
+      streetAddress: "",
+      state: "",
       hasHomeProfile: true,
     });
-    // window.location = "/";
   };
 
   render() {
@@ -53,7 +47,7 @@ export default class Profile extends Component {
             <div className="card-body mt-2">
               <form>
                 <div className="form-group">
-                  <label>*Street Address</label>
+                  <label>Street Address</label>
                   <input
                     type="text"
                     className="form-control"
@@ -95,7 +89,7 @@ export default class Profile extends Component {
                 </div>
                 {/* State */}
                 <div className="form-group">
-                  <label>*Zip Code </label>
+                  <label>Zip Code </label>
                   <input
                     type="number"
                     className="form-control"
@@ -115,6 +109,14 @@ export default class Profile extends Component {
                     Get Records from Zillow
                   </button>
                 </div>
+                {this.props.isError ? (
+                  <Alert
+                    className="alert-danger mt-2 text-center"
+                    isOpen={this.props.isError}
+                  >
+                    {this.props.errorMsg}
+                  </Alert>
+                ) : null}
               </form>
             </div>
           </div>

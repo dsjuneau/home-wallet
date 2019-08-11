@@ -8,15 +8,17 @@ export default function AddDocument() {
   const [fileName, setFileName] = useState("Choose File");
   const [uploadedFile, setUploadedFile] = useState({});
   const [message, setMessage] = useState("");
-  const [uploadPercentage, setUploadPercentage] = useState(0);
+  // const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const onChange = e => {
+    console.log(e.target.files[0]);
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
 
   const onSubmit = async e => {
     e.preventDefault();
+    console.log(e);
     const formData = new FormData();
     formData.append("file", file);
 
@@ -24,15 +26,6 @@ export default function AddDocument() {
       const res = await axios.post("/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress: progressEvent => {
-          setUploadPercentage(
-            parseInt(
-              Math.round(progressEvent.loaded * 100) / progressEvent.total
-            )
-          );
-          //Clear Percentage
-          setTimeout(() => setUploadPercentage(0), 10000);
         },
       });
       const { fileName, filePath } = res.data;
@@ -56,13 +49,12 @@ export default function AddDocument() {
             <i className="fas fa-file-pdf" /> &nbsp; Add Document
           </h3>
         </div>
-        {/* added for File Upload - will reorganize after */}
+        {/* added for File Upload - will reorganize after
         <h5 className="display-5 text-center">
           <i className="fab fa-react" />
           File Upload
         </h5>
-        {/* File upload per (https://www.youtube.com/watch?v=b6Oe2puTdMQ)*/}
-
+        File upload per (https://www.youtube.com/watch?v=b6Oe2puTdMQ) */}
         <div className="card-body">
           <div className="text-right">
             <a className="btn btn-info" href="/Documents/">
@@ -115,7 +107,6 @@ export default function AddDocument() {
             </form>
           </div>
         </div>
-
         {uploadedFile ? (
           <div>
             <h3 className="text-center">{uploadedFile.fileName}</h3>

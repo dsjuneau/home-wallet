@@ -229,9 +229,6 @@ export default class AddVendor extends Component {
               </div> */}
 
                 {/*Create Vendor in DB */}
-                <Alert className="alert-alert mt-2" isOpen={this.state.visible}>
-                  Vendor Added!
-                </Alert>
                 <button
                   onClick={this.handleFormSubmit}
                   className="btn btn-block btn-info mt-5"
@@ -239,6 +236,9 @@ export default class AddVendor extends Component {
                   Add Vendor
                 </button>
               </form>
+              <Alert className="alert-success mt-2" isOpen={this.state.visible}>
+                Vendor Added!
+              </Alert>
             </div>
           </div>
         </div>

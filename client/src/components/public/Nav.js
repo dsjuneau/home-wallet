@@ -36,11 +36,6 @@ export default class Nav extends React.Component {
               <DropdownToggle caret>Options</DropdownToggle>
               <DropdownMenu>
                 <DropdownItem>
-                  <a className="dropdown-item" href="/">
-                    <i className="fas fa-home" /> Main
-                  </a>
-                </DropdownItem>
-                <DropdownItem>
                   <a className="dropdown-item" href="/Login/">
                     <i className="fas fa-user-circle" /> Login
                   </a>

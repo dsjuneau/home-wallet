@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Alert } from "reactstrap";
 
 export class Login extends Component {
   state = { email: "", password: "", isError: false };
@@ -15,6 +16,7 @@ export class Login extends Component {
         this.props.auth(res.data.userName, res.data._id);
       } else {
         this.setState({ isError: true, errorMsg: res.data.msg });
+        this.onShowAlert();
       }
     });
   };
@@ -28,6 +30,15 @@ export class Login extends Component {
   handleClick = () => {
     axios.post("/api/auth/reset", { email: this.state.email });
   };
+
+  onShowAlert = () => {
+    this.setState({ isError: true }, () => {
+      window.setTimeout(() => {
+        this.setState({ isError: false });
+      }, 2000);
+    });
+  };
+
   render() {
     return (
       <div>
@@ -39,9 +50,10 @@ export class Login extends Component {
                 <i className="fas fa-user-circle" /> Login
               </h3>
             </div>
+
             <form className="mx-auto" onSubmit={this.handleSubmit}>
               <div className="form-group input-group">
-                <label>{this.state.isError ? this.state.errorMsg : ""}</label>
+                {/* <label>{this.state.isError ? this.state.errorMsg : ""}</label> */}
                 <div className="input-group-prepend">
                   <span className="input-group-text">
                     <i className="fa fa-envelope" />
@@ -71,7 +83,9 @@ export class Login extends Component {
               </div>
               <button className="btn btn-success">Submit</button>
             </form>
-
+            <Alert className="alert-danger mt-2" isOpen={this.state.isError}>
+              {this.state.errorMsg}
+            </Alert>
             <div className="form-group text-center mt-5">
               <a href="/Register/">Create an Account</a>
               <br />

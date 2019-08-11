@@ -1,6 +1,9 @@
 import React from "react";
 
-export default function Documents() {
+export default function Documents(props) {
+  // console.log(this.props);
+  console.log(props);
+
   return (
     <div>
       <div className="container">
@@ -13,9 +16,12 @@ export default function Documents() {
         <div className="card-body">
           <div className="text-right">
             <a className="btn btn-info" href="/AddDocument/">
-              <i class="fa fa-plus-circle" aria-hidden="true" />
+              <i className="fa fa-plus-circle" aria-hidden="true" />
               &nbsp; Add Document
             </a>
+          </div>
+          <div>
+            <input type="file" onChange={e => props.showFile(e)} />
           </div>
           <br />
           <div className="card mt-2">
@@ -23,8 +29,6 @@ export default function Documents() {
             <div className="container">
               <ul>
                 <li>Doc 1</li>
-                <li>Doc 2</li>
-                <li>Doc 3</li>
               </ul>
             </div>
           </div>

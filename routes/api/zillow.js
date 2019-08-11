@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const axios = require("axios");
 const parseString = require("xml2js").parseString;
-
 require("dotenv").config();
 
 // @ Get home data from Zillow
@@ -14,19 +13,30 @@ router.route("/:address/:zip").get(function(req, res) {
   axios
     .get(url)
     .then(function(response) {
+      // console.log("reponse.data when called", response.data);
+      // console.log(
+      //   "reponse.data when called",
+      //   response.data["SearchResults:searchresults"].request
+      // );
       return convertToJSON(response.data);
     })
     .then(function(response) {
+      // console.log(response);
       res.json(response);
     })
     .catch(function(error) {
-      console.log("Unable to find", address, "in zip code", zip);
-      res.json(error);
+      // console.log("error", error);
+      res.json("Unable to find", address, "in zip code", zip);
     });
 
   function convertToJSON(xml) {
     let details = {};
     parseString(xml, function(err, result) {
+      {
+        result["SearchResults:searchresults"].response === undefined
+          ? console.log("undefined")
+          : console.log("ok");
+      }
       propData =
         result["SearchResults:searchresults"].response[0].results[0].result;
       {

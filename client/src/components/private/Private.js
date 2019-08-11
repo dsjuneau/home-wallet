@@ -1,246 +1,22 @@
-// import React, { Component } from "react";
-// import { BrowserRouter as Router, Route } from "react-router-dom";
-// import Nav from "./Nav";
-// import Calendar from "./Calendar";
-// import Footer from "./Footer";
-// import Vendors from "./Vendors";
-// import Repairs from "./Repairs";
-// import Documents from "./Documents";
-// import AddVendor from "./AddVendor";
-// import AddRepair from "./AddRepair";
-// import AddDocument from "./AddDocument";
-// import axios from "axios";
-
-// export class Private extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.toggle2 = this.toggle2.bind(this);
-
-//     this.state = {
-//       zillowData: {},
-//       streetAddress: "",
-//       zipCode: "",
-//       hasPool: false,
-//       hasFence: false,
-//       parking: "",
-//       modal2: false,
-//       currentHomeProfile: {},
-//     };
-//   }
-
-//   componentDidMount() {
-//     axios.get("/api/home").then(res => {
-//       if (res.data.length > 0) {
-//         this.setState({
-//           hasHomeProfile: true,
-//           hasZillow: true,
-//           modal: false,
-//         });
-//       } else {
-//         this.setState({
-//           modal: true,
-//         });
-//       }
-//     });
-//   }
-
-//   handleSaveProfile = event => {
-//     event.preventDefault();
-//     const {
-//       zillowData,
-//       streetAddress,
-//       zipCode,
-//       hasPool,
-//       hasFence,
-//       parking,
-//       hasHomeProfile,
-//       hasZillow,
-//     } = this.state;
-
-//     let homeProfile = {
-//       userId: this.props.user.id,
-//       hasHomeProfile,
-//       hasZillow,
-//       streetAddress,
-//       zipCode,
-//       hasPool,
-//       hasFence,
-//       parking,
-//       yearBuilt: zillowData.yearBuilt,
-//       bedrooms: zillowData.bedrooms,
-//       bathrooms: zillowData.bathrooms,
-//       gla: zillowData.gla,
-//       lotSize: zillowData.lotSize,
-//       taxAssessment: zillowData.taxAssessment,
-//       taxYear: zillowData.taxYear,
-//       zestimate: zillowData.zestimate,
-//       zestimateHigh: zillowData.zestimateHigh,
-//       zeistimateLow: zillowData.zeistimateLow,
-//       zillowLink: zillowData.zillowLink,
-//     };
-
-//     axios.post("/api/home", { homeProfile }).then(res => {
-//       if (res.data) {
-//         // console.log(res);
-//         this.setState({
-//           hasHomeProfile: true,
-//           modal2: false,
-//           currentHomeProfile: res.data,
-//         });
-//       }
-//     });
-//   };
-
-//   handleDeleteProfile = event => {
-//     event.preventDefault();
-
-//     axios
-//       .delete(`/api/home/${this.props.user.id}`)
-//       .then(console.log("home profile deleted"))
-//       .then(
-//         this.setState({
-//           hasHomeProfile: false,
-//           hasZillow: false,
-//         })
-//       )
-//       .then((window.location = "/"))
-//       .catch(function(error) {
-//         if (error) {
-//           console.log(error);
-//         }
-//       });
-//   };
-
-//   handleZillowCall = event => {
-//     event.preventDefault();
-//     const { zipCode, streetAddress } = this.state;
-//     if (zipCode && streetAddress) {
-//       axios.get(`/api/zillow/${streetAddress}/${zipCode}`).then(response => {
-//         this.setState({
-//           zillowData: response.data,
-//           hasZillow: true,
-//           modal: false,
-//           modal2: true,
-//         });
-//       });
-//     } else {
-//       alert("Please enter the full address with zip code");
-//     }
-//   };
-
-//   toggle2() {
-//     this.setState(prevState => ({
-//       modal: !prevState.modal,
-//     }));
-//   }
-//   handleInputChange = event => {
-//     // Getting the value and name of the input which triggered the change
-//     const { name, value } = event.target;
-
-//     // Updating the input's state
-//     this.setState({
-//       [name]: value,
-//     });
-//   };
-//   handlePoolCheck = () => {
-//     this.setState({ hasPool: !this.state.hasPool });
-//   };
-
-//   handleFenceCheck = () => {
-//     this.setState({ hasFence: !this.state.hasFence });
-//   };
-
-//   render() {
-//     // console.log(this.state);
-//     return (
-//       <div>
-//         <Nav
-//           userName={this.props.user.userName}
-//           userId={this.props.user.id}
-//           unAuth={this.props.unAuth}
-//           streetAddress={this.state.streetAddress}
-//           zipCode={this.state.zipCode}
-//           handleZillowCall={this.handleZillowCall}
-//           handleSaveProfile={this.handleSaveProfile}
-//           handleDeleteProfile={this.handleDeleteProfile}
-//           handleFenceCheck={this.handleFenceCheck}
-//           handlePoolCheck={this.handlePoolCheck}
-//           handleInputChange={this.handleInputChange}
-//           toggle2={this.toggle2}
-//           hasHomeProfile={this.state.hasHomeProfile}
-//           hasZillow={this.state.hasZillow}
-//           zillowData={this.state.zillowData}
-//           modal={this.state.modal}
-//           modal2={this.state.modal2}
-//           hasPool={this.state.hasPool}
-//           hasFence={this.state.hasFence}
-//           parking={this.state.parking}
-//           newHomeProfile={this.state.currentHomeProfile}
-//         />
-//         <Router>
-//           <Route
-//             path={["/", "/login"]}
-//             exact
-//             render={() => <Calendar userId={this.props.user.id} />}
-//           />
-
-//           <Route
-//             path="/Vendors/"
-//             render={props => <Vendors {...props} userId={this.props.user.id} />}
-//           />
-//           <Route
-//             userId={this.props.user.id}
-//             path="/Repairs/"
-//             component={Repairs}
-//           />
-//           <Route
-//             userId={this.props.user.id}
-//             path="/Documents/"
-//             component={Documents}
-//           />
-//           <Route
-//             path="/AddVendor/"
-//             render={props => (
-//               <AddVendor {...props} userId={this.props.user.id} />
-//             )}
-//           />
-//           <Route
-//             userId={this.props.user.id}
-//             path="/AddRepair/"
-//             component={AddRepair}
-//           />
-//           <Route
-//             path="/AddDocument/"
-//             render={props => (
-//               <AddDocument {...props} userId={this.props.user.id} />
-//             )}
-//           />
-//         </Router>
-//         <Footer />
-//       </div>
-//     );
-//   }
-// }
-
-// export default Private;
-
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Nav from "./Nav";
 import Calendar from "./Calendar";
 import Footer from "./Footer";
 import Vendors from "./Vendors";
 import Repairs from "./Repairs";
-import Documents from "./Documents";
+// import Documents from "./Documents";
 import AddVendor from "./AddVendor";
 import AddRepair from "./AddRepair";
-import AddDocument from "./AddDocument";
+// import AddDocument from "./AddDocument";
+import NoMatch from "./NoMatch";
 import axios from "axios";
 
 export class Private extends Component {
   constructor(props) {
     super(props);
-    this.toggle2 = this.toggle2.bind(this);
+    this.toggleZillowModal = this.toggleZillowModal.bind(this);
+    this.toggleNav = this.toggleNav.bind(this);
 
     this.state = {
       zillowData: {},
@@ -249,8 +25,12 @@ export class Private extends Component {
       hasPool: false,
       hasFence: false,
       parking: "",
-      modal2: false,
+      profileModal: false,
+      zillowModal: false,
+      dropdownOpen: false,
       homeProfile: {},
+      isError: false,
+      errorMsg: "You did something wrong",
     };
   }
 
@@ -261,11 +41,11 @@ export class Private extends Component {
           homeProfile: res.data[0],
           hasHomeProfile: true,
           hasZillow: true,
-          modal: false,
+          profileModal: false,
         });
       } else {
         this.setState({
-          modal: true,
+          profileModal: true,
         });
       }
     });
@@ -307,11 +87,11 @@ export class Private extends Component {
     };
 
     axios.post("/api/home", { formProfile }).then(res => {
-      console.log("RESPONSE FROM API: ", res);
+      // console.log("RESPONSE FROM API: ", res);
       if (res.data) {
         this.setState({
           hasHomeProfile: true,
-          modal2: false,
+          zillowModal: false,
           homeProfile: formProfile,
         });
       } else {
@@ -325,14 +105,14 @@ export class Private extends Component {
 
     axios
       .delete(`/api/home/${this.props.user.id}`)
-      .then(console.log("home profile deleted"))
+      // .then(console.log("home profile deleted"))
       .then(
         this.setState({
           hasHomeProfile: false,
           hasZillow: false,
+          modal: true,
         })
       )
-      // .then((window.location = "/"))
       .catch(function(error) {
         if (error) {
           console.log(error);
@@ -348,20 +128,30 @@ export class Private extends Component {
         this.setState({
           zillowData: response.data,
           hasZillow: true,
-          modal: false,
-          modal2: true,
+          profileModal: false,
+          zillowModal: true,
         });
       });
     } else {
-      alert("Please enter the full address with zip code");
+      this.onShowMessage();
+      this.setState({
+        errorMsg: "Please enter the full address with zip code",
+      });
     }
   };
 
-  toggle2() {
+  toggleZillowModal() {
     this.setState(prevState => ({
-      modal: !prevState.modal,
+      profileModal: !prevState.profileModal,
     }));
   }
+
+  toggleNav() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen,
+    }));
+  }
+
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
@@ -379,8 +169,28 @@ export class Private extends Component {
     this.setState({ hasFence: !this.state.hasFence });
   };
 
+  handleLogout = () => {
+    document.cookie = `key=;path=/`;
+    this.props.unAuth();
+  };
+
+  clearProfile() {
+    this.setState({
+      hasZillow: false,
+      hasHomeProfile: false,
+      profileModal: true,
+    });
+  }
+
+  onShowMessage = () => {
+    this.setState({ isError: true }, () => {
+      window.setTimeout(() => {
+        this.setState({ isError: false });
+      }, 3000);
+    });
+  };
+
   render() {
-    console.log("Render in Private.js (homeProfile: ", this.state.homeProfile);
     return (
       <div>
         <Nav
@@ -395,56 +205,70 @@ export class Private extends Component {
           handleFenceCheck={this.handleFenceCheck}
           handlePoolCheck={this.handlePoolCheck}
           handleInputChange={this.handleInputChange}
-          toggle2={this.toggle2}
+          toggleZillowModal={this.toggleZillowModal}
+          toggleNav={this.toggleNav}
+          dropdownOpen={this.state.dropdownOpen}
+          clearProfile={this.clearProfile}
+          handleLogout={this.handleLogout}
           hasHomeProfile={this.state.hasHomeProfile}
           hasZillow={this.state.hasZillow}
           zillowData={this.state.zillowData}
-          modal={this.state.modal}
-          modal2={this.state.modal2}
+          profileModal={this.state.profileModal}
+          zillowModal={this.state.zillowModal}
           hasPool={this.state.hasPool}
           hasFence={this.state.hasFence}
           parking={this.state.parking}
           newHomeProfile={this.state.homeProfile}
+          isError={this.state.isError}
+          errorMsg={this.state.errorMsg}
+          onShowMessage={this.onShowMessage}
         />
         <Router>
-          <Route
-            path={["/", "/login"]}
-            exact
-            render={() => <Calendar userId={this.props.user.id} />}
-          />
-
-          <Route
-            path="/Vendors/"
-            render={props => <Vendors {...props} userId={this.props.user.id} />}
-          />
-          <Route
-            // userId={this.props.user.id}
-           
-            path="/Repairs/"
-            render={() => <Repairs userId={this.props.user.id} />}
-        //    component={Repairs}
-          />
-          <Route
-            userId={this.props.user.id}
-            path="/Documents/"
-            component={Documents}
-          />
-          <Route
-            path="/AddVendor/"
-            render={props => (
-              <AddVendor {...props} userId={this.props.user.id} />
-            )}
-          />
-          <Route
-            path="/AddRepair/"
-            render={() => <AddRepair userId={this.props.user.id} />}
-          />
-          <Route
-            path="/AddDocument/"
-            render={props => (
-              <AddDocument {...props} userId={this.props.user.id} />
-            )}
-          />
+          <Switch>
+            <Route
+              path={["/", "/login"]}
+              exact
+              render={() => <Calendar userId={this.props.user.id} />}
+            />
+            <Route
+              path="/Vendors/"
+              render={props => (
+                <Vendors {...props} userId={this.props.user.id} />
+              )}
+            />
+            <Route
+              path="/Repairs/"
+              render={() => <Repairs userId={this.props.user.id} />}
+            />
+            {/* <Route
+              path="/Documents/"
+              render={props => (
+                <Documents
+                  {...props}
+                  userId={this.props.user.id}
+                  showFile={this.showFile}
+                /> */}
+            )} />
+            <Route
+              path="/AddVendor/"
+              render={props => (
+                <AddVendor {...props} userId={this.props.user.id} />
+              )}
+            />
+            <Route
+              userId={this.props.user.id}
+              path="/AddRepair/"
+              component={AddRepair}
+            />
+            {/* <Route
+              path="/AddDocument/"
+              render={props => (
+                <AddDocument {...props} userId={this.props.user.id} />
+              )}
+            /> */}
+            <Route path="*" component={NoMatch} />
+            )} />
+          </Switch>
         </Router>
         <Footer />
       </div>

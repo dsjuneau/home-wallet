@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Nav from "./Nav";
 import Info from "./Info";
 import Login from "./Login";
@@ -12,13 +12,16 @@ export class Public extends Component {
       <Router>
         <div>
           <Nav />
-          <Route path="/" exact component={Info} />
-          <Route
-            path="/login/"
-            render={() => <Login auth={this.props.auth} />}
-          />
-          <Route path="/register/" component={Register} />
-          <Footer />
+          <Switch>
+            <Route path="/" exact component={Info} />
+            <Route
+              path="/login/"
+              render={() => <Login auth={this.props.auth} />}
+            />
+            <Route path="/register/" component={Register} />
+            <Route path="*" component={Info} />
+            <Footer />
+          </Switch>
         </div>
       </Router>
     );

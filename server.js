@@ -7,6 +7,17 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload"); //! added for file upload
 
+// const fs = require("fs");
+// require("dotenv").config();
+
+// !! Cloudinary for Heroku
+// const cloudinary = require("cloudinary");
+// const cloud_name = process.env.
+// const api_key = process.env.
+// const api_secret = process.env.
+
+// https://stackoverflow.com/questions/47196800/reactjs-and-images-in-public-folder
+
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

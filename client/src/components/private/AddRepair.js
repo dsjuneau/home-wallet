@@ -1,31 +1,31 @@
-import React, { Component } from 'react';
-import { Button, Row, Col, Form, FormGroup, Label, Input } from 'reactstrap';
-import moment from 'moment';
-import API from '../../utils/API';
+import React, { Component } from "react";
+import { Row, Col, Form, FormGroup, Label, Input } from "reactstrap";
+import moment from "moment";
+import API from "../../utils/API";
 
 export default class AddRepair extends Component {
   state = {
     userId: this.props.userId,
-    repairId: '',
-    repairType: 'Repair',
-    title: '',
-    recurrencePeriod: 'never',
+    repairId: "",
+    repairType: "Repair",
+    title: "",
+    recurrencePeriod: "never",
     repeatInterval: 1,
-    repeatDayOfWeek: '',
-    startDate: '',
-    recurrenceStartDate: '',
-    recurrenceEndDate: '',
-    startTime: '',
-    endTime: '',
+    repeatDayOfWeek: "SU",
+    startDate: "",
+    recurrenceStartDate: "",
+    recurrenceEndDate: "",
+    startTime: "",
+    endTime: "",
     cost: 0,
-    priority: 'low',
-    status: 'Thinking about it!',
+    priority: "low",
+    status: "Thinking about it!",
     isVendor: false,
-    vendor: '',
-    notes: '',
+    vendor: "",
+    notes: "",
     editable: true,
 
-    modal: false
+    modal: false,
   };
 
   handleInputChange = event => {
@@ -34,7 +34,7 @@ export default class AddRepair extends Component {
 
     // Updating the input's state
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -55,25 +55,25 @@ export default class AddRepair extends Component {
       vendor: this.state.vendor,
       notes: this.state.notes,
       startTime: this.state.startTime,
-      endTime: this.state.endTime
+      endTime: this.state.endTime,
     };
 
-    if (this.state.recurrencePeriod !== 'never') {
+    if (this.state.recurrencePeriod !== "never") {
       let momentStart =
-        this.state.recurrenceStartDate + ' ' + this.state.startTime;
-      let momentEnd = this.state.recurrenceStartDate + ' ' + this.state.endTime;
+        this.state.recurrenceStartDate + " " + this.state.startTime;
+      let momentEnd = this.state.recurrenceStartDate + " " + this.state.endTime;
       let duration = moment
         .duration(
-          moment(momentEnd, 'YYYY/MM/DD HH:mm').diff(
-            moment(momentStart, 'YYYY/MM/DD HH:mm')
+          moment(momentEnd, "YYYY/MM/DD HH:mm").diff(
+            moment(momentStart, "YYYY/MM/DD HH:mm")
           )
         )
         .asHours();
 
-      console.log('duration: ' + duration);
+      console.log("duration: " + duration);
 
       let parsedRecurStart =
-        this.state.recurrenceStartDate + 'T' + this.state.startTime + ':00';
+        this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
       //    let parsedRecurEnd = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
 
       newRepair.recurrenceStartDate = parsedRecurStart;
@@ -81,9 +81,9 @@ export default class AddRepair extends Component {
       newRepair.recurrenceEndDate = this.state.recurrenceEndDate;
       newRepair.duration = duration;
 
-      if (this.state.recurrencePeriod === 'daily') {
+      if (this.state.recurrencePeriod === "daily") {
         this.setState({
-          repeatInterval: 1
+          repeatInterval: 1,
         });
 
         newRepair.repeatInterval = this.state.repeatInterval;
@@ -95,12 +95,12 @@ export default class AddRepair extends Component {
             freq: this.state.recurrencePeriod,
             interval: this.state.repeatInterval,
             dtstart: parsedRecurStart,
-            until: this.state.recurrenceEndDate
+            until: this.state.recurrenceEndDate,
           },
           duration: duration,
-          backgroundColor: 'yellow'
+          backgroundColor: "yellow",
         };
-      } else if (this.state.recurrencePeriod === 'weekly') {
+      } else if (this.state.recurrencePeriod === "weekly") {
         newRepair.repeatInterval = this.state.repeatInterval;
 
         newEvent = {
@@ -111,28 +111,28 @@ export default class AddRepair extends Component {
             interval: this.state.repeatInterval,
             byweekday: this.state.repeatDayOfWeek,
             dtstart: parsedRecurStart,
-            until: this.state.recurrenceEndDate
+            until: this.state.recurrenceEndDate,
           },
           duration: duration,
-          backgroundColor: 'green'
+          backgroundColor: "green",
         };
       }
     } else {
-      let momentStart = this.state.startDate + ' ' + this.state.startTime;
-      let momentEnd = this.state.startDate + ' ' + this.state.endTime;
+      let momentStart = this.state.startDate + " " + this.state.startTime;
+      let momentEnd = this.state.startDate + " " + this.state.endTime;
       let duration = moment
         .duration(
-          moment(momentEnd, 'YYYY/MM/DD HH:mm').diff(
-            moment(momentStart, 'YYYY/MM/DD HH:mm')
+          moment(momentEnd, "YYYY/MM/DD HH:mm").diff(
+            moment(momentStart, "YYYY/MM/DD HH:mm")
           )
         )
         .asHours();
 
-      console.log('duration: ' + duration);
+      console.log("duration: " + duration);
 
       let parsedStart =
-        this.state.startDate + 'T' + this.state.startTime + ':00';
-      let parsedEnd = this.state.startDate + 'T' + this.state.endTime + ':00';
+        this.state.startDate + "T" + this.state.startTime + ":00";
+      let parsedEnd = this.state.startDate + "T" + this.state.endTime + ":00";
 
       newRepair.startDate = parsedStart;
       newRepair.duration = duration;
@@ -143,7 +143,7 @@ export default class AddRepair extends Component {
         title: this.state.title,
         start: parsedStart,
         end: parsedEnd,
-        editable: true
+        editable: true,
       };
     }
 
@@ -162,23 +162,23 @@ export default class AddRepair extends Component {
       .catch(err => console.log(err));
 
     this.setState({
-      repairType: '',
-      title: '',
-      startDate: '',
-      recurrencePeriod: 'never',
+      repairType: "",
+      title: "",
+      startDate: "",
+      recurrencePeriod: "never",
       repeatInterval: 1,
-      repeatDayOfWeek: '',
-      recurrenceStartDate: '',
-      recurrenceEndDate: '',
-      startTime: '',
-      endTime: '',
+      repeatDayOfWeek: "",
+      recurrenceStartDate: "",
+      recurrenceEndDate: "",
+      startTime: "",
+      endTime: "",
       cost: 0,
-      priority: 'low',
-      status: 'Thinking about it!',
+      priority: "low",
+      status: "Thinking about it!",
       isVendor: false,
-      vendor: '',
-      notes: '',
-      editable: true
+      vendor: "",
+      notes: "",
+      editable: true,
     });
   };
 
@@ -204,7 +204,7 @@ export default class AddRepair extends Component {
             </div>
             <Form>
               <FormGroup>
-                <Label for="repairType">Type</Label>
+                <Label htmlFor="repairType">Type</Label>
                 <Input
                   type="select"
                   id="repairTypeSelect"
@@ -218,9 +218,10 @@ export default class AddRepair extends Component {
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Label for="repairDescription">Description</Label>
+                <Label htmlFor="repairDescription">Description</Label>
                 <Input
                   type="text"
+                  /*  className="form-control" */
                   id="repairDescriptionInput"
                   placeholder="mow grass"
                   value={this.state.title}
@@ -230,7 +231,7 @@ export default class AddRepair extends Component {
               </FormGroup>
 
               <FormGroup>
-                <Label for="recurringPeriod">Repeat</Label>
+                <Label htmlFor="recurringPeriod">Repeat</Label>
                 <Input
                   type="select"
                   value={this.state.recurrencePeriod}
@@ -245,12 +246,12 @@ export default class AddRepair extends Component {
                 </Input>
               </FormGroup>
 
-              {this.state.recurrencePeriod === 'daily' ||
-              this.state.recurrencePeriod === 'weekly' ? (
+              {this.state.recurrencePeriod === "daily" ||
+              this.state.recurrencePeriod === "weekly" ? (
                 <Row>
                   <Col md={6}>
                     <FormGroup>
-                      <Label for="recurrence-start-date-input">
+                      <Label htmlFor="recurrence-start-date-input">
                         Start Date
                       </Label>
                       <Input
@@ -264,7 +265,7 @@ export default class AddRepair extends Component {
                   </Col>
                   <Col md={6}>
                     <FormGroup>
-                      <Label for="end-date-input">End By Date</Label>
+                      <Label htmlFor="end-date-input">End By Date</Label>
                       <Input
                         type="date"
                         id="end-date-input"
@@ -279,7 +280,7 @@ export default class AddRepair extends Component {
                 <Row>
                   <Col md={6}>
                     <FormGroup>
-                      <Label for="start-date-input">Start Date</Label>
+                      <Label htmlFor="start-date-input">Start Date</Label>
                       <Input
                         type="date"
                         id="start-date-input"
@@ -295,7 +296,7 @@ export default class AddRepair extends Component {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="start-time-input">Start Time</Label>
+                    <Label htmlFor="start-time-input">Start Time</Label>
                     <Input
                       type="time"
                       id="start-time-input"
@@ -307,7 +308,7 @@ export default class AddRepair extends Component {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="end-time-input">End Time</Label>
+                    <Label htmlFor="end-time-input">End Time</Label>
                     <Input
                       type="time"
                       id="end-time-input"
@@ -319,7 +320,7 @@ export default class AddRepair extends Component {
                 </Col>
               </Row>
 
-              {this.state.recurrencePeriod === 'weekly' ? (
+              {this.state.recurrencePeriod === "weekly" ? (
                 <div>
                   <Row form>
                     <Col md={6}>
@@ -429,7 +430,7 @@ export default class AddRepair extends Component {
 
               {this.state.isVendor ? (
                 <FormGroup>
-                  <Label for="repairVendor" />
+                  <Label htmlFor="repairVendor" />
                   <Input
                     type="select"
                     className="form-control"
@@ -447,7 +448,9 @@ export default class AddRepair extends Component {
               )}
 
               <FormGroup>
-                <Label for="repairNotes">Additional Notes/Instruction</Label>
+                <Label htmlFor="repairNotes">
+                  Additional Notes/Instruction
+                </Label>
                 <Input
                   type="textarea"
                   id="repairNotesInput"
@@ -457,12 +460,13 @@ export default class AddRepair extends Component {
                   onChange={this.handleInputChange}
                 />
               </FormGroup>
-              <Button
+
+              <button
                 onClick={this.handleFormSubmit}
                 className="btn btn-block btn-success mt-3"
               >
                 Add
-              </Button>
+              </button>
             </Form>
           </div>
         </div>

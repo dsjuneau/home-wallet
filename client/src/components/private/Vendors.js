@@ -43,6 +43,7 @@ export default class Vendors extends React.Component {
       }, 4000);
     });
   };
+
   render() {
     return (
       <div>
@@ -57,7 +58,7 @@ export default class Vendors extends React.Component {
           <div className="card-body">
             <div className="text-right">
               <a className="btn btn-info" href="/AddVendor/">
-                <i class="fa fa-plus-circle" aria-hidden="true" />
+                <i className="fa fa-plus-circle" aria-hidden="true" />
                 &nbsp; Add Vendor
               </a>
             </div>
@@ -82,7 +83,7 @@ export default class Vendors extends React.Component {
                             id={vendor._id}
                             onClick={() => this.deleteVendor(vendor._id)}
                           >
-                            <i class="fas fa-trash-alt" />
+                            <i className="fas fa-trash-alt" />
                           </button>
                         </h3>
                       </div>

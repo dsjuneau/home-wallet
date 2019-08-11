@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Button,
   Modal,
@@ -13,10 +13,10 @@ import {
   CardText,
   CardBody,
   CardTitle,
-  CardSubtitle
-} from 'reactstrap';
-import moment from 'moment';
-import API from '../../utils/API';
+  CardSubtitle,
+} from "reactstrap";
+import moment from "moment";
+import API from "../../utils/API";
 
 export default class Repair extends React.Component {
   constructor(props) {
@@ -24,24 +24,24 @@ export default class Repair extends React.Component {
 
     this.state = {
       repairs: [],
-      changeRepairId: '',
+      changeRepairId: "",
       modal: false,
-      repairType: '',
-      title: '',
+      repairType: "",
+      title: "",
       cost: 0,
-      priority: '',
-      status: '',
+      priority: "",
+      status: "",
       isVendor: false,
-      vendor: '',
-      notes: '',
-      recurrencePeriod: 'never',
+      vendor: "",
+      notes: "",
+      recurrencePeriod: "never",
       repeatInterval: 1,
-      repeatDayOfWeek: '',
-      startDate: '',
-      recurrenceStartDate: '',
-      recurrenceEndDate: '',
-      startTime: '',
-      endTime: ''
+      repeatDayOfWeek: "",
+      startDate: "",
+      recurrenceStartDate: "",
+      recurrenceEndDate: "",
+      startTime: "",
+      endTime: "",
     };
   }
 
@@ -50,10 +50,10 @@ export default class Repair extends React.Component {
   }
 
   loadRepairs = () => {
-    console.log('Repairs.js this.props.userId: ' + this.props.userId);
+    // console.log("Repairs.js this.props.userId: " + this.props.userId);
     API.getRepairs(this.props.userId)
       .then(repairs => {
-        console.log(repairs);
+        // console.log(repairs);
 
         const repairList = repairs.data.map(item => ({
           repairId: item._id,
@@ -72,11 +72,11 @@ export default class Repair extends React.Component {
           recurrenceEndDate: item.recurrenceEndDate,
           duration: item.duration,
           startTime: item.startTime,
-          endTime: item.endTime
+          endTime: item.endTime,
         }));
 
         this.setState({
-          repairs: repairList
+          repairs: repairList,
         });
       })
       .catch(err => console.log(err));
@@ -84,22 +84,22 @@ export default class Repair extends React.Component {
 
   toggle = () => {
     this.setState(prevState => ({
-      modal: !prevState.modal
+      modal: !prevState.modal,
     }));
   };
 
   handleChangeRepair = id => {
     let changeRepair = this.state.repairs.filter(item => item.repairId === id);
-    console.log('changeRepair: ' + JSON.stringify(changeRepair)); // working
+    console.log("changeRepair: " + JSON.stringify(changeRepair)); // working
 
     let formatStartDate = moment(changeRepair[0].startDate).format(
-      'YYYY-MM-DD'
+      "YYYY-MM-DD"
     );
     let formatRecurStartDate = moment(
       changeRepair[0].recurrenceStartDate
-    ).format('YYYY-MM-DD');
+    ).format("YYYY-MM-DD");
     let formatRecurEndDate = moment(changeRepair[0].recurrenceEndDate).format(
-      'YYYY-MM-DD'
+      "YYYY-MM-DD"
     );
 
     this.setState({
@@ -119,7 +119,7 @@ export default class Repair extends React.Component {
       recurrenceStartDate: formatRecurStartDate,
       recurrenceEndDate: formatRecurEndDate,
       startTime: changeRepair[0].startTime,
-      endTime: changeRepair[0].endTime
+      endTime: changeRepair[0].endTime,
     });
 
     this.toggle();
@@ -135,14 +135,14 @@ export default class Repair extends React.Component {
     console.log(event.target);
     // Updating the input's state
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
   handleDeleteRepair(id) {
     var filtered = this.state.repairs.filter(item => item._id !== id);
     this.setState({
-      repairs: filtered
+      repairs: filtered,
     });
     API.deleteRepair(id)
       .then(this.loadRepairs())
@@ -171,25 +171,25 @@ export default class Repair extends React.Component {
       vendor: this.state.vendor,
       notes: this.state.notes,
       startTime: this.state.startTime,
-      endTime: this.state.endTime
+      endTime: this.state.endTime,
     };
 
-    if (this.state.recurrencePeriod !== 'never') {
+    if (this.state.recurrencePeriod !== "never") {
       let momentStart =
-        this.state.recurrenceStartDate + ' ' + this.state.startTime;
-      let momentEnd = this.state.recurrenceStartDate + ' ' + this.state.endTime;
+        this.state.recurrenceStartDate + " " + this.state.startTime;
+      let momentEnd = this.state.recurrenceStartDate + " " + this.state.endTime;
       let duration = moment
         .duration(
-          moment(momentEnd, 'YYYY/MM/DD HH:mm').diff(
-            moment(momentStart, 'YYYY/MM/DD HH:mm')
+          moment(momentEnd, "YYYY/MM/DD HH:mm").diff(
+            moment(momentStart, "YYYY/MM/DD HH:mm")
           )
         )
         .asHours();
 
-      console.log('duration: ' + duration);
+      console.log("duration: " + duration);
 
       let parsedRecurStart =
-        this.state.recurrenceStartDate + 'T' + this.state.startTime + ':00';
+        this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
       //    let parsedRecurEnd = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
 
       modifiedRepair.recurrenceStartDate = parsedRecurStart;
@@ -197,7 +197,7 @@ export default class Repair extends React.Component {
       modifiedRepair.recurrenceEndDate = this.state.recurrenceEndDate;
       modifiedRepair.duration = duration;
 
-      if (this.state.recurrencePeriod === 'daily') {
+      if (this.state.recurrencePeriod === "daily") {
         /*     let momentDayInterval = moment
                 .duration(moment(this.state.recurrenceEndDate, 'YYYY/MM/DD')
                 .diff(moment(this.state.recurrenceStartDate, 'YYYY/MM/DD'))
@@ -206,7 +206,7 @@ export default class Repair extends React.Component {
             console.log("momentDayInterval: " + momentDayInterval); */
 
         this.setState({
-          repeatInterval: 1
+          repeatInterval: 1,
         });
 
         modifiedRepair.repeatInterval = this.state.repeatInterval;
@@ -219,12 +219,12 @@ export default class Repair extends React.Component {
             freq: this.state.recurrencePeriod,
             interval: this.state.repeatInterval,
             dtstart: parsedRecurStart,
-            until: this.state.recurrenceEndDate
+            until: this.state.recurrenceEndDate,
           },
           duration: duration,
-          backgroundColor: 'yellow'
+          backgroundColor: "yellow",
         };
-      } else if (this.state.recurrencePeriod === 'weekly') {
+      } else if (this.state.recurrencePeriod === "weekly") {
         modifiedRepair.repeatInterval = this.state.repeatInterval;
 
         modifiedEvent = {
@@ -236,28 +236,28 @@ export default class Repair extends React.Component {
             interval: this.state.repeatInterval,
             byweekday: this.state.repeatDayOfWeek,
             dtstart: parsedRecurStart, // CHECK THIS //
-            until: this.state.recurrenceEndDate
+            until: this.state.recurrenceEndDate,
           },
           duration: duration,
-          backgroundColor: 'green'
+          backgroundColor: "green",
         };
       }
     } else {
-      let momentStart = this.state.startDate + ' ' + this.state.startTime;
-      let momentEnd = this.state.startDate + ' ' + this.state.endTime;
+      let momentStart = this.state.startDate + " " + this.state.startTime;
+      let momentEnd = this.state.startDate + " " + this.state.endTime;
       let duration = moment
         .duration(
-          moment(momentEnd, 'YYYY/MM/DD HH:mm').diff(
-            moment(momentStart, 'YYYY/MM/DD HH:mm')
+          moment(momentEnd, "YYYY/MM/DD HH:mm").diff(
+            moment(momentStart, "YYYY/MM/DD HH:mm")
           )
         )
         .asHours();
 
-      console.log('duration: ' + duration);
+      console.log("duration: " + duration);
 
       let parsedStart =
-        this.state.startDate + 'T' + this.state.startTime + ':00';
-      let parsedEnd = this.state.startDate + 'T' + this.state.endTime + ':00';
+        this.state.startDate + "T" + this.state.startTime + ":00";
+      let parsedEnd = this.state.startDate + "T" + this.state.endTime + ":00";
 
       modifiedRepair.startDate = parsedStart;
       modifiedRepair.duration = duration;
@@ -269,7 +269,7 @@ export default class Repair extends React.Component {
         title: this.state.title,
         start: parsedStart,
         end: parsedEnd,
-        editable: true
+        editable: true,
       };
     }
 
@@ -290,30 +290,30 @@ export default class Repair extends React.Component {
       .then(response => {
         //  console.log(response);
         this.setState({
-          repairs: response.data
+          repairs: response.data,
         });
       })
       .catch(err => console.log(err));
 
     this.setState({
-      changeRepairId: '',
-      repairType: '',
-      title: '',
-      startDate: '',
-      recurrencePeriod: 'never',
+      changeRepairId: "",
+      repairType: "",
+      title: "",
+      startDate: "",
+      recurrencePeriod: "never",
       repeatInterval: 1,
-      repeatDayOfWeek: '',
-      recurrenceStartDate: '',
-      recurrenceEndDate: '',
-      startTime: '',
-      endTime: '',
+      repeatDayOfWeek: "",
+      recurrenceStartDate: "",
+      recurrenceEndDate: "",
+      startTime: "",
+      endTime: "",
       cost: 0,
-      priority: 'low',
-      status: 'Thinking about it!',
+      priority: "low",
+      status: "Thinking about it!",
       isVendor: false,
-      vendor: '',
-      notes: '',
-      editable: true
+      vendor: "",
+      notes: "",
+      editable: true,
     });
   };
 
@@ -331,8 +331,8 @@ export default class Repair extends React.Component {
           <div className="card-body">
             <div className="text-right">
               <a className="btn btn-info" href="/AddRepair/">
-                <i class="fa fa-plus-circle" aria-hidden="true" /> &nbsp; Add
-                Task
+                <i className="fa fa-plus-circle" aria-hidden="true" /> &nbsp;
+                Add Task
               </a>
             </div>
             <br />
@@ -341,7 +341,7 @@ export default class Repair extends React.Component {
                 this.state.repairs.map(item => (
                   <Card
                     className="repair-card"
-                    style={{ borderColor: '#333' }}
+                    style={{ borderColor: "#333" }}
                     key={item.repairId}
                   >
                     <CardBody>
@@ -369,28 +369,28 @@ export default class Repair extends React.Component {
                               <p>Vendor: {item.vendor}</p>
                             </Row>
 
-                            {item.recurrencePeriod === 'never' ? (
+                            {item.recurrencePeriod === "never" ? (
                               <Row>
                                 <p>
-                                  Scheduled For:{' '}
-                                  {moment(item.startDate).format('MM/DD/YYYY')}{' '}
+                                  Scheduled For:{" "}
+                                  {moment(item.startDate).format("MM/DD/YYYY")}{" "}
                                 </p>
                               </Row>
                             ) : (
                               <span />
                             )}
 
-                            {item.recurrencePeriod === 'weekly' ? (
+                            {item.recurrencePeriod === "weekly" ? (
                               <Row>
                                 <p>
                                   Scheduled every {item.repeatInterval} week(s)
-                                  from{' '}
+                                  from{" "}
                                   {moment(item.recurrenceStartDate).format(
-                                    'MM/DD/YYYY'
-                                  )}{' '}
-                                  to{' '}
+                                    "MM/DD/YYYY"
+                                  )}{" "}
+                                  to{" "}
                                   {moment(item.recurrenceEndDate).format(
-                                    'MM/DD/YYYY'
+                                    "MM/DD/YYYY"
                                   )}
                                 </p>
                               </Row>
@@ -398,16 +398,16 @@ export default class Repair extends React.Component {
                               <span />
                             )}
 
-                            {item.recurrencePeriod === 'daily' ? (
+                            {item.recurrencePeriod === "daily" ? (
                               <Row>
                                 <p>
-                                  Scheduled from:{' '}
+                                  Scheduled from:{" "}
                                   {moment(item.recurrenceStartDate).format(
-                                    'MM/DD/YYYY'
-                                  )}{' '}
-                                  to{' '}
+                                    "MM/DD/YYYY"
+                                  )}{" "}
+                                  to{" "}
                                   {moment(item.recurrenceEndDate).format(
-                                    'MM/DD/YYYY'
+                                    "MM/DD/YYYY"
                                   )}
                                 </p>
                               </Row>
@@ -451,7 +451,7 @@ export default class Repair extends React.Component {
             <ModalBody>
               <Form>
                 <FormGroup>
-                  <Label for="repairType">Type</Label>
+                  <Label htmlFor="repairType">Type</Label>
                   <Input
                     type="select"
                     id="repairTypeSelect"
@@ -467,7 +467,7 @@ export default class Repair extends React.Component {
                   </Input>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="repairDescription">Description</Label>
+                  <Label htmlFor="repairDescription">Description</Label>
                   <Input
                     type="text"
                     id="repairDescriptionInput"
@@ -479,7 +479,7 @@ export default class Repair extends React.Component {
                 </FormGroup>
 
                 <FormGroup>
-                  <Label for="recurringPeriod">Repeat</Label>
+                  <Label htmlFor="recurringPeriod">Repeat</Label>
                   <Input
                     type="select"
                     defaultValue={this.state.recurrencePeriod}
@@ -495,12 +495,12 @@ export default class Repair extends React.Component {
                   </Input>
                 </FormGroup>
 
-                {this.state.recurrencePeriod === 'daily' ||
-                this.state.recurrencePeriod === 'weekly' ? (
+                {this.state.recurrencePeriod === "daily" ||
+                this.state.recurrencePeriod === "weekly" ? (
                   <Row>
                     <Col md={6}>
                       <FormGroup>
-                        <Label for="recurrence-start-date-input">
+                        <Label htmlFor="recurrence-start-date-input">
                           Start Date
                         </Label>
                         <Input
@@ -515,7 +515,7 @@ export default class Repair extends React.Component {
                     </Col>
                     <Col md={6}>
                       <FormGroup>
-                        <Label for="end-date-input">End By Date</Label>
+                        <Label htmlFor="end-date-input">End By Date</Label>
                         <Input
                           type="date"
                           id="end-date-input"
@@ -531,7 +531,7 @@ export default class Repair extends React.Component {
                   <Row>
                     <Col md={6}>
                       <FormGroup>
-                        <Label for="start-date-input">Start Date</Label>
+                        <Label htmlFor="start-date-input">Start Date</Label>
                         <Input
                           type="date"
                           id="start-date-input"
@@ -548,7 +548,7 @@ export default class Repair extends React.Component {
                 <Row form>
                   <Col md={6}>
                     <FormGroup>
-                      <Label for="start-time-input">Start Time</Label>
+                      <Label htmlFor="start-time-input">Start Time</Label>
                       <Input
                         type="time"
                         id="start-time-input"
@@ -561,7 +561,7 @@ export default class Repair extends React.Component {
                   </Col>
                   <Col md={6}>
                     <FormGroup>
-                      <Label for="end-time-input">End Time</Label>
+                      <Label htmlFor="end-time-input">End Time</Label>
                       <Input
                         type="time"
                         id="end-time-input"
@@ -574,12 +574,12 @@ export default class Repair extends React.Component {
                   </Col>
                 </Row>
 
-                {this.state.recurrencePeriod === 'weekly' ? (
+                {this.state.recurrencePeriod === "weekly" ? (
                   <div>
                     <Row form>
                       <Col md={6}>
                         <FormGroup>
-                          <Label for="repeatInterval">every</Label>
+                          <Label htmlFor="repeatInterval">every</Label>
                           <Input
                             type="select"
                             name="repeatInterval"
@@ -597,7 +597,7 @@ export default class Repair extends React.Component {
                       </Col>
                       <Col md={6}>
                         <FormGroup>
-                          <Label for="repeatDayOfWeek">on</Label>
+                          <Label htmlFor="repeatDayOfWeek">on</Label>
                           <Input
                             type="select"
                             defaultValue={this.state.repeatDayOfWeek}
@@ -624,7 +624,7 @@ export default class Repair extends React.Component {
                 <Row form>
                   <Col md={4}>
                     <FormGroup>
-                      <Label for="repairCost"> Repair Cost</Label>
+                      <Label htmlFor="repairCost"> Repair Cost</Label>
                       <Input
                         type="number"
                         id="repairCostInput"
@@ -637,7 +637,7 @@ export default class Repair extends React.Component {
                   </Col>
                   <Col md={4}>
                     <FormGroup>
-                      <Label for="repairPriority">Repair Priority</Label>
+                      <Label htmlFor="repairPriority">Repair Priority</Label>
                       <Input
                         type="select"
                         id="repairPrioritySelect"
@@ -654,7 +654,7 @@ export default class Repair extends React.Component {
                   </Col>
                   <Col md={4}>
                     <FormGroup>
-                      <Label for="repairStatus">Repair Status</Label>
+                      <Label htmlFor="repairStatus">Repair Status</Label>
                       <Input
                         type="select"
                         id="repairStatusSelect"
@@ -674,7 +674,9 @@ export default class Repair extends React.Component {
                 <FormGroup>
                   <Row form>
                     <Col md={4}>
-                      <Label for="isVendor">Assign a Contractor/Vendor?</Label>
+                      <Label htmlFor="isVendor">
+                        Assign a Contractor/Vendor?
+                      </Label>
                     </Col>
                     <Col md={4}>
                       <input
@@ -689,7 +691,7 @@ export default class Repair extends React.Component {
 
                 {this.state.isVendor ? (
                   <FormGroup>
-                    <Label for="repairVendor" />
+                    <Label htmlFor="repairVendor" />
                     <Input
                       type="select"
                       id="repairVendorSelect"
@@ -707,7 +709,9 @@ export default class Repair extends React.Component {
                 )}
 
                 <FormGroup>
-                  <Label for="repairNotes">Additional Notes/Instruction</Label>
+                  <Label htmlFor="repairNotes">
+                    Additional Notes/Instruction
+                  </Label>
                   <Input
                     type="textarea"
                     id="repairNotesInput"

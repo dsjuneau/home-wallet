@@ -39,8 +39,8 @@ export default {
   //  Gets all repairs from database
   getRepairs: function(id) {
     console.log("API.getRepairs: " + id);
-//    return axios.get("/api/repairs/user/" + id);
-    return axios.get("/api/repairs/");
+    return axios.get("/api/repairs/user/" + id);
+//    return axios.get("/api/repairs/");
   },
  
   // Gets the repair with the given id

@@ -202,9 +202,11 @@ export class Private extends Component {
             render={props => <Vendors {...props} userId={this.props.user.id} />}
           />
           <Route
-            userId={this.props.user.id}
+            // userId={this.props.user.id}
+           
             path="/Repairs/"
-            component={Repairs}
+            render={() => <Repairs userId={this.props.user.id} />}
+        //    component={Repairs}
           />
           <Route
             userId={this.props.user.id}

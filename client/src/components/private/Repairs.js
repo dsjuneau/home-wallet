@@ -710,7 +710,7 @@ render() {
         onClick={this.handleFormSubmit}
         className="btn btn-block btn-success mt-3"
     >
-        Add
+        Update
     </button>
     </Form>
         </ModalBody>

@@ -441,7 +441,7 @@ export default class Calendar extends React.Component {
         name="repeatDayOfWeek"
         onChange={this.handleInputChange}
         >
-        <option selected value="SU">Sunday</option>
+        <option value="SU">Sunday</option>
         <option value="MO">Monday</option>
         <option value="TU">Tuesday</option>
         <option value="WE">Wednesday</option>

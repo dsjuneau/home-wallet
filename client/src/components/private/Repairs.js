@@ -245,7 +245,7 @@ handleFormSubmit = event => {
                     freq: this.state.recurrencePeriod,
                     interval: this.state.repeatInterval,
                     byweekday: this.state.repeatDayOfWeek,
-                    dtstart: parsedRecurStart,
+                    dtstart: parsedRecurStart,                // CHECK THIS //
                     until: this.state.recurrenceEndDate,
                 },
                 duration: duration,

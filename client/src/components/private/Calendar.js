@@ -19,7 +19,7 @@ export default class Calendar extends React.Component {
         userId: this.props.userId,
         repairId: "",
     //   search: "",
-        repairType: "",
+        repairType: "Repair",
         title: "",
         recurrencePeriod: "never",
         repeatInterval: 1,
@@ -303,7 +303,6 @@ export default class Calendar extends React.Component {
         <Input
         type="select"
         id="repairTypeSelect"
-        defaultValue="Repair"
         value={this.state.repairType}
         name="repairType"
         onChange={this.handleInputChange}
@@ -329,7 +328,6 @@ export default class Calendar extends React.Component {
         <Label for="recurringPeriod">Repeat</Label>
         <Input
         type="select"
-        defaultValue="Never"
         value={this.state.recurrencePeriod}
         name="recurrencePeriod"
         onChange={this.handleInputChange}
@@ -423,7 +421,6 @@ export default class Calendar extends React.Component {
         <Input
         type="select"
         name="repeatInterval"
-        defaultValue={1}
         value={this.state.repeatInterval}
         onChange={this.handleInputChange}   
         >
@@ -467,7 +464,6 @@ export default class Calendar extends React.Component {
         <Input
         type="number"
         id="repairCostInput"
-        defaultValue={0}
         value={this.state.cost}
         name="cost"
         onChange={this.handleInputChange}
@@ -480,7 +476,6 @@ export default class Calendar extends React.Component {
         <Input
         type="select"
         id="repairPrioritySelect"
-        defaultValue= "low"
         value={this.state.priority}
         name="priority"
         onChange={this.handleInputChange}
@@ -497,7 +492,6 @@ export default class Calendar extends React.Component {
         <Input
         type="select"
         id="repairStatusSelect"
-        defaultValue="Thinking about it!"
         value={this.state.status}
         name="status"
         onChange={this.handleInputChange}
@@ -556,9 +550,6 @@ export default class Calendar extends React.Component {
         onChange={this.handleInputChange}
         />
         </FormGroup>
-
-
-
     <button
         onClick={this.handleFormSubmit}
         className="btn btn-block btn-success mt-3"

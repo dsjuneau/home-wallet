@@ -35,7 +35,8 @@ export class Private extends Component {
   }
 
   componentDidMount() {
-    axios.get("/api/home").then(res => {
+    var homeId = this.props.user.id;
+    axios.get(`/api/home/${homeId}`).then(res => {
       if (res.data.length > 0) {
         this.setState({
           homeProfile: res.data[0],

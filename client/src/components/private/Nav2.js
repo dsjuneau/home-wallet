@@ -127,7 +127,7 @@ export default function Nav(props) {
               <div className="row">
                 <a
                   href="/"
-                  className="btn btn-sm btn-danger ml-auto"
+                  className="btn btn-sm btn-danger mx-auto"
                   onClick={props.handleDeleteProfile}
                 >
                   <i className="fas fa-trash-alt" /> Delete Profile
@@ -195,26 +195,37 @@ export default function Nav(props) {
                         Zillow
                       </a>
                     </h4>
-                    <p>
-                      Year Built: {props.zillowData.yearBuilt}
-                      <br />
-                      Beds: {props.zillowData.bedrooms}
-                      <br />
-                      Baths: {props.zillowData.bathrooms}
-                      <br />
-                      Square Footage: {props.zillowData.gla} <br />
-                      Lot Size: {props.zillowData.lotSize} sf
-                      <br />
-                      Tax Assessment for {props.zillowData.taxYear}: $
-                      {props.zillowData.taxAssessment}
-                      <br />
-                      Zestimate Range: ${props.zillowData.zestimateLow} -
-                      {props.zillowData.zestimateHigh}
-                      <br />
-                      Zestimate: ${props.zillowData.zestimate}
-                    </p>
-
                     <form>
+                      <p>
+                        Year Built: {props.zillowData.yearBuilt}
+                        <br />
+                        Beds: {props.zillowData.bedrooms}
+                        <br />
+                        Baths: {props.zillowData.bathrooms}
+                        <br />
+                        Square Footage: {props.zillowData.gla} <br />
+                        Lot Size: {props.zillowData.lotSize} sf
+                        <br />
+                        Tax Assessment for {props.zillowData.taxYear}: $
+                        {props.zillowData.taxAssessment}
+                        <br />
+                        Zestimate Range: ${props.zillowData.zestimateLow} -
+                        {props.zillowData.zestimateHigh}
+                        <br />
+                        Zestimate: ${props.zillowData.zestimate}
+                      </p>
+                      <div className="form-group">
+                        <label htmlFor="yearBuilt">Year Built</label>
+                        <input
+                          type="text"
+                          id="yearBuilt"
+                          defaultValue={props.zillowData.yearBuilt}
+                          // value={props.zillowData.yearBuilt}
+                          name="yearBuilt"
+                          onChange={props.handleInputChange}
+                        />
+                      </div>
+
                       <div className="form-group">
                         <div className="row">
                           <div className="col-4">

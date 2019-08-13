@@ -1,5 +1,5 @@
 import React from "react";
-import funnyImage from "../../funny_house.jpg";
+import funnyImage from "../../images/funny_house.jpg";
 
 export default function NoMatch() {
   return (

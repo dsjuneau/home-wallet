@@ -4,7 +4,10 @@ import moment from "moment";
 import API from "../../utils/API";
 
 export default class AddRepair extends Component {
-  state = {
+  constructor(props) {
+    super(props);
+
+  this.state = {
     userId: this.props.userId,
     repairId: "",
     repairType: "Repair",
@@ -28,6 +31,8 @@ export default class AddRepair extends Component {
     modal: false,
   };
 
+}
+
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
@@ -41,7 +46,7 @@ export default class AddRepair extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-
+    console.log(this.props);
     let newEvent;
 
     let newRepair = {

@@ -256,9 +256,10 @@ export class Private extends Component {
               )}
             />
             <Route
-              userId={this.props.user.id}
+            //  userId={this.props.user.id}
+              render={() => <AddRepair userId={this.props.user.id} />}
               path="/AddRepair/"
-              component={AddRepair}
+            //  component={AddRepair}
             />
             {/* <Route
               path="/AddDocument/"

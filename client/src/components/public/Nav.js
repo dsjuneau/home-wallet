@@ -28,7 +28,7 @@ export default class Nav extends React.Component {
           <div className="container">
             <a className="navbar-brand " href="/">
               <h1>
-                My Home Wallet <i className="fas fa-wallet" />
+                Home Wallet <i className="fas fa-wallet" />
               </h1>
             </a>
 

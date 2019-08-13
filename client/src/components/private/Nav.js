@@ -22,7 +22,7 @@ export default function Nav(props) {
         <div className="container">
           <a className="navbar-brand " href="/">
             <h1>
-              My Home Wallet <i className="fas fa-wallet" />
+              Home Wallet <i className="fas fa-wallet" />
             </h1>
           </a>
           <Dropdown isOpen={props.dropdownOpen} toggle={props.toggleNav}>
@@ -127,7 +127,7 @@ export default function Nav(props) {
               <div className="row">
                 <a
                   href="/"
-                  className="btn btn-sm btn-danger ml-auto"
+                  className="btn btn-sm btn-danger mx-auto"
                   onClick={props.handleDeleteProfile}
                 >
                   <i className="fas fa-trash-alt" /> Delete Profile

@@ -10,12 +10,14 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
+
 import MakeProfile from "./MakeProfile.js";
 import Profile from "./Profile.js";
 
 export default function Nav(props) {
   const { newHomeProfile } = props;
   let currentProfile = newHomeProfile;
+  // console.log(props);
 
   return (
     <div>
@@ -78,21 +80,38 @@ export default function Nav(props) {
       </nav>
 
       {props.hasZillow && props.hasHomeProfile ? (
-        <Profile
-          streetAddress={currentProfile.streetAddress}
-          lotSize={currentProfile.lotSize}
-          taxYear={currentProfile.taxYear}
-          taxAssessment={currentProfile.taxAssessment}
-          zestimate={currentProfile.zestimate}
-          gla={currentProfile.gla}
-          bedrooms={currentProfile.bedrooms}
-          bathrooms={currentProfile.bathrooms}
-          yearBuilt={currentProfile.yearBuilt}
-          parking={currentProfile.parking}
-          hasPool={currentProfile.hasPool}
-          hasFence={currentProfile.hasFence}
-          handleDeleteProfile={props.handleDeleteProfile}
-        />
+        <div>
+          {!props.isProfileOpen ? (
+            <div className="container">
+              <button className="btn btn-light" onClick={props.showProfile}>
+                <i className="fas fa-minus" />
+              </button>
+            </div>
+          ) : (
+            <div>
+              <div className="container">
+                <button className="btn btn-light" onClick={props.showProfile}>
+                  <i className="fas fa-plus" />
+                </button>
+              </div>
+              <Profile
+                streetAddress={currentProfile.streetAddress}
+                lotSize={currentProfile.lotSize}
+                taxYear={currentProfile.taxYear}
+                taxAssessment={currentProfile.taxAssessment}
+                zestimate={currentProfile.zestimate}
+                gla={currentProfile.gla}
+                bedrooms={currentProfile.bedrooms}
+                bathrooms={currentProfile.bathrooms}
+                yearBuilt={currentProfile.yearBuilt}
+                parking={currentProfile.parking}
+                hasPool={currentProfile.hasPool}
+                hasFence={currentProfile.hasFence}
+                handleDeleteProfile={props.handleDeleteProfile}
+              />
+            </div>
+          )}
+        </div>
       ) : (
         <div>
           <div className="container">

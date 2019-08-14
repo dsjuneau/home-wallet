@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Nav from "./Nav";
+import Nav from "./Nav2";
 import Calendar from "./Calendar";
 import Footer from "./Footer";
 import Vendors from "./Vendors";
@@ -30,7 +30,7 @@ export class Private extends Component {
       parking: "",
       hasPool: false,
       hasFence: false,
-
+      isProfileOpen: false,
       profileModal: false,
       zillowModal: false,
       dropdownOpen: false,

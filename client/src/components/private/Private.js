@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Nav from "./Nav";
+import Nav from "./Nav2";
 import Calendar from "./Calendar";
 import Footer from "./Footer";
 import Vendors from "./Vendors";
@@ -17,6 +17,7 @@ export class Private extends Component {
     super(props);
     this.toggleZillowModal = this.toggleZillowModal.bind(this);
     this.toggleNav = this.toggleNav.bind(this);
+    this.showProfile = this.showProfile.bind(this);
 
     this.state = {
       zillowData: {},
@@ -26,6 +27,7 @@ export class Private extends Component {
       hasFence: false,
       parking: "",
       profileModal: false,
+      isProfileOpen: true,
       zillowModal: false,
       dropdownOpen: false,
       homeProfile: {},
@@ -153,6 +155,12 @@ export class Private extends Component {
     }));
   }
 
+  showProfile() {
+    this.setState(prevState => ({
+      isProfileOpen: !prevState.isProfileOpen,
+    }));
+  }
+
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
@@ -211,6 +219,8 @@ export class Private extends Component {
           dropdownOpen={this.state.dropdownOpen}
           clearProfile={this.clearProfile}
           handleLogout={this.handleLogout}
+          showProfile={this.showProfile}
+          isProfileOpen={this.state.isProfileOpen}
           hasHomeProfile={this.state.hasHomeProfile}
           hasZillow={this.state.hasZillow}
           zillowData={this.state.zillowData}

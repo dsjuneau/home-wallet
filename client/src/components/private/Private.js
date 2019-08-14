@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Nav from "./Nav";
+import Nav from "./Nav2";
 import Calendar from "./Calendar";
 import Footer from "./Footer";
 import Vendors from "./Vendors";
@@ -22,9 +22,15 @@ export class Private extends Component {
       zillowData: {},
       streetAddress: "",
       zipCode: "",
+      yearBuilt: "",
+      bedrooms: "",
+      bathrooms: "",
+      gla: "",
+      lotSize: "",
+      parking: "",
       hasPool: false,
       hasFence: false,
-      parking: "",
+
       profileModal: false,
       zillowModal: false,
       dropdownOpen: false,
@@ -63,6 +69,11 @@ export class Private extends Component {
       parking,
       hasHomeProfile,
       hasZillow,
+      yearBuilt,
+      bedrooms,
+      bathrooms,
+      gla,
+      lotSize,
     } = this.state;
 
     let formProfile = {
@@ -74,11 +85,11 @@ export class Private extends Component {
       hasPool,
       hasFence,
       parking,
-      yearBuilt: zillowData.yearBuilt,
-      bedrooms: zillowData.bedrooms,
-      bathrooms: zillowData.bathrooms,
-      gla: zillowData.gla,
-      lotSize: zillowData.lotSize,
+      yearBuilt,
+      bedrooms,
+      bathrooms,
+      gla,
+      lotSize,
       taxAssessment: zillowData.taxAssessment,
       taxYear: zillowData.taxYear,
       zestimate: zillowData.zestimate,
@@ -257,10 +268,10 @@ export class Private extends Component {
               )}
             />
             <Route
-            //  userId={this.props.user.id}
+              //  userId={this.props.user.id}
               render={() => <AddRepair userId={this.props.user.id} />}
               path="/AddRepair/"
-            //  component={AddRepair}
+              //  component={AddRepair}
             />
             {/* <Route
               path="/AddDocument/"

@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
+import MakeProfile from "./MakeProfile.js";
 import Profile from "./Profile.js";
 
 export default function Nav(props) {
@@ -22,7 +23,7 @@ export default function Nav(props) {
         <div className="container">
           <a className="navbar-brand " href="/">
             <h1>
-              My Home Wallet <i className="fas fa-wallet" />
+              Home Wallet <i className="fas fa-wallet" />
             </h1>
           </a>
           <Dropdown isOpen={props.dropdownOpen} toggle={props.toggleNav}>
@@ -39,7 +40,7 @@ export default function Nav(props) {
                   <i className="fas fa-home" /> Main
                 </a>
               </DropdownItem>
-              {/* Calendar removed as it is the default and Documents not working right now */}
+              {/* Calendar option removed as it is the default and Documents are  not working right now */}
               {/*  <DropdownItem>
                   {" "}
                   <a className="dropdown-item" href="/">
@@ -77,65 +78,21 @@ export default function Nav(props) {
       </nav>
 
       {props.hasZillow && props.hasHomeProfile ? (
-        <div className="container mb-5">
-          <div className="card">
-            <div>
-              <div className="row mt-2">
-                <h5 className="mx-auto">
-                  <strong>
-                    Profile for {currentProfile.streetAddress} <span />
-                  </strong>
-                </h5>
-              </div>
-              <div className="row">
-                <div className="col-4">
-                  <p>
-                    <strong>Lot Size:</strong>
-                    <span> {currentProfile.lotSize}</span> sf
-                    <br />
-                    <strong>
-                      Tax Assessment for {currentProfile.taxYear}:
-                    </strong>
-                    <span>${currentProfile.taxAssessment}</span>
-                    <br />
-                    <strong>Zestimate:</strong> ${currentProfile.zestimate}
-                    <br />
-                  </p>
-                </div>
-                <div className="col-4">
-                  <p>
-                    <strong>Square Footage:</strong> {currentProfile.gla} <br />
-                    <strong>Beds:</strong> {currentProfile.bedrooms}
-                    <br />
-                    <strong>Baths:</strong> {currentProfile.bathrooms}
-                    <br />
-                    <strong>Year Built: </strong> {currentProfile.yearBuilt}
-                    <br />
-                  </p>
-                </div>
-
-                <div className="col-4">
-                  <strong>Parking: </strong> {currentProfile.parking}
-                  <br />
-                  <strong>Pool: </strong>{" "}
-                  {currentProfile.hasPool ? " Yes" : "No"}
-                  <br />
-                  <strong>Fence: </strong>{" "}
-                  {currentProfile.hasFence ? " Yes" : "No"} <br />
-                </div>
-              </div>
-              <div className="row">
-                <a
-                  href="/"
-                  className="btn btn-sm btn-danger mx-auto"
-                  onClick={props.handleDeleteProfile}
-                >
-                  <i className="fas fa-trash-alt" /> Delete Profile
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Profile
+          streetAddress={currentProfile.streetAddress}
+          lotSize={currentProfile.lotSize}
+          taxYear={currentProfile.taxYear}
+          taxAssessment={currentProfile.taxAssessment}
+          zestimate={currentProfile.zestimate}
+          gla={currentProfile.gla}
+          bedrooms={currentProfile.bedrooms}
+          bathrooms={currentProfile.bathrooms}
+          yearBuilt={currentProfile.yearBuilt}
+          parking={currentProfile.parking}
+          hasPool={currentProfile.hasPool}
+          hasFence={currentProfile.hasFence}
+          handleDeleteProfile={props.handleDeleteProfile}
+        />
       ) : (
         <div>
           <div className="container">
@@ -150,7 +107,7 @@ export default function Nav(props) {
                 </Button>
               </ModalHeader>
               <ModalBody>
-                <Profile
+                <MakeProfile
                   hasHomeProfile={props.hasHomeProfile}
                   streetAddress={props.streetAddress}
                   zipCode={props.zipCode}
@@ -178,7 +135,7 @@ export default function Nav(props) {
             <ModalBody>
               <div className="container">
                 <div className="card">
-                  <div className="card-header mb-4 bg-secondary text-white">
+                  <div className="card-header  bg-secondary text-white">
                     <h3 className="text-center mt-2 ">
                       <i className="fas fa-home" />
                       &nbsp; Tell us about {props.streetAddress}
@@ -195,37 +152,88 @@ export default function Nav(props) {
                         Zillow
                       </a>
                     </h4>
-                    <form>
-                      <p>
-                        Year Built: {props.zillowData.yearBuilt}
-                        <br />
-                        Beds: {props.zillowData.bedrooms}
-                        <br />
-                        Baths: {props.zillowData.bathrooms}
-                        <br />
-                        Square Footage: {props.zillowData.gla} <br />
-                        Lot Size: {props.zillowData.lotSize} sf
-                        <br />
-                        Tax Assessment for {props.zillowData.taxYear}: $
-                        {props.zillowData.taxAssessment}
-                        <br />
-                        Zestimate Range: ${props.zillowData.zestimateLow} -
-                        {props.zillowData.zestimateHigh}
-                        <br />
-                        Zestimate: ${props.zillowData.zestimate}
-                      </p>
-                      <div className="form-group">
-                        <label htmlFor="yearBuilt">Year Built</label>
+                    <div className="row mt-3">
+                      <div className="col-4">
+                        <div className="form-group">
+                          <label htmlFor="yearBuilt"> Year Built:</label>
+                        </div>
+                      </div>
+                      <div className="col-6">
                         <input
                           type="text"
                           id="yearBuilt"
                           defaultValue={props.zillowData.yearBuilt}
-                          // value={props.zillowData.yearBuilt}
                           name="yearBuilt"
                           onChange={props.handleInputChange}
                         />
                       </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-4">
+                        <div className="form-group">
+                          <label htmlFor="bedrooms"> Bedrooms:</label>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <input
+                          type="text"
+                          id="bedrooms"
+                          defaultValue={props.zillowData.bedrooms}
+                          name="bedrooms"
+                          onChange={props.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-4">
+                        <div className="form-group">
+                          <label htmlFor="bathrooms"> Bathrooms:</label>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <input
+                          type="text"
+                          id="bathrooms"
+                          defaultValue={props.zillowData.bathrooms}
+                          name="bathrooms"
+                          onChange={props.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-4">
+                        <div className="form-group">
+                          <label htmlFor="gla"> Square Footage:</label>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <input
+                          type="text"
+                          id="gla"
+                          defaultValue={props.zillowData.gla}
+                          name="gla"
+                          onChange={props.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-4">
+                        <div className="form-group">
+                          <label htmlFor="lotSize"> Lot Size:</label>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <input
+                          type="text"
+                          id="lotSize"
+                          defaultValue={props.zillowData.lotSize}
+                          name="lotSize"
+                          onChange={props.handleInputChange}
+                        />
+                      </div>
+                    </div>
 
+                    <form>
                       <div className="form-group">
                         <div className="row">
                           <div className="col-4">
@@ -233,7 +241,7 @@ export default function Nav(props) {
                               Check if you have a pool?{" "}
                             </label>
                           </div>
-                          <div className="col-8">
+                          <div className="col">
                             <input
                               value={props.hasPool}
                               type="checkbox"
@@ -241,13 +249,15 @@ export default function Nav(props) {
                               checked={props.hasPool}
                               onChange={props.handlePoolCheck}
                             />
-                          </div>
+                          </div>{" "}
+                        </div>
+                        <div className="row">
                           <div className="col-4">
                             <label htmlFor="hasFence">
                               Check if you have a fence?
                             </label>
                           </div>
-                          <div className="col-8">
+                          <div className="col-4">
                             <input
                               value={props.hasFence}
                               type="checkbox"
@@ -260,11 +270,11 @@ export default function Nav(props) {
                       </div>
                       <div className="form-group">
                         <div className="row">
-                          <div className="col-3">
+                          <div className="col-4">
                             <label />
                             Parking
                           </div>
-                          <div className="col-8">
+                          <div className="col">
                             <select
                               className="form-control"
                               id="parking"

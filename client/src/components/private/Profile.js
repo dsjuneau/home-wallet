@@ -1,127 +1,64 @@
-import React, { Component } from "react";
-import { Alert } from "reactstrap";
-import axios from "axios";
+import React from "react";
 
-export default class Profile extends Component {
-  handleZillowCall = event => {
-    event.preventDefault();
-    const { zipCode, streetAddress } = this.props;
-    if (zipCode && streetAddress) {
-      console.log("got zip and street");
+export default function Profile(props) {
+  // console.log("Props for Profile", props);
+  return (
+    <div>
+      <div className="container mb-5">
+        <div className="card">
+          <div>
+            <div className="row mt-2">
+              <h5 className="mx-auto">
+                <strong>
+                  Profile for {props.streetAddress} <span />
+                </strong>
+              </h5>
+            </div>
+            <div className="row">
+              <div className="col-4">
+                <p>
+                  <strong>Lot Size:</strong>
+                  <span> {props.lotSize}</span> sf
+                  <br />
+                  <strong>Tax Assessment for {props.taxYear}:</strong>
+                  <span>${props.taxAssessment}</span>
+                  <br />
+                  <strong>Zestimate:</strong> ${props.zestimate}
+                  <br />
+                </p>
+              </div>
+              <div className="col-4">
+                <p>
+                  <strong>Square Footage:</strong> {props.gla} <br />
+                  <strong>Beds:</strong> {props.bedrooms}
+                  <br />
+                  <strong>Baths:</strong> {props.bathrooms}
+                  <br />
+                  <strong>Year Built: </strong> {props.yearBuilt}
+                  <br />
+                </p>
+              </div>
 
-      axios
-        .get(`/api/zillow/${streetAddress}/${zipCode}`)
-        .then(function(req, response) {
-          console.log(req);
-          console.log(response);
-        });
-    } else {
-      alert("street address and zip code are required");
-    }
-  };
-
-  handleFormSubmit = event => {
-    // Preventing the default behavior of the form submit (which is to refresh the page)
-    event.preventDefault();
-    this.setState({
-      city: "",
-      zipCode: "",
-      streetAddress: "",
-      state: "",
-      hasHomeProfile: true,
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <div className="container">
-          <div className="card mt-2" />
-          <div className="card-header mb-4 bg-secondary text-white">
-            <h3 className="text-center mt-4 ">
-              <i className="fas fa-home" />
-              &nbsp; Enter your Address
-            </h3>
-          </div>
-          <div className="card-body">
-            <div className="card-body mt-2">
-              <form>
-                <div className="form-group">
-                  <label>Street Address</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="addressInput"
-                    value={this.props.streetAddress}
-                    name="streetAddress"
-                    onChange={this.props.handleInputChange}
-                    placeholder="123 Main St"
-                  />
-                </div>
-                {/* Street Address */}
-                <div className="form-group">
-                  <label>City</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cityInput"
-                    value={this.props.city}
-                    name="city"
-                    onChange={this.props.handleInputChange}
-                    placeholder="Dallas"
-                  />
-                </div>
-                {/* City */}
-                <div className="form-group">
-                  <label />
-                  State
-                  <select
-                    className="form-control"
-                    id="state"
-                    value={this.props.state}
-                    name="state"
-                    onChange={this.props.handleInputChange}
-                  >
-                    <option>TX </option>
-                    <option>OK </option>
-                    <option>MI </option>
-                  </select>
-                </div>
-                {/* State */}
-                <div className="form-group">
-                  <label>Zip Code </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="zipInput"
-                    value={this.props.zipCode}
-                    name="zipCode"
-                    onChange={this.props.handleInputChange}
-                    placeholder="12345"
-                  />
-                </div>
-                {/* Zip Code */}
-                <div>
-                  <button
-                    className="btn btn-info btn-block"
-                    onClick={this.props.handleZillowCall}
-                  >
-                    Get Records from Zillow
-                  </button>
-                </div>
-                {this.props.isError ? (
-                  <Alert
-                    className="alert-danger mt-2 text-center"
-                    isOpen={this.props.isError}
-                  >
-                    {this.props.errorMsg}
-                  </Alert>
-                ) : null}
-              </form>
+              <div className="col-4">
+                <strong>Parking: </strong> {props.parking}
+                <br />
+                <strong>Pool: </strong> {props.hasPool ? " Yes" : "No"}
+                <br />
+                <strong>Fence: </strong> {props.hasFence ? " Yes" : "No"} <br />
+              </div>
+            </div>
+            <div className="row">
+              <a
+                href="/"
+                className="btn btn-sm btn-danger mx-auto"
+                onClick={props.handleDeleteProfile}
+              >
+                <i className="fas fa-trash-alt" /> Delete Profile
+              </a>
             </div>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }

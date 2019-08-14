@@ -10,7 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
-import Profile from "./Profile.js";
+import MakeProfile from "./MakeProfile.js";
 
 export default function Nav(props) {
   const { newHomeProfile } = props;
@@ -150,7 +150,7 @@ export default function Nav(props) {
                 </Button>
               </ModalHeader>
               <ModalBody>
-                <Profile
+                <MakeProfile
                   hasHomeProfile={props.hasHomeProfile}
                   streetAddress={props.streetAddress}
                   zipCode={props.zipCode}
@@ -171,7 +171,7 @@ export default function Nav(props) {
         <div className="container">
           <Modal
             isOpen={props.zillowModal}
-            toggle={props.toggle2}
+            toggle={props.toggleZillowModal}
             className={props.className}
           >
             <ModalHeader className="ml-auto" />

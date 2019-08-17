@@ -8,7 +8,6 @@ import Repairs from "./Repairs";
 import Documents from "./Documents";
 import AddVendor from "./AddVendor";
 import AddRepair from "./AddRepair";
-import AddDocument from "./AddDocument";
 import NoMatch from "./NoMatch";
 import axios from "axios";
 
@@ -282,22 +281,14 @@ export class Private extends Component {
               )}
             />
             <Route
-              //  userId={this.props.user.id}
               render={() => <AddRepair userId={this.props.user.id} />}
               path="/AddRepair/"
-              //  component={AddRepair}
-            />
-            <Route
-              path="/AddDocument/"
-              render={props => (
-                <AddDocument {...props} userId={this.props.user.id} />
-              )}
             />
             <Route path="*" component={NoMatch} />
             )} />
           </Switch>
         </Router>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

@@ -14,15 +14,13 @@ import {
 import MakeProfile from "./MakeProfile.js";
 import Profile from "./Profile.js";
 
-import Upload from "./Upload";
-
 export default function Nav(props) {
   const { newHomeProfile } = props;
   let currentProfile = newHomeProfile;
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light ">
+      <nav className="navbar navbar-expand-lg navbar-light bg-white mb-5 ">
         <div className="container">
           <a className="navbar-brand " href="/">
             <h1>

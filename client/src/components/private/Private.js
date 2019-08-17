@@ -5,10 +5,10 @@ import Calendar from "./Calendar";
 import Footer from "./Footer";
 import Vendors from "./Vendors";
 import Repairs from "./Repairs";
-// import Documents from "./Documents";
+import Documents from "./Documents";
 import AddVendor from "./AddVendor";
 import AddRepair from "./AddRepair";
-// import AddDocument from "./AddDocument";
+import AddDocument from "./AddDocument";
 import NoMatch from "./NoMatch";
 import axios from "axios";
 
@@ -32,7 +32,7 @@ export class Private extends Component {
       hasPool: false,
       hasFence: false,
       profileModal: false,
-      isProfileOpen: false,
+      isProfileOpen: true,
       zillowModal: false,
       dropdownOpen: false,
       homeProfile: {},
@@ -204,7 +204,7 @@ export class Private extends Component {
     });
   }
 
-  // for alerts/messages for the user
+  // alerts/messages for the user
   onShowMessage = () => {
     this.setState({ isError: true }, () => {
       window.setTimeout(() => {
@@ -265,15 +265,16 @@ export class Private extends Component {
               path="/Repairs/"
               render={() => <Repairs userId={this.props.user.id} />}
             />
-            {/* <Route
+            <Route
               path="/Documents/"
               render={props => (
                 <Documents
                   {...props}
                   userId={this.props.user.id}
                   showFile={this.showFile}
-                /> */}
-            )} />
+                />
+              )}
+            />
             <Route
               path="/AddVendor/"
               render={props => (
@@ -286,12 +287,12 @@ export class Private extends Component {
               path="/AddRepair/"
               //  component={AddRepair}
             />
-            {/* <Route
+            <Route
               path="/AddDocument/"
               render={props => (
                 <AddDocument {...props} userId={this.props.user.id} />
               )}
-            /> */}
+            />
             <Route path="*" component={NoMatch} />
             )} />
           </Switch>

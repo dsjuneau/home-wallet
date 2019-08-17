@@ -1,4 +1,5 @@
 import React from "react";
+import Upload from "./Upload";
 
 export default function Documents(props) {
   // console.log(this.props);
@@ -33,6 +34,7 @@ export default function Documents(props) {
             </div>
           </div>
           {/* card */}
+          <Upload />
         </div>
       </div>
     </div>

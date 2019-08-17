@@ -5,7 +5,10 @@ export default function Profile(props) {
     <div>
       {props.isProfileOpen ? (
         <div className="container mb-5">
-          <div className="card">
+          <div
+            className="card"
+            style={{ borderBottom: "solid lightgrey", padding: "1.5em" }}
+          >
             <div>
               <div className="row mt-2">
                 <div className="col text-center">

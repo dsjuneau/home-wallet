@@ -5,6 +5,7 @@ const app = express();
 const routes = require("./routes");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+// const path = require("path");
 // const fileUpload = require("express-fileupload"); //! added for file upload
 
 // const fs = require("fs");
@@ -27,6 +28,10 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
+// for File Upload !
+
+const uploads = require("./routes/api/uploads");
+app.use("/api/uploads", uploads);
 // // ! added for file upload
 // app.use(fileUpload());
 

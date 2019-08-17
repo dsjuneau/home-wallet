@@ -14,6 +14,8 @@ import {
 import MakeProfile from "./MakeProfile.js";
 import Profile from "./Profile.js";
 
+import Upload from "./Upload";
+
 export default function Nav(props) {
   const { newHomeProfile } = props;
   let currentProfile = newHomeProfile;
@@ -48,11 +50,11 @@ export default function Nav(props) {
                     <i className="far fa-calendar-alt" /> Calendar
                   </a>
                 </DropdownItem> */}
-              {/* <DropdownItem>
-                  <a className="dropdown-item" href="/Documents/">
-                    <i className="fas fa-file-pdf" /> Documents
-                  </a>
-                </DropdownItem> */}
+              <DropdownItem>
+                <a className="dropdown-item" href="/Documents/">
+                  <i className="fas fa-file-pdf" /> Documents
+                </a>
+              </DropdownItem>
               <DropdownItem>
                 <a className="dropdown-item" href="/Repairs/">
                   <i className="fas fa-tools" /> Repairs
@@ -97,6 +99,7 @@ export default function Nav(props) {
             isProfileOpen={props.isProfileOpen}
             showProfile={props.showProfile}
           />
+          {/* <Upload /> */}
         </div>
       ) : (
         <div>

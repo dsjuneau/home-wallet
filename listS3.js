@@ -5,8 +5,8 @@ require("dotenv").config();
 // Set the region
 AWS.config.update({
   region: "us-east-2",
-  accessKeyId: "AKIAZMV4QDHAP7GDSN74",
-  secretAccessKey: "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",
+  accessKeyId: process.env.AMAZON_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AMAZON_SECRET_ACCESS_KEY,
 });
 
 // Create S3 service object
@@ -16,7 +16,7 @@ s3 = new AWS.S3({
 
 // Create the parameters for calling listObjects
 var bucketParams = {
-  Bucket: "homewalletuploads",
+  Bucket: process.env.AMAZON_SECRET_BUCKET,
 };
 
 // Call S3 to obtain a list of the objects in the bucket

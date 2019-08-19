@@ -15,6 +15,6 @@ router.use("/home", home);
 
 router.use("/zillow", zillow);
 router.use("/vendors", vendors);
-// router.use("uploads", uploads);
+router.use("uploads", uploads);
 
 module.exports = router;

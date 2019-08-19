@@ -23,7 +23,7 @@ export default class Nav extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="bg-nav pt-4">
         <nav className="navbar navbar-expand-lg navbar-light ">
           <div className="container">
             <a className="navbar-brand " href="/">

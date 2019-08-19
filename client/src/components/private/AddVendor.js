@@ -100,9 +100,9 @@ export default class AddVendor extends Component {
   render() {
     // console.log(this.props);
     return (
-      <div>
-        <div className="container">
-          <div className="card mt-2" />
+      <div className="bg bg-vendor pt-3">
+        <div className="container ">
+          <div className="card mt-2 " />
           <div className="card-header mb-4 bg-secondary text-white">
             <h3 className="text-center mt-4 ">
               <i className="far fa-address-card" />
@@ -115,8 +115,8 @@ export default class AddVendor extends Component {
                 Go to Vendor List
               </a>
             </div>
-            <div className="card-body mt-2">
-              <form>
+            <div className="card-body mt-2 ">
+              <form className="bg-light p-5 ">
                 <div className="form-group">
                   <label>Vendor Name</label>
                   <input

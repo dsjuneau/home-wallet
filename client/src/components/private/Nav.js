@@ -20,7 +20,7 @@ export default function Nav(props) {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-white mb-5 ">
+      <nav className="navbar navbar-expand-lg navbar-light bg-white">
         <div className="container">
           <a className="navbar-brand " href="/">
             <h1>

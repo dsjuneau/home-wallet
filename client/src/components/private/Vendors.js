@@ -46,7 +46,7 @@ export default class Vendors extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="bg bg-vendors pt-3">
         <div className="container">
           <div className="card mt-2" />
           <div className="card-header mb-4 bg-secondary text-white">
@@ -68,7 +68,7 @@ export default class Vendors extends React.Component {
             </Alert>
             {/* Vendor Card Starts Here */}
             {this.state.vendors.length ? (
-              <div className="card mt-2">
+              <div className="card mt-2 p-5">
                 {this.state.vendors.map(vendor => (
                   <div key={vendor._id}>
                     <div

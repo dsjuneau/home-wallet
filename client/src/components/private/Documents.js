@@ -82,13 +82,13 @@ export class Documents extends Component {
     this.setState({ visible: true, message, color }, () => {
       window.setTimeout(() => {
         this.setState({ visible: false, modal: false });
-      }, 4000);
+      }, 2000);
     });
   };
 
   render() {
     return (
-      <div>
+      <div className="bg bg-documents pt-3">
         <div className="container">
           <div className="card mt-2" />
           <div className="card-header mb-4 bg-secondary text-white">
@@ -100,17 +100,14 @@ export class Documents extends Component {
             <div className="text-right">
               <a
                 className="btn btn-info"
-                href="/AddDocument/"
+                href="/Documents/"
                 onClick={this.toggle}
               >
                 <i className="fa fa-plus-circle" aria-hidden="true" />
                 &nbsp; Add Document
               </a>
             </div>
-            {/* <div>
-              <input type="file" onChange={e => this.props.showFile(e)} />
-            </div> */}
-            {/* <br /> */}
+            <button className="btn btn-warning">Show Documents</button>
           </div>
         </div>
         <div>

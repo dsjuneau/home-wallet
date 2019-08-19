@@ -253,7 +253,7 @@ export default class Calendar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="bg bg-home pt-5">
         <div className="container">
           <button
             className="btn btn-info btn-lg mb-2"

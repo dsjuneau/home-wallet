@@ -319,7 +319,7 @@ export default class Repair extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="bg bg-repairs pt-3">
         <div className="container">
           <div className="card mt-2" />
           <div className="card-header mb-4 bg-secondary text-white">

@@ -1,38 +1,50 @@
 html,
 body {
   min-height: 100vh;
-  /* background-image: url("https://images.unsplash.com/photo-1522444195799-478538b28823?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"); */
-
-  background-image: url("https://images.unsplash.com/photo-1507831228884-93d43e81a99d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1232&q=80");
-  background-image: no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  /* font-family: sans-serif; */
+  /* background-image: url("https://images.unsplash.com/photo-1508167290553-87a67eca5bf5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"); */
 }
 
-/* body {
-  margin: 0;
-  padding: 0;
-} */
+a {
+  color: blue;
+  font-weight: 400;
+}
+.bg {
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
-/* #root {
-  /* position: relative; */
-/* display: flex;
-  flex-direction: column; */
-/* height: calc(100% - 200px);
-  padding-bottom: 200px; */
-/* } */
+.bg-home {
+  background-image: url("https://images.unsplash.com/photo-1522444195799-478538b28823?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80");
+}
 
-/* .footer {
-  max-height: 200px;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-} */
+.bg-nav {
+  background: #fff;
+}
 
+.bg-login {
+  background-image: url("https://images.unsplash.com/photo-1541615008677-0d46e9f9dcb6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80");
+}
+
+.bg-documents {
+  background-image: url("https://images.unsplash.com/photo-1507831228884-93d43e81a99d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1232&q=80");
+}
+
+.bg-repairs {
+  background-image: url("https://images.unsplash.com/photo-1516972810927-80185027ca84?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1300&q=80");
+}
+
+.bg-vendors {
+  background-image: url("https://images.unsplash.com/photo-1516880711640-ef7db81be3e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+}
+
+.bg-vendor {
+  background-image: url("https://images.unsplash.com/photo-1505798577917-a65157d3320a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+}
+.calendar-container {
+  background: white;
+}
 .container,
 .card {
   border: none;

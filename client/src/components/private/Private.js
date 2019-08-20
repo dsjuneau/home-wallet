@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Nav from "./Nav";
-import Calendar from "./CalendarV2";
+import Calendar from "./Calendar";
 import Footer from "./Footer";
 import Vendors from "./Vendors";
 import Repairs from "./Repairs";

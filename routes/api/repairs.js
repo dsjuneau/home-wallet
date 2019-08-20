@@ -11,7 +11,7 @@ router.route("/")
 
   router
   .route("/user/:id")
-  .get(repairsController.findByUserId)
+  .get(repairsController.findByUserId);
 
 
 // Matches with "/api/repairs/:id"

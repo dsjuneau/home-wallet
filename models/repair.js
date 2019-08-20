@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const repairSchema = new Schema({
   userId: { type: String },
-//  bidId: { type: Schema.Types.ObjectId, ref: 'Bid' },
   repairType: { type: String },
   title: { type: String },
   cost: { type: Number },

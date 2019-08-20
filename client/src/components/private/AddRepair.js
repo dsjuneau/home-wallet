@@ -24,7 +24,7 @@ export default class AddRepair extends Component {
     priority: "low",
     status: "Thinking about it!",
     isVendor: false,
-    vendor: "",
+    vendor: "Havarti and Friends",
     notes: "",
     editable: true,
 
@@ -32,6 +32,21 @@ export default class AddRepair extends Component {
   };
 
 }
+
+componentDidMount() {
+  this.loadVendors();
+}
+
+loadVendors = () => {
+  API.getVendors(this.props.userId)
+    .then(response => {
+          console.log("On Load from getVendors: " + JSON.stringify(response.data));
+      this.setState({
+        vendors: response.data,
+      });
+    })
+    .catch(err => console.log(err));
+};
 
   handleInputChange = event => {
     // Getting the value and name of the input which triggered the change
@@ -158,7 +173,7 @@ export default class AddRepair extends Component {
         return JSON.stringify(newRepair.data._id);
       })
       .then(repairId => {
-        newEvent.repairId = repairId;
+        newEvent.id = repairId;
         API.saveEvent(newEvent);
       })
       .then(newEvent => {
@@ -433,24 +448,28 @@ export default class AddRepair extends Component {
                 </Row>
               </FormGroup>
 
-              {this.state.isVendor ? (
-                <FormGroup>
-                  <Label htmlFor="repairVendor" />
-                  <Input
-                    type="select"
-                    className="form-control"
-                    id="repairVendorSelect"
-                    value={this.state.vendor}
-                    name="vendor"
-                    onChange={this.handleInputChange}
-                  >
-                    <option>Big Bob</option>
-                    <option>Julio</option>
-                  </Input>
-                </FormGroup>
-              ) : (
-                <p />
-              )}
+              {(this.state.isVendor && this.state.vendors.length) ? (
+                    <FormGroup>
+                      <Label htmlFor="repairVendor" />
+                      <Input
+                        type="select"
+                        className="form-control"
+                        id="repairVendorSelect"
+                        defaultValue={this.state.vendor}
+                        name="vendor"
+                        onChange={this.handleInputChange}
+                      >
+                 
+                {this.state.vendors.map(item => (
+                        <option>{item.vendorCompany}</option>
+                  ))})
+                
+                      </Input>
+                    </FormGroup>
+                  ) : (
+                    <p />
+                  )}
+
 
               <FormGroup>
                 <Label htmlFor="repairNotes">

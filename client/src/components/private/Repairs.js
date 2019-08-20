@@ -10,6 +10,7 @@ import {
   Label,
   Input,
   Card,
+//  CardHeader,
   CardText,
   CardBody,
   CardTitle,
@@ -24,6 +25,7 @@ export default class Repair extends React.Component {
 
     this.state = {
       repairs: [],
+      vendors: [],
       changeRepairId: "",
       modal: false,
       repairType: "",
@@ -32,7 +34,7 @@ export default class Repair extends React.Component {
       priority: "",
       status: "",
       isVendor: false,
-      vendor: "",
+      vendor: "Havarti and Friends",
       notes: "",
       recurrencePeriod: "never",
       repeatInterval: 1,
@@ -47,6 +49,7 @@ export default class Repair extends React.Component {
 
   componentDidMount() {
     this.loadRepairs();
+    this.loadVendors();
   }
 
   loadRepairs = () => {
@@ -77,6 +80,17 @@ export default class Repair extends React.Component {
 
         this.setState({
           repairs: repairList,
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
+  loadVendors = () => {
+    API.getVendors(this.props.userId)
+      .then(response => {
+            console.log("On Load from getVendors: " + JSON.stringify(response.data));
+        this.setState({
+          vendors: response.data,
         });
       })
       .catch(err => console.log(err));
@@ -130,10 +144,8 @@ export default class Repair extends React.Component {
   };
 
   handleInputChange = event => {
-    // Getting the value and name of the input which triggered the change
     const { name, value } = event.target;
     console.log(event.target);
-    // Updating the input's state
     this.setState({
       [name]: value,
     });
@@ -152,9 +164,7 @@ export default class Repair extends React.Component {
       .catch(err => console.log(err));
   }
 
-  //// NOT COMPLETE ////
   handleFormSubmit = event => {
-    // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
     let modifiedEvent = {};
@@ -190,21 +200,13 @@ export default class Repair extends React.Component {
 
       let parsedRecurStart =
         this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
-      //    let parsedRecurEnd = this.state.recurrenceEndDate + "T" + this.state.endTime + ":00";
-
+  
       modifiedRepair.recurrenceStartDate = parsedRecurStart;
       modifiedRepair.repeatDayOfWeek = this.state.repeatDayOfWeek;
       modifiedRepair.recurrenceEndDate = this.state.recurrenceEndDate;
       modifiedRepair.duration = duration;
 
       if (this.state.recurrencePeriod === "daily") {
-        /*     let momentDayInterval = moment
-                .duration(moment(this.state.recurrenceEndDate, 'YYYY/MM/DD')
-                .diff(moment(this.state.recurrenceStartDate, 'YYYY/MM/DD'))
-                ).asDays();
-            
-            console.log("momentDayInterval: " + momentDayInterval); */
-
         this.setState({
           repeatInterval: 1,
         });
@@ -213,7 +215,7 @@ export default class Repair extends React.Component {
 
         modifiedEvent = {
           userId: this.props.userId,
-          repairId: JSON.stringify(this.state.changeRepairId),
+          id: JSON.stringify(this.state.changeRepairId),
           title: this.state.title,
           rrule: {
             freq: this.state.recurrencePeriod,
@@ -235,7 +237,7 @@ export default class Repair extends React.Component {
             freq: this.state.recurrencePeriod,
             interval: this.state.repeatInterval,
             byweekday: this.state.repeatDayOfWeek,
-            dtstart: parsedRecurStart, // CHECK THIS //
+            dtstart: parsedRecurStart,
             until: this.state.recurrenceEndDate,
           },
           duration: duration,
@@ -264,7 +266,7 @@ export default class Repair extends React.Component {
 
       modifiedEvent = {
         userId: this.props.userId,
-        repairId: JSON.stringify(this.state.changeRepairId),
+        id: JSON.stringify(this.state.changeRepairId),
         category: this.state.repairType,
         title: this.state.title,
         start: parsedStart,
@@ -345,6 +347,7 @@ export default class Repair extends React.Component {
                     key={item.repairId}
                   >
                     <CardBody>
+                {/*     <CardHeader>{item.title}</CardHeader> */}
                       <CardTitle>
                         <h3>{item.title}</h3>
                       </CardTitle>
@@ -689,24 +692,27 @@ export default class Repair extends React.Component {
                   </Row>
                 </FormGroup>
 
-                {this.state.isVendor ? (
-                  <FormGroup>
-                    <Label htmlFor="repairVendor" />
-                    <Input
-                      type="select"
-                      id="repairVendorSelect"
-                      //        defaultValue={this.state.vendor}
-                      value={this.state.vendor}
-                      name="vendor"
-                      onChange={this.handleInputChange}
-                    >
-                      <option>Big Bob</option>
-                      <option>Julio</option>
-                    </Input>
-                  </FormGroup>
-                ) : (
-                  <p />
-                )}
+                {(this.state.isVendor && this.state.vendors.length) ? (
+                    <FormGroup>
+                      <Label htmlFor="repairVendor" />
+                      <Input
+                        type="select"
+                        className="form-control"
+                        id="repairVendorSelect"
+                        defaultValue={this.state.vendor}
+                        name="vendor"
+                        onChange={this.handleInputChange}
+                      >
+                 
+                {this.state.vendors.map(item => (
+                        <option>{item.vendorCompany}</option>
+                  ))})
+                
+                      </Input>
+                    </FormGroup>
+                  ) : (
+                    <p />
+                  )}
 
                 <FormGroup>
                   <Label htmlFor="repairNotes">

@@ -7,6 +7,11 @@ router
   .get(vendorsController.findAll)
   .post(vendorsController.create);
 
+router
+.route("/user/:id")
+.get(vendorsController.findByUserId);
+
+
 // Matches with "/api/vendors/:id"
 router
   .route("/:id")

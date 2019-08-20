@@ -158,7 +158,7 @@ export default class AddRepair extends Component {
         return JSON.stringify(newRepair.data._id);
       })
       .then(repairId => {
-        newEvent.repairId = repairId;
+        newEvent.id = repairId;
         API.saveEvent(newEvent);
       })
       .then(newEvent => {

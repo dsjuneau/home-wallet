@@ -9,8 +9,8 @@ export default {
 
   // Modifies one event
   changeEvent: function(eventData) {
-    //    console.log("from changeEvent in API: " + eventData.id);
-    return axios.put("/api/events/" + eventData.repairId, eventData);
+        console.log("from changeEvent in API: " + eventData.id);  // working
+    return axios.put("/api/events/" + eventData.id, eventData);
   },
 
   //  Gets all events from database
@@ -41,10 +41,12 @@ export default {
 
   // Gets the repair with the given id
   getRepair: function(id) {
+    console.log("From API.getRepair: " + id);
     return axios.get("/api/repairs/" + id);
   },
   // Modifies one repair
   changeRepair: function(repairData) {
+//    console.log("From changeRepair in API: " + repairData.repairId);
     return axios.put("/api/repairs/" + repairData.repairId, repairData);
   },
   // Deletes the repair with the given id

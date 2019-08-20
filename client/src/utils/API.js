@@ -54,4 +54,11 @@ export default {
     console.log("from deleteRepair: " + id);
     return axios.delete("/api/repairs/" + id);
   },
+    //  Gets all vendors from database
+    getVendors: function(id) {
+      //    console.log("API.getRepairs: " + id);
+      return axios.get("/api/vendors/user/" + id);
+      //    return axios.get("/api/repairs/");
+    },
+
 };

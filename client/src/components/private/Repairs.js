@@ -25,6 +25,7 @@ export default class Repair extends React.Component {
 
     this.state = {
       repairs: [],
+      vendors: [],
       changeRepairId: "",
       modal: false,
       repairType: "",
@@ -33,7 +34,7 @@ export default class Repair extends React.Component {
       priority: "",
       status: "",
       isVendor: false,
-      vendor: "",
+      vendor: "Havarti and Friends",
       notes: "",
       recurrencePeriod: "never",
       repeatInterval: 1,
@@ -48,6 +49,7 @@ export default class Repair extends React.Component {
 
   componentDidMount() {
     this.loadRepairs();
+    this.loadVendors();
   }
 
   loadRepairs = () => {
@@ -78,6 +80,17 @@ export default class Repair extends React.Component {
 
         this.setState({
           repairs: repairList,
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
+  loadVendors = () => {
+    API.getVendors(this.props.userId)
+      .then(response => {
+            console.log("On Load from getVendors: " + JSON.stringify(response.data));
+        this.setState({
+          vendors: response.data,
         });
       })
       .catch(err => console.log(err));
@@ -679,24 +692,27 @@ export default class Repair extends React.Component {
                   </Row>
                 </FormGroup>
 
-                {this.state.isVendor ? (
-                  <FormGroup>
-                    <Label htmlFor="repairVendor" />
-                    <Input
-                      type="select"
-                      id="repairVendorSelect"
-                      //        defaultValue={this.state.vendor}
-                      value={this.state.vendor}
-                      name="vendor"
-                      onChange={this.handleInputChange}
-                    >
-                      <option>Big Bob</option>
-                      <option>Julio</option>
-                    </Input>
-                  </FormGroup>
-                ) : (
-                  <p />
-                )}
+                {(this.state.isVendor && this.state.vendors.length) ? (
+                    <FormGroup>
+                      <Label htmlFor="repairVendor" />
+                      <Input
+                        type="select"
+                        className="form-control"
+                        id="repairVendorSelect"
+                        defaultValue={this.state.vendor}
+                        name="vendor"
+                        onChange={this.handleInputChange}
+                      >
+                 
+                {this.state.vendors.map(item => (
+                        <option>{item.vendorCompany}</option>
+                  ))})
+                
+                      </Input>
+                    </FormGroup>
+                  ) : (
+                    <p />
+                  )}
 
                 <FormGroup>
                   <Label htmlFor="repairNotes">

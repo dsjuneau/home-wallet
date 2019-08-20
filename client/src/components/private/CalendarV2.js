@@ -25,6 +25,7 @@ export default class Calendar extends React.Component {
     this.calendarComponentRef = React.createRef();
     this.state = {
       events: [],
+      vendors: [],
       userId: this.props.userId,
       repairId: "",
       repairType: "Repair",
@@ -41,7 +42,7 @@ export default class Calendar extends React.Component {
       priority: "low",
       status: "Thinking about it!",
       isVendor: false,
-      vendor: "",
+      vendor: "Havarti and Friends",
       notes: "",
       editable: true,
 
@@ -55,18 +56,32 @@ export default class Calendar extends React.Component {
 
   componentDidMount() {
     this.loadEvents();
+    this.loadVendors();
   }
 
   loadEvents = () => {
     API.getEvents(this.props.userId)
       .then(response => {
-      //      console.log("On Load from getEvents: " + JSON.stringify(response.data));
+            console.log("On Load from getEvents: " + JSON.stringify(response.data));
         this.setState({
           events: response.data,
         });
       })
       .catch(err => console.log(err));
   };
+
+
+  loadVendors = () => {
+    API.getVendors(this.props.userId)
+      .then(response => {
+            console.log("On Load from getVendors: " + JSON.stringify(response.data));
+        this.setState({
+          vendors: response.data,
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
 
   toggle = () => {
     this.setState(prevState => ({
@@ -290,7 +305,7 @@ export default class Calendar extends React.Component {
       priority: "low",
       status: "Thinking about it!",
       isVendor: false,
-      vendor: "",
+      vendor: "Havarti and Friends",
       notes: "",
       editable: true,
     });
@@ -440,7 +455,7 @@ export default class Calendar extends React.Component {
       priority: "low",
       status: "Thinking about it!",
       isVendor: false,
-      vendor: "",
+      vendor: "Havarti and Friends",
       notes: "",
       editable: true,
     });
@@ -728,19 +743,22 @@ export default class Calendar extends React.Component {
                     </Row>
                   </FormGroup>
 
-                  {this.state.isVendor ? (
+                  {(this.state.isVendor && this.state.vendors.length) ? (
                     <FormGroup>
                       <Label htmlFor="repairVendor" />
                       <Input
                         type="select"
                         className="form-control"
                         id="repairVendorSelect"
-                        value={this.state.vendor}
+                        defaultValue={this.state.vendor}
                         name="vendor"
                         onChange={this.handleInputChange}
                       >
-                        <option>Big Bob</option>
-                        <option>Julio</option>
+                 
+                {this.state.vendors.map(item => (
+                        <option>{item.vendorCompany}</option>
+                  ))})
+                
                       </Input>
                     </FormGroup>
                   ) : (
@@ -1021,24 +1039,27 @@ export default class Calendar extends React.Component {
                   </Row>
                 </FormGroup>
 
-                {this.state.isVendor ? (
-                  <FormGroup>
-                    <Label htmlFor="repairVendor" />
-                    <Input
-                      type="select"
-                      id="repairVendorSelect"
-                      //        defaultValue={this.state.vendor}
-                      value={this.state.vendor}
-                      name="vendor"
-                      onChange={this.handleInputChange}
-                    >
-                      <option>Big Bob</option>
-                      <option>Julio</option>
-                    </Input>
-                  </FormGroup>
-                ) : (
-                  <p />
-                )}
+                {(this.state.isVendor && this.state.vendors.length) ? (
+                    <FormGroup>
+                      <Label htmlFor="repairVendor" />
+                      <Input
+                        type="select"
+                        className="form-control"
+                        id="repairVendorSelect"
+                        defaultValue={this.state.vendor}
+                        name="vendor"
+                        onChange={this.handleInputChange}
+                      >
+                 
+                {this.state.vendors.map(item => (
+                        <option>{item.vendorCompany}</option>
+                  ))})
+                
+                      </Input>
+                    </FormGroup>
+                  ) : (
+                    <p />
+                  )}
 
                 <FormGroup>
                   <Label htmlFor="repairNotes">

@@ -28,16 +28,16 @@ module.exports = {
         .catch(err => res.status(422).json(err));
     },
     update: function(req, res) {
-  //    console.log("update in eventsController req.params.id: " + req.params.id); // working
+      console.log("update in eventsController req.params.id: " + req.params.id);
       db.Event
-        .findOneAndUpdate({ repairId: req.params.id }, req.body)
+        .findOneAndUpdate({ id: req.params.id }, req.body)
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     },
     remove: function(req, res) {
   //    console.log("from eventscontroller: " + req.params.id);
       db.Event
-        .findOneAndDelete({ repairId: req.params.id })
+        .findOneAndDelete({ id: req.params.id })
         .then(dbModel => res.json(dbModel))
         .catch(err => res.status(422).json(err));
     }

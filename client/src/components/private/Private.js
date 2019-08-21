@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Nav from "./Nav";
 import Calendar from "./Calendar";
-import Footer from "./Footer";
 import Vendors from "./Vendors";
 import Repairs from "./Repairs";
-// import Documents from "./Documents";
+import Documents from "./Documents";
 import AddVendor from "./AddVendor";
 import AddRepair from "./AddRepair";
-// import AddDocument from "./AddDocument";
 import NoMatch from "./NoMatch";
 import axios from "axios";
 
@@ -17,15 +15,22 @@ export class Private extends Component {
     super(props);
     this.toggleZillowModal = this.toggleZillowModal.bind(this);
     this.toggleNav = this.toggleNav.bind(this);
+    this.showProfile = this.showProfile.bind(this);
 
     this.state = {
       zillowData: {},
       streetAddress: "",
       zipCode: "",
+      yearBuilt: "",
+      bedrooms: "",
+      bathrooms: "",
+      gla: "",
+      lotSize: "",
+      parking: "",
       hasPool: false,
       hasFence: false,
-      parking: "",
       profileModal: false,
+      isProfileOpen: false,
       zillowModal: false,
       dropdownOpen: false,
       homeProfile: {},
@@ -63,6 +68,11 @@ export class Private extends Component {
       parking,
       hasHomeProfile,
       hasZillow,
+      yearBuilt,
+      bedrooms,
+      bathrooms,
+      gla,
+      lotSize,
     } = this.state;
 
     let formProfile = {
@@ -74,11 +84,11 @@ export class Private extends Component {
       hasPool,
       hasFence,
       parking,
-      yearBuilt: zillowData.yearBuilt,
-      bedrooms: zillowData.bedrooms,
-      bathrooms: zillowData.bathrooms,
-      gla: zillowData.gla,
-      lotSize: zillowData.lotSize,
+      yearBuilt,
+      bedrooms,
+      bathrooms,
+      gla,
+      lotSize,
       taxAssessment: zillowData.taxAssessment,
       taxYear: zillowData.taxYear,
       zestimate: zillowData.zestimate,
@@ -88,7 +98,6 @@ export class Private extends Component {
     };
 
     axios.post("/api/home", { formProfile }).then(res => {
-      // console.log("RESPONSE FROM API: ", res);
       if (res.data) {
         this.setState({
           hasHomeProfile: true,
@@ -106,7 +115,6 @@ export class Private extends Component {
 
     axios
       .delete(`/api/home/${this.props.user.id}`)
-      // .then(console.log("home profile deleted"))
       .then(
         this.setState({
           hasHomeProfile: false,
@@ -131,6 +139,11 @@ export class Private extends Component {
           hasZillow: true,
           profileModal: false,
           zillowModal: true,
+          yearBuilt: response.data.yearBuilt,
+          bedrooms: response.data.bedrooms,
+          bathrooms: response.data.bathrooms,
+          gla: response.data.gla,
+          lotSize: response.data.lotSize,
         });
       });
     } else {
@@ -150,6 +163,12 @@ export class Private extends Component {
   toggleNav() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen,
+    }));
+  }
+
+  showProfile() {
+    this.setState(prevState => ({
+      isProfileOpen: !prevState.isProfileOpen,
     }));
   }
 
@@ -183,6 +202,7 @@ export class Private extends Component {
     });
   }
 
+  // alerts/messages for the user
   onShowMessage = () => {
     this.setState({ isError: true }, () => {
       window.setTimeout(() => {
@@ -211,6 +231,8 @@ export class Private extends Component {
           dropdownOpen={this.state.dropdownOpen}
           clearProfile={this.clearProfile}
           handleLogout={this.handleLogout}
+          showProfile={this.showProfile}
+          isProfileOpen={this.state.isProfileOpen}
           hasHomeProfile={this.state.hasHomeProfile}
           hasZillow={this.state.hasZillow}
           zillowData={this.state.zillowData}
@@ -241,15 +263,16 @@ export class Private extends Component {
               path="/Repairs/"
               render={() => <Repairs userId={this.props.user.id} />}
             />
-            {/* <Route
+            <Route
               path="/Documents/"
               render={props => (
                 <Documents
                   {...props}
                   userId={this.props.user.id}
                   showFile={this.showFile}
-                /> */}
-            )} />
+                />
+              )}
+            />
             <Route
               path="/AddVendor/"
               render={props => (
@@ -257,22 +280,14 @@ export class Private extends Component {
               )}
             />
             <Route
-            //  userId={this.props.user.id}
               render={() => <AddRepair userId={this.props.user.id} />}
               path="/AddRepair/"
-            //  component={AddRepair}
             />
-            {/* <Route
-              path="/AddDocument/"
-              render={props => (
-                <AddDocument {...props} userId={this.props.user.id} />
-              )}
-            /> */}
             <Route path="*" component={NoMatch} />
             )} />
           </Switch>
         </Router>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

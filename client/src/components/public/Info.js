@@ -5,33 +5,37 @@ import repairImage from "../../images/repair.jpg";
 
 export default function Info() {
   return (
-    <div>
-      <div className="container mt-5">
-        <div className="card">
-          <div className="card-header mb-2 bg-secondary text-white text-center">
-            <h3 className="mt-4 ">Welcome to Home Wallet</h3>
-          </div>
+    <div className="bg bg-home pt-5">
+      <div className="container mt-3">
+        <div className="card-header bg-secondary text-white text-center mt-5">
+          <h3 className="mt-2 ">Welcome to Home Wallet</h3>
+        </div>
+        <div className="card mt-3">
           <div className="card-body" />
-
+          <p className="p-3" style={{ fontSize: "20px" }}>
+            Home Wallet helps you prioritize and keep track of home repairs and
+            maintenance, both major and minor. Create your own list of vendors
+            to keep track of who did what when and how much it cost.
+          </p>
+          <p className="p-3" style={{ fontSize: "20px" }}>
+            To start, simply enter some basic data about the home. This helps
+            HomeWallet to determine which repairs and maintenance items need to
+            be tracked. Choose from a dashboard or a calendar view to see
+            upcoming scheduled repairs.
+          </p>
+        </div>
+      </div>
+      <div>
+        <div className="container">
           <form>
-            <p style={{ fontSize: "30px" }}>
-              Home Wallet helps you prioritize and keep track of home repairs
-              and maintenance, both major and minor. Create your own list of
-              vendors to keep track of who did what when and how much it cost.
-            </p>
-            <p style={{ fontSize: "30px" }}>
-              To start, simply enter some basic data about the home. This helps
-              HomeWallet to determine which repairs and maintenance items need
-              to be tracked. Choose from a dashboard or a calendar view to see
-              upcoming scheduled repairs.
-            </p>
-            <h2 className="text-center mt-5">Features</h2>
+            <div className="mt-3 card-header bg-secondary text-white text-center">
+              <h3 className="mt-2 ">Features</h3>
+            </div>
             <div className="row text-center">
               <div className="col-4 mb-3 mt-5">
                 <div className="card">
                   <img
                     src={zillowImage}
-                    // "https://media.noria.com/sites/Uploads/2018/12/20/73c77e51-97d0-4ec5-81dc-e80c0b265dcf_Images_ProactiveMaintenanceApproach_31035_1234x694_large.jpeg"
                     className="img-fluid"
                     style={{ width: "100%" }}
                     alt="document-management"
@@ -82,7 +86,7 @@ export default function Info() {
               </a>
               <p>
                 &nbsp;&nbsp;&nbsp; Already have an account? &nbsp;&nbsp;&nbsp;
-                <a href="/login">Log In</a>
+                <a href="/login">Login</a>
               </p>
             </div>
           </form>

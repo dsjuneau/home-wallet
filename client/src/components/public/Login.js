@@ -41,7 +41,7 @@ export class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div className="bg bg-login pt-3">
         <div className="container mt-5">
           <div className="card ">
             <div className="card-header mb-4 bg-secondary text-white">

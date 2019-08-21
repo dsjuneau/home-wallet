@@ -10,7 +10,7 @@ import {
   Label,
   Input,
   Card,
-//  CardHeader,
+  //  CardHeader,
   CardText,
   CardBody,
   CardTitle,
@@ -88,7 +88,9 @@ export default class Repair extends React.Component {
   loadVendors = () => {
     API.getVendors(this.props.userId)
       .then(response => {
-            console.log("On Load from getVendors: " + JSON.stringify(response.data));
+        console.log(
+          "On Load from getVendors: " + JSON.stringify(response.data)
+        );
         this.setState({
           vendors: response.data,
         });
@@ -200,7 +202,7 @@ export default class Repair extends React.Component {
 
       let parsedRecurStart =
         this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
-  
+
       modifiedRepair.recurrenceStartDate = parsedRecurStart;
       modifiedRepair.repeatDayOfWeek = this.state.repeatDayOfWeek;
       modifiedRepair.recurrenceEndDate = this.state.recurrenceEndDate;
@@ -321,9 +323,9 @@ export default class Repair extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="bg bg-repairs pt-3">
         <div className="container">
-          <div className="card mt-2" />
+          <div className="card  mt-2" />
           <div className="card-header mb-4 bg-secondary text-white">
             <h3 className="text-center mt-4 ">
               <i className="fas fa-tools" /> &nbsp; Updates, Repairs, and
@@ -347,7 +349,7 @@ export default class Repair extends React.Component {
                     key={item.repairId}
                   >
                     <CardBody>
-                {/*     <CardHeader>{item.title}</CardHeader> */}
+                      {/*     <CardHeader>{item.title}</CardHeader> */}
                       <CardTitle>
                         <h3>{item.title}</h3>
                       </CardTitle>
@@ -692,27 +694,26 @@ export default class Repair extends React.Component {
                   </Row>
                 </FormGroup>
 
-                {(this.state.isVendor && this.state.vendors.length) ? (
-                    <FormGroup>
-                      <Label htmlFor="repairVendor" />
-                      <Input
-                        type="select"
-                        className="form-control"
-                        id="repairVendorSelect"
-                        defaultValue={this.state.vendor}
-                        name="vendor"
-                        onChange={this.handleInputChange}
-                      >
-                 
-                {this.state.vendors.map(item => (
+                {this.state.isVendor && this.state.vendors.length ? (
+                  <FormGroup>
+                    <Label htmlFor="repairVendor" />
+                    <Input
+                      type="select"
+                      className="form-control"
+                      id="repairVendorSelect"
+                      defaultValue={this.state.vendor}
+                      name="vendor"
+                      onChange={this.handleInputChange}
+                    >
+                      {this.state.vendors.map(item => (
                         <option>{item.vendorCompany}</option>
-                  ))})
-                
-                      </Input>
-                    </FormGroup>
-                  ) : (
-                    <p />
-                  )}
+                      ))}
+                      )
+                    </Input>
+                  </FormGroup>
+                ) : (
+                  <p />
+                )}
 
                 <FormGroup>
                   <Label htmlFor="repairNotes">

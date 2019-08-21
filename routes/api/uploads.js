@@ -11,7 +11,6 @@ require("dotenv").config();
 const s3Client = new aws.S3({
   accessKeyId: process.env.AMAZON_ACCESS_KEY_ID,
   secretAccessKey: process.env.AMAZON_SECRET_ACCESS_KEY,
-  // Region: process.env.AMAZON_REGION,
   Bucket: process.env.AMAZON_BUCKET,
 });
 
@@ -54,19 +53,17 @@ function checkFileType(file, cb) {
   }
 }
 
-// @ route POST to upload image/pdf
+// @ upload document
 
 router.post("/home-file-upload", (req, res) => {
   homeProfileUpload(req, res, error => {
     // console.log("requestOkokok", req.file);
     // console.log("error", error);
     if (error) {
-      // console.log("errors", error);
       res.json({ error: error });
     } else {
       // If File not found
       if (req.file === undefined) {
-        // console.log("Error: No File Selected!");
         res.json("Error: No File Selected");
       } else {
         // If Success

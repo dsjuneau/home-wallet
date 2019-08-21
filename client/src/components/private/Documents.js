@@ -14,6 +14,8 @@ export class Documents extends Component {
       visible: false,
       message: "",
       color: "",
+      images: [],
+      documents: [],
     };
 
     this.toggle = this.toggle.bind(this);
@@ -63,12 +65,25 @@ export class Documents extends Component {
             } else {
               // Success
               let fileName = response.data;
-              console.log("fileName", fileName);
+              console.log("fileName", this.state.selectedFile.name);
+              console.log("fileURL", fileName.location);
+              console.log("Here's the Props", this.props);
+              let docDetail = {
+                userId: this.props.userId,
+                fileName: this.state.selectedFile.name,
+                fileUrl: fileName.location,
+              };
               this.onShowAlert("Document Uploaded Successfully", "success");
+              // });
+              console.log("docDetails", docDetail);
+              // axios.post("/api/documents", { docDetail }).then(res => {
+              //   console.log("Heres's the Data", res.data);
+              //
             }
           }
         })
         .catch(error => {
+          console.log(error);
           // If another error
           this.onShowAlert(error, "danger");
         });
@@ -98,16 +113,12 @@ export class Documents extends Component {
           </div>
           <div className="card-body">
             <div className="text-right">
-              <a
-                className="btn btn-info"
-                href="/Documents/"
-                onClick={this.toggle}
-              >
+              <button className="btn btn-info" onClick={this.toggle}>
                 <i className="fa fa-plus-circle" aria-hidden="true" />
                 &nbsp; Add Document
-              </a>
+              </button>
             </div>
-            <button className="btn btn-warning">Show Documents</button>
+            {/* <button className="btn btn-warning">Show Documents</button> */}
           </div>
         </div>
         <div>

@@ -119,9 +119,12 @@ export default class Vendors extends React.Component {
                 ))}{" "}
               </div>
             ) : (
-              <h5 className="text-center mt-5">
-                No Vendors have been added. Please click the "Add Vendor Button"
-              </h5>
+              <div className="jumbotron">
+                <h4 className="text-center mt-5">
+                  No Vendors have been added. Please click the "Add Vendor
+                  Button"
+                </h4>
+              </div>
             )}
           </div>
         </div>

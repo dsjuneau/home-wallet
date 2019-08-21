@@ -9,7 +9,7 @@ export default {
 
   // Modifies one event
   changeEvent: function(eventData) {
-        console.log("from changeEvent in API: " + eventData.id);  // working
+    console.log("from changeEvent in API: " + eventData.id); // working
     return axios.put("/api/events/" + eventData.id, eventData);
   },
 
@@ -23,7 +23,7 @@ export default {
   },
   // Deletes the event with the given id
   deleteEvent: function(id) {
-    console.log("from deleteEvent: " + id);
+    // console.log("from deleteEvent: " + id);
     return axios.delete("/api/events/" + id);
   },
 
@@ -41,24 +41,23 @@ export default {
 
   // Gets the repair with the given id
   getRepair: function(id) {
-    console.log("From API.getRepair: " + id);
+    // console.log("From API.getRepair: " + id);
     return axios.get("/api/repairs/" + id);
   },
   // Modifies one repair
   changeRepair: function(repairData) {
-//    console.log("From changeRepair in API: " + repairData.repairId);
+    //    console.log("From changeRepair in API: " + repairData.repairId);
     return axios.put("/api/repairs/" + repairData.repairId, repairData);
   },
   // Deletes the repair with the given id
   deleteRepair: function(id) {
-    console.log("from deleteRepair: " + id);
+    // console.log("from deleteRepair: " + id);
     return axios.delete("/api/repairs/" + id);
   },
-    //  Gets all vendors from database
-    getVendors: function(id) {
-      //    console.log("API.getRepairs: " + id);
-      return axios.get("/api/vendors/user/" + id);
-      //    return axios.get("/api/repairs/");
-    },
-
+  //  Gets all vendors from database
+  getVendors: function(id) {
+    //    console.log("API.getRepairs: " + id);
+    return axios.get("/api/vendors/user/" + id);
+    //    return axios.get("/api/repairs/");
+  },
 };

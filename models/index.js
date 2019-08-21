@@ -5,5 +5,5 @@ module.exports = {
   Bid: require("./bid"),
   Home: require("./home"),
   Vendor: require("./vendor"),
-
+  Document: require("./document"),
 };

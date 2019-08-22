@@ -7,7 +7,7 @@ export default function NoMatch() {
         <div className="container">
           <div className="jumbotron nomatch text-center">
             <h1 style={{ fontSize: "100px" }}>404</h1>
-            <h3>You've reached a dead end</h3>
+            <h3>Looks like you went down the wrong hallway.</h3>
             <br />
             <a href="/" className="btn btn-success btn lg">
               Take Me Home

@@ -210,9 +210,6 @@ export class Documents extends Component {
               >
                 Upload!
               </button>
-              {/* <Button color="info" onClick={this.toggle}>
-                Upload
-              </Button>*/}
               <Button color="danger" onClick={this.toggle}>
                 Cancel
               </Button>

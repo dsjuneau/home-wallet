@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Alert } from "reactstrap";
+// import Upload from "./Upload";
 
 export default class AddVendor extends Component {
   constructor(props) {
@@ -217,6 +218,7 @@ export default class AddVendor extends Component {
                     placeholder="Mary has used this company for years and loves them"
                   />
                 </div>
+                {/* <Upload /> */}
                 {/* <div className="custom-file">
                 <input
                   type="file"

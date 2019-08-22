@@ -10,8 +10,6 @@ import AddRepair from "./AddRepair";
 import NoMatch from "./NoMatch";
 import axios from "axios";
 
-// import { TransitionGroup, CSSTransition } from "react-transition-group";
-
 export class Private extends Component {
   constructor(props) {
     super(props);
@@ -183,6 +181,7 @@ export class Private extends Component {
       [name]: value,
     });
   };
+
   handlePoolCheck = () => {
     this.setState({ hasPool: !this.state.hasPool });
   };
@@ -288,8 +287,6 @@ export class Private extends Component {
             <Route path="*" component={NoMatch} />
             )} />
           </Switch>
-          {/* </CSSTransition>
-          </TransitionGroup> */}
         </Router>
         {/* <Footer /> */}
       </div>

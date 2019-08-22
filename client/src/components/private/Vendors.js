@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Alert } from "reactstrap";
+import placeholder from "../../images/headshot-placeholder.jpg";
 
 export default class Vendors extends React.Component {
   constructor(props) {
@@ -88,31 +89,39 @@ export default class Vendors extends React.Component {
                         </h3>
                       </div>
                       <div className="container">
-                        <p>
-                          {" "}
-                          <strong>Company: </strong>{" "}
-                          <span>{vendor.vendorCompany}</span>
-                        </p>
-                        <p>
-                          {" "}
-                          <strong>Phone:</strong>{" "}
-                          <span>{vendor.vendorPhone}</span>
-                        </p>
-                        <p>
-                          {" "}
-                          <strong>Email:</strong>{" "}
-                          <span>{vendor.vendorEmail}</span>
-                        </p>
-                        <p>
-                          {" "}
-                          <strong>Notes:</strong>{" "}
-                          <span>{vendor.vendorNotes}</span>
-                        </p>
-                        <p>
-                          {" "}
-                          <strong>Category: </strong>{" "}
-                          <span>{vendor.vendorCategory}</span>{" "}
-                        </p>
+                        <div className="row mt-3 mb-3">
+                          <div className="col-7">
+                            <p>
+                              <strong>Company: </strong>{" "}
+                              <span>{vendor.vendorCompany}</span>
+                            </p>
+                            <p>
+                              <strong>Phone:</strong>{" "}
+                              <span>{vendor.vendorPhone}</span>
+                            </p>
+                            <p>
+                              <strong>Email:</strong>{" "}
+                              <span>{vendor.vendorEmail}</span>
+                            </p>
+                            <p>
+                              {" "}
+                              <strong>Notes:</strong>{" "}
+                              <span>{vendor.vendorNotes}</span>
+                            </p>
+                            <p>
+                              {" "}
+                              <strong>Category: </strong>{" "}
+                              <span>{vendor.vendorCategory}</span>{" "}
+                            </p>
+                          </div>
+                          <div className="col-5">
+                            <img
+                              src={placeholder}
+                              style={{ width: "200px", height: "200px" }}
+                              alt="ImgPlaceholder"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

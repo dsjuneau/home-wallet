@@ -41,7 +41,7 @@ const homeProfileUpload = multer({
 
 function checkFileType(file, cb) {
   // Allowed ext
-  const filetypes = /jpeg|jpg|png|gif|pdf/;
+  const filetypes = /jpeg|jpg|png|gif/;
   // Check ext
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   // Check mime
@@ -49,7 +49,7 @@ function checkFileType(file, cb) {
   if (mimetype && extname) {
     return cb(null, true);
   } else {
-    cb("Error: jpg, png or pdf files only!");
+    cb("Error: Image files only!");
   }
 }
 

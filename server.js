@@ -15,10 +15,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// ! for File Upload !
-const uploads = require("./routes/api/uploads");
-app.use("/api/uploads", uploads);
-
 app.use(routes);
 // Send every other request to the React app
 // Define any API routes before this runs
@@ -28,7 +24,7 @@ app.get("*", (req, res) => {
 
 //Connect to mongoDB
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost/myHomeWallet", {
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/HomeWallet", {
     useNewUrlParser: true,
   })
   .then(() => console.log("Database Connected"));

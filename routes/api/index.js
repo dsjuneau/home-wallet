@@ -6,7 +6,7 @@ const home = require("./home");
 const vendors = require("./vendors");
 const repairs = require("./repairs");
 const uploads = require("./uploads");
-// const documents = require("./documents");
+const documents = require("./documents");
 
 // routes
 router.use("/auth", auth);
@@ -16,7 +16,7 @@ router.use("/home", home);
 
 router.use("/zillow", zillow);
 router.use("/vendors", vendors);
-router.use("uploads", uploads);
-// router.use("documents", documents);
+router.use("/uploads", uploads);
+router.use("/documents", documents);
 
 module.exports = router;

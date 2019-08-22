@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import { DocumentProvider } from "mongoose";
 import Message from "./Message";
 
 export default function AddDocument() {
@@ -11,14 +10,14 @@ export default function AddDocument() {
   // const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const onChange = e => {
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
 
   const onSubmit = async e => {
     e.preventDefault();
-    console.log(e);
+    // console.log(e);
     const formData = new FormData();
     formData.append("file", file);
 
@@ -49,12 +48,6 @@ export default function AddDocument() {
             <i className="fas fa-file-pdf" /> &nbsp; Add Document
           </h3>
         </div>
-        {/* added for File Upload - will reorganize after
-        <h5 className="display-5 text-center">
-          <i className="fab fa-react" />
-          File Upload
-        </h5>
-        File upload per (https://www.youtube.com/watch?v=b6Oe2puTdMQ) */}
         <div className="card-body">
           <div className="text-right">
             <a className="btn btn-info" href="/Documents/">
@@ -64,27 +57,6 @@ export default function AddDocument() {
           <div className="card-body mt-2">
             {message ? <Message msg={message} /> : null}
             <form onSubmit={onSubmit}>
-              {/* <div className="form-group">
-                <label htmlFor="Format">Type</label>
-                <select className="form-control" id="FormatSelect">
-                  <option selected>Document: pdf</option>
-                  <option>Image: jpg</option>
-                </select>
-              </div> */}
-              {/* <div className="form-group">
-                <label htmlFor="document title"> documentTitle</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="documentTitleInput"
-                  placeholder="Appraisal"
-                  required
-                />
-              </div> */}
-              {/* <div className="form-group">
-                <label htmlFor="docNotes">Additional Notes</label>
-                <textarea className="form-control" id="docNotes" rows="3" />
-              </div> */}
               <div className="form-group">
                 <label htmlFor="docUpload">Upload Document</label>
                 <div className="custom-file mt-2">
@@ -117,13 +89,6 @@ export default function AddDocument() {
             />
           </div>
         ) : null}
-        {/* // <div> 
-              // <img src={uploadedFile} alt="uploadedFile"/>
-              // <div/>
-              
-             
-              // <h1>No Image found</h1>
-             */}
       </div>
     </div>
   );

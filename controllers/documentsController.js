@@ -24,16 +24,8 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    db.Document.findOneAndDelete({ userId: req.params.id })
+    db.Document.findOneAndDelete({ _id: req.params.id })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  // findProfile: function(req, res) {
-  //   const string = req.params.id.toString();
-  //   db.Document.find({ userId: string })
-  //     .then(dbModel => {
-  //       res.json(dbModel);
-  //     })
-  //     .catch(err => res.status(422).json(err));
-  // },
 };

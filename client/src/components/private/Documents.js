@@ -14,8 +14,7 @@ export class Documents extends Component {
       visible: false,
       message: "",
       color: "",
-      images: [],
-      documents: [],
+      documents: {},
     };
 
     this.toggle = this.toggle.bind(this);
@@ -63,22 +62,18 @@ export class Documents extends Component {
                 this.onShowAlert(response.data.error, "danger");
               }
             } else {
-              // Success
               let fileName = response.data;
-              console.log("fileName", this.state.selectedFile.name);
-              console.log("fileURL", fileName.location);
-              console.log("Here's the Props", this.props);
+
               let docDetail = {
                 userId: this.props.userId,
                 fileName: this.state.selectedFile.name,
                 fileUrl: fileName.location,
               };
               this.onShowAlert("Document Uploaded Successfully", "success");
-              // });
-              console.log("docDetails", docDetail);
-              // axios.post("/api/documents", { docDetail }).then(res => {
-              //   console.log("Heres's the Data", res.data);
-              //
+
+              axios.post("/api/documents", { docDetail }).then(res => {
+                // console.log("Heres's the Data", res.data);
+              });
             }
           }
         })
@@ -97,8 +92,38 @@ export class Documents extends Component {
     this.setState({ visible: true, message, color }, () => {
       window.setTimeout(() => {
         this.setState({ visible: false, modal: false });
+        window.location.reload();
       }, 2000);
     });
+  };
+
+  componentDidMount() {
+    axios
+      .get("/api/documents")
+      .then(res => {
+        if (res.data.length > 0) {
+          this.setState({
+            documents: res.data,
+          });
+          console.log(res.data);
+        } else {
+          console.log("You need to add a document/photo");
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
+  deleteDocument = id => {
+    axios
+      .delete(`/api/documents/${id}`)
+      .then(
+        window.setTimeout(() => {
+          window.location.reload();
+        }, 1000)
+      )
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -113,19 +138,56 @@ export class Documents extends Component {
           </div>
           <div className="card-body">
             <div className="text-right">
-              <button className="btn btn-info" onClick={this.toggle}>
+              <button className="btn btn-info mb-5" onClick={this.toggle}>
                 <i className="fa fa-plus-circle" aria-hidden="true" />
                 &nbsp; Add Document
               </button>
             </div>
-            {/* <button className="btn btn-warning">Show Documents</button> */}
+            {/* beginning of images */}
+            {this.state.documents.length ? (
+              <div className="row">
+                {this.state.documents.map(document => (
+                  <div key={document._id} className="col-4">
+                    <div className="card mt-3">
+                      <div className="card-header">
+                        {document.fileName}{" "}
+                        <button
+                          className="btn btn-outline-danger float-right"
+                          id={document._id}
+                          onClick={() => this.deleteDocument(document._id)}
+                        >
+                          <i className="far fa-trash-alt" />
+                        </button>
+                      </div>
+                      <div key={document._id} className="card-body">
+                        <a
+                          href={document.fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src={document.fileUrl}
+                            alt={document.fileName}
+                            style={{ width: "100%" }}
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="jumbotron">
+                <h4 className="text-center mt-5">
+                  No Documents have been added. Please click the "Add Document
+                  Button"
+                </h4>
+              </div>
+            )}
+            {/* end of images */}
           </div>
         </div>
         <div>
-          {/* <Button color="danger" onClick={this.toggle}>
-            {/* {this.props.buttonLabel} */}
-          {/* Hello World */}
-          {/* </Button>  */}
           <Modal
             isOpen={this.state.modal}
             toggle={this.toggle}

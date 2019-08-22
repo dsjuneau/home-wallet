@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Dropdown,
   DropdownToggle,
@@ -22,11 +23,11 @@ export default function Nav(props) {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-white">
         <div className="container">
-          <a className="navbar-brand " href="/">
+          <Link to="/" className="navbar-brand ">
             <h1>
               Home Wallet <i className="fas fa-wallet" />
             </h1>
-          </a>
+          </Link>
           <Dropdown isOpen={props.dropdownOpen} toggle={props.toggleNav}>
             <DropdownToggle caret>Options</DropdownToggle>
             <DropdownMenu>
@@ -37,41 +38,41 @@ export default function Nav(props) {
               </p>
               {/* </DropdownItem> */}
               <DropdownItem>
-                <a className="dropdown-item" href="/">
+                <Link to="/" className="dropdown-item">
                   <i className="fas fa-home" /> Main
-                </a>
+                </Link>
               </DropdownItem>
               {/* Calendar option removed as it is the default and Documents are  not working right now */}
               {/*  <DropdownItem>
                   {" "}
-                  <a className="dropdown-item" href="/">
+                  <Link className="dropdown-item" href="/">
                     <i className="far fa-calendar-alt" /> Calendar
-                  </a>
+                  </Link>
                 </DropdownItem> */}
               <DropdownItem>
-                <a className="dropdown-item" href="/Documents/">
+                <Link to="/Documents/" className="dropdown-item">
                   <i className="fas fa-file-pdf" /> Documents
-                </a>
+                </Link>
               </DropdownItem>
               <DropdownItem>
-                <a className="dropdown-item" href="/Repairs/">
+                <Link to="/Repairs/" className="dropdown-item">
                   <i className="fas fa-tools" /> Repairs
-                </a>
+                </Link>
               </DropdownItem>
               <DropdownItem>
-                <a className="dropdown-item" href="/Vendors/">
+                <Link to="/Vendors/" className="dropdown-item">
                   <i className="far fa-address-card" /> Vendors
-                </a>
+                </Link>
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem className="text-center">
-                <a
-                  className="btn btn-outline-danger"
-                  href="/Login/"
-                  onClick={props.handleLogout}
+                <Link
+                  to="/Login/"
+                  // className="btn btn-outline-danger"
+                  // onClick={props.handleLogout}
                 >
                   <i className="fas fa-sign-out-alt" /> Logout
-                </a>
+                </Link>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>

@@ -18,7 +18,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log("getting here", req.body);
+    // console.log("getting here", req.body);
     db.Vendor.create(req.body.newVendor)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
@@ -29,7 +29,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    console.log(req.query);
+    // console.log(req.query);
     db.Vendor.findByIdAndRemove({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))

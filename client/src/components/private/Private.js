@@ -10,6 +10,8 @@ import AddRepair from "./AddRepair";
 import NoMatch from "./NoMatch";
 import axios from "axios";
 
+// import { TransitionGroup, CSSTransition } from "react-transition-group";
+
 export class Private extends Component {
   constructor(props) {
     super(props);
@@ -214,39 +216,39 @@ export class Private extends Component {
   render() {
     return (
       <div>
-        <Nav
-          userName={this.props.user.userName}
-          userId={this.props.user.id}
-          unAuth={this.props.unAuth}
-          streetAddress={this.state.streetAddress}
-          zipCode={this.state.zipCode}
-          handleZillowCall={this.handleZillowCall}
-          handleSaveProfile={this.handleSaveProfile}
-          handleDeleteProfile={this.handleDeleteProfile}
-          handleFenceCheck={this.handleFenceCheck}
-          handlePoolCheck={this.handlePoolCheck}
-          handleInputChange={this.handleInputChange}
-          toggleZillowModal={this.toggleZillowModal}
-          toggleNav={this.toggleNav}
-          dropdownOpen={this.state.dropdownOpen}
-          clearProfile={this.clearProfile}
-          handleLogout={this.handleLogout}
-          showProfile={this.showProfile}
-          isProfileOpen={this.state.isProfileOpen}
-          hasHomeProfile={this.state.hasHomeProfile}
-          hasZillow={this.state.hasZillow}
-          zillowData={this.state.zillowData}
-          profileModal={this.state.profileModal}
-          zillowModal={this.state.zillowModal}
-          hasPool={this.state.hasPool}
-          hasFence={this.state.hasFence}
-          parking={this.state.parking}
-          newHomeProfile={this.state.homeProfile}
-          isError={this.state.isError}
-          errorMsg={this.state.errorMsg}
-          onShowMessage={this.onShowMessage}
-        />
         <Router>
+          <Nav
+            userName={this.props.user.userName}
+            userId={this.props.user.id}
+            unAuth={this.props.unAuth}
+            streetAddress={this.state.streetAddress}
+            zipCode={this.state.zipCode}
+            handleZillowCall={this.handleZillowCall}
+            handleSaveProfile={this.handleSaveProfile}
+            handleDeleteProfile={this.handleDeleteProfile}
+            handleFenceCheck={this.handleFenceCheck}
+            handlePoolCheck={this.handlePoolCheck}
+            handleInputChange={this.handleInputChange}
+            toggleZillowModal={this.toggleZillowModal}
+            toggleNav={this.toggleNav}
+            dropdownOpen={this.state.dropdownOpen}
+            clearProfile={this.clearProfile}
+            handleLogout={this.handleLogout}
+            showProfile={this.showProfile}
+            isProfileOpen={this.state.isProfileOpen}
+            hasHomeProfile={this.state.hasHomeProfile}
+            hasZillow={this.state.hasZillow}
+            zillowData={this.state.zillowData}
+            profileModal={this.state.profileModal}
+            zillowModal={this.state.zillowModal}
+            hasPool={this.state.hasPool}
+            hasFence={this.state.hasFence}
+            parking={this.state.parking}
+            newHomeProfile={this.state.homeProfile}
+            isError={this.state.isError}
+            errorMsg={this.state.errorMsg}
+            onShowMessage={this.onShowMessage}
+          />
           <Switch>
             <Route
               path={["/", "/login"]}
@@ -286,6 +288,8 @@ export class Private extends Component {
             <Route path="*" component={NoMatch} />
             )} />
           </Switch>
+          {/* </CSSTransition>
+          </TransitionGroup> */}
         </Router>
         {/* <Footer /> */}
       </div>

@@ -62,7 +62,7 @@ export default class Calendar extends React.Component {
   loadEvents = () => {
     API.getEvents(this.props.userId)
       .then(response => {
-            console.log("On Load from getEvents: " + JSON.stringify(response.data));
+        // console.log("On Load from getEvents: " + JSON.stringify(response.data));
         this.setState({
           events: response.data,
         });
@@ -70,18 +70,16 @@ export default class Calendar extends React.Component {
       .catch(err => console.log(err));
   };
 
-
   loadVendors = () => {
     API.getVendors(this.props.userId)
       .then(response => {
-            console.log("On Load from getVendors: " + JSON.stringify(response.data));
+        // console.log("On Load from getVendors: " + JSON.stringify(response.data));
         this.setState({
           vendors: response.data,
         });
       })
       .catch(err => console.log(err));
   };
-
 
   toggle = () => {
     this.setState(prevState => ({
@@ -95,53 +93,52 @@ export default class Calendar extends React.Component {
     }));
   };
 
-    handleEventClick = ({ event, el }) => {
-      console.log("event id: " + event.id);
-      console.log(typeof(event.id));
-     let clickedRepairId = JSON.parse(event.id);
-      console.log("From handleEventClick: " + JSON.stringify(event.title));  // event.title works.
+  handleEventClick = ({ event, el }) => {
+    console.log("event id: " + event.id);
+    console.log(typeof event.id);
+    let clickedRepairId = JSON.parse(event.id);
+    // console.log("From handleEventClick: " + JSON.stringify(event.title)); // event.title works.
 
-         API.getRepair(clickedRepairId)
-        .then(response => {
-              console.log("EventClick from getRepair: " + JSON.stringify(response.data));
+    API.getRepair(clickedRepairId)
+      .then(response => {
+        // console.log("EventClick from getRepair: " + JSON.stringify(response.data));
 
-              let clickedRepair = response.data;
+        let clickedRepair = response.data;
 
-              let formatStartDate = moment(clickedRepair.startDate).format(
-                "YYYY-MM-DD"
-              );
-              let formatRecurStartDate = moment(
-                clickedRepair.recurrenceStartDate
-              ).format("YYYY-MM-DD");
-              let formatRecurEndDate = moment(clickedRepair.recurrenceEndDate).format(
-                "YYYY-MM-DD"
-              );
+        let formatStartDate = moment(clickedRepair.startDate).format(
+          "YYYY-MM-DD"
+        );
+        let formatRecurStartDate = moment(
+          clickedRepair.recurrenceStartDate
+        ).format("YYYY-MM-DD");
+        let formatRecurEndDate = moment(clickedRepair.recurrenceEndDate).format(
+          "YYYY-MM-DD"
+        );
 
-              this.setState({
-                repairId: clickedRepair._id,
-                repairType: clickedRepair.repairType,
-                title: clickedRepair.title,
-                cost: clickedRepair.cost,
-                priority: clickedRepair.priority,
-                status: clickedRepair.status,
-                isVendor: clickedRepair.isVendor,
-                vendor: clickedRepair.vendor,
-                notes: clickedRepair.notes,
-                recurrencePeriod: clickedRepair.recurrencePeriod,
-                repeatInterval: clickedRepair.repeatInterval,
-                repeatDayOfWeek: clickedRepair.repeatDayOfWeek,
-                startDate: formatStartDate,
-                recurrenceStartDate: formatRecurStartDate,
-                recurrenceEndDate: formatRecurEndDate,
-                startTime: clickedRepair.startTime,
-                endTime: clickedRepair.endTime,
-              });
+        this.setState({
+          repairId: clickedRepair._id,
+          repairType: clickedRepair.repairType,
+          title: clickedRepair.title,
+          cost: clickedRepair.cost,
+          priority: clickedRepair.priority,
+          status: clickedRepair.status,
+          isVendor: clickedRepair.isVendor,
+          vendor: clickedRepair.vendor,
+          notes: clickedRepair.notes,
+          recurrencePeriod: clickedRepair.recurrencePeriod,
+          repeatInterval: clickedRepair.repeatInterval,
+          repeatDayOfWeek: clickedRepair.repeatDayOfWeek,
+          startDate: formatStartDate,
+          recurrenceStartDate: formatRecurStartDate,
+          recurrenceEndDate: formatRecurEndDate,
+          startTime: clickedRepair.startTime,
+          endTime: clickedRepair.endTime,
+        });
 
-              this.detailToggle();
-        })
-        .catch(err => console.log(err));
-
-    }
+        this.detailToggle();
+      })
+      .catch(err => console.log(err));
+  };
 
   handleNewEvent = arg => {
     this.setState(prevState => ({
@@ -280,7 +277,7 @@ export default class Calendar extends React.Component {
       })
       .then(repairId => {
         newEvent.id = repairId;
-      
+
         API.saveEvent(newEvent);
       })
       .then(newEvent => {
@@ -310,7 +307,6 @@ export default class Calendar extends React.Component {
       editable: true,
     });
   };
-
 
   handleModifyFormSubmit = event => {
     event.preventDefault();
@@ -343,7 +339,7 @@ export default class Calendar extends React.Component {
         )
         .asHours();
 
-      console.log("duration: " + duration);
+      // console.log("duration: " + duration);
 
       let parsedRecurStart =
         this.state.recurrenceStartDate + "T" + this.state.startTime + ":00";
@@ -354,7 +350,6 @@ export default class Calendar extends React.Component {
       modifiedRepair.duration = duration;
 
       if (this.state.recurrencePeriod === "daily") {
-
         this.setState({
           repeatInterval: 1,
         });
@@ -403,7 +398,7 @@ export default class Calendar extends React.Component {
         )
         .asHours();
 
-      console.log("duration: " + duration);
+      // console.log("duration: " + duration);
 
       let parsedStart =
         this.state.startDate + "T" + this.state.startTime + ":00";
@@ -422,7 +417,10 @@ export default class Calendar extends React.Component {
         editable: true,
       };
     }
-    console.log("Modified Event from ModifiedFormSubmit: " + JSON.stringify(modifiedEvent));
+    console
+      .log
+      // "Modified Event from ModifiedFormSubmit: " + JSON.stringify(modifiedEvent)
+      ();
 
     API.changeRepair(modifiedRepair)
       .then(res => {
@@ -432,12 +430,12 @@ export default class Calendar extends React.Component {
 
     API.changeEvent(modifiedEvent)
       .then(res => {
-            console.log("changeEvent in changeEvent: " + JSON.stringify(res));
+        // console.log("changeEvent in changeEvent: " + JSON.stringify(res));
         this.detailToggle();
       })
       .catch(err => console.log(err));
-      
-      this.loadEvents();
+
+    this.loadEvents();
 
     this.setState({
       repairId: "",
@@ -474,8 +472,6 @@ export default class Calendar extends React.Component {
       .catch(err => console.log(err));
   }
 
-
-
   render() {
     return (
       <div className="bg bg-home pt-5">
@@ -492,9 +488,8 @@ export default class Calendar extends React.Component {
             <div className="calendar" />
             <FullCalendar
               defaultView="dayGridMonth"
-              eventClick= {this.handleEventClick}
+              eventClick={this.handleEventClick}
               dateClick={this.handleDateClick}
-
               header={{
                 left: "prev,next today",
                 center: "title",
@@ -743,7 +738,7 @@ export default class Calendar extends React.Component {
                     </Row>
                   </FormGroup>
 
-                  {(this.state.isVendor && this.state.vendors.length) ? (
+                  {this.state.isVendor && this.state.vendors.length ? (
                     <FormGroup>
                       <Label htmlFor="repairVendor" />
                       <Input
@@ -754,11 +749,10 @@ export default class Calendar extends React.Component {
                         name="vendor"
                         onChange={this.handleInputChange}
                       >
-                 
-                {this.state.vendors.map(item => (
-                        <option>{item.vendorCompany}</option>
-                  ))})
-                
+                        {this.state.vendors.map(item => (
+                          <option>{item.vendorCompany}</option>
+                        ))}
+                        )
                       </Input>
                     </FormGroup>
                   ) : (
@@ -790,256 +784,260 @@ export default class Calendar extends React.Component {
           </div>
 
           <div>
-          <Modal
-            isOpen={this.state.detailModal}
-            toggle={this.detailToggle}
-            className={this.props.className}
-          >
-            <Button className="ml-auto" color="danger" onClick={this.detailToggle}>
-              x
-            </Button>
-            <ModalBody>
-              <Form>
-                <FormGroup>
-                  <Label htmlFor="repairType">Type</Label>
-                  <Input
-                    type="select"
-                    id="repairTypeSelect"
-                    defaultValue={this.state.repairType}
-                    //value={this.state.repairType}
+            <Modal
+              isOpen={this.state.detailModal}
+              toggle={this.detailToggle}
+              className={this.props.className}
+            >
+              <Button
+                className="ml-auto"
+                color="danger"
+                onClick={this.detailToggle}
+              >
+                x
+              </Button>
+              <ModalBody>
+                <Form>
+                  <FormGroup>
+                    <Label htmlFor="repairType">Type</Label>
+                    <Input
+                      type="select"
+                      id="repairTypeSelect"
+                      defaultValue={this.state.repairType}
+                      //value={this.state.repairType}
 
-                    name="repairType"
-                    onChange={this.handleInputChange}
-                  >
-                    <option>Update</option>
-                    <option>Repair</option>
-                    <option>Maintenance</option>
-                  </Input>
-                </FormGroup>
-                <FormGroup>
-                  <Label htmlFor="repairDescription">Description</Label>
-                  <Input
-                    type="text"
-                    id="repairDescriptionInput"
-                    defaultValue={this.state.title}
-                    //    value={this.state.title}
-                    name="title"
-                    onChange={this.handleInputChange}
-                  />
-                </FormGroup>
+                      name="repairType"
+                      onChange={this.handleInputChange}
+                    >
+                      <option>Update</option>
+                      <option>Repair</option>
+                      <option>Maintenance</option>
+                    </Input>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label htmlFor="repairDescription">Description</Label>
+                    <Input
+                      type="text"
+                      id="repairDescriptionInput"
+                      defaultValue={this.state.title}
+                      //    value={this.state.title}
+                      name="title"
+                      onChange={this.handleInputChange}
+                    />
+                  </FormGroup>
 
-                <FormGroup>
-                  <Label htmlFor="recurringPeriod">Repeat</Label>
-                  <Input
-                    type="select"
-                    defaultValue={this.state.recurrencePeriod}
-                    //    value={this.state.recurrencePeriod}
-                    name="recurrencePeriod"
-                    onChange={this.handleInputChange}
-                  >
-                    <option value="never">Never</option>
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    {/*   <option>Monthly</option> */}
-                    {/*   <option>Yearly</option> */}
-                  </Input>
-                </FormGroup>
+                  <FormGroup>
+                    <Label htmlFor="recurringPeriod">Repeat</Label>
+                    <Input
+                      type="select"
+                      defaultValue={this.state.recurrencePeriod}
+                      //    value={this.state.recurrencePeriod}
+                      name="recurrencePeriod"
+                      onChange={this.handleInputChange}
+                    >
+                      <option value="never">Never</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      {/*   <option>Monthly</option> */}
+                      {/*   <option>Yearly</option> */}
+                    </Input>
+                  </FormGroup>
 
-                {this.state.recurrencePeriod === "daily" ||
-                this.state.recurrencePeriod === "weekly" ? (
-                  <Row>
-                    <Col md={6}>
-                      <FormGroup>
-                        <Label htmlFor="recurrence-start-date-input">
-                          Start Date
-                        </Label>
-                        <Input
-                          type="date"
-                          id="recurrence-start-date-input"
-                          defaultValue={this.state.recurrenceStartDate}
-                          //        value={this.state.recurrenceStartDate}
-                          name="recurrenceStartDate"
-                          onChange={this.handleInputChange}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col md={6}>
-                      <FormGroup>
-                        <Label htmlFor="end-date-input">End By Date</Label>
-                        <Input
-                          type="date"
-                          id="end-date-input"
-                          defaultValue={this.state.recurrenceEndDate}
-                          //    value={this.state.recurrenceEndDate}
-                          name="recurrenceEndDate"
-                          onChange={this.handleInputChange}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                ) : (
-                  <Row>
-                    <Col md={6}>
-                      <FormGroup>
-                        <Label htmlFor="start-date-input">Start Date</Label>
-                        <Input
-                          type="date"
-                          id="start-date-input"
-                          defaultValue={this.state.startDate}
-                          //        value={this.state.startDate}
-                          name="startDate"
-                          onChange={this.handleInputChange}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                )}
-
-                <Row form>
-                  <Col md={6}>
-                    <FormGroup>
-                      <Label htmlFor="start-time-input">Start Time</Label>
-                      <Input
-                        type="time"
-                        id="start-time-input"
-                        defaultValue={this.state.startTime}
-                        //     value={this.state.startTime}
-                        name="startTime"
-                        onChange={this.handleInputChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col md={6}>
-                    <FormGroup>
-                      <Label htmlFor="end-time-input">End Time</Label>
-                      <Input
-                        type="time"
-                        id="end-time-input"
-                        defaultValue={this.state.endTime}
-                        //    value={this.state.endTime}
-                        name="endTime"
-                        onChange={this.handleInputChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                {this.state.recurrencePeriod === "weekly" ? (
-                  <div>
-                    <Row form>
+                  {this.state.recurrencePeriod === "daily" ||
+                  this.state.recurrencePeriod === "weekly" ? (
+                    <Row>
                       <Col md={6}>
                         <FormGroup>
-                          <Label htmlFor="repeatInterval">every</Label>
+                          <Label htmlFor="recurrence-start-date-input">
+                            Start Date
+                          </Label>
                           <Input
-                            type="select"
-                            name="repeatInterval"
-                            defaultValue={this.state.repeatInterval}
-                            //     value={this.state.repeatInterval}
+                            type="date"
+                            id="recurrence-start-date-input"
+                            defaultValue={this.state.recurrenceStartDate}
+                            //        value={this.state.recurrenceStartDate}
+                            name="recurrenceStartDate"
                             onChange={this.handleInputChange}
-                          >
-                            <option value={1}>1</option>
-                            <option value={2}>2</option>
-                            <option value={3}>3</option>
-                            <option value={4}>4</option>
-                          </Input>
-                          <span>week(s)</span>
+                          />
                         </FormGroup>
                       </Col>
                       <Col md={6}>
                         <FormGroup>
-                          <Label htmlFor="repeatDayOfWeek">on</Label>
+                          <Label htmlFor="end-date-input">End By Date</Label>
                           <Input
-                            type="select"
-                            defaultValue={this.state.repeatDayOfWeek}
-                            //    value={this.state.repeatDayOfWeek}
-                            name="repeatDayOfWeek"
+                            type="date"
+                            id="end-date-input"
+                            defaultValue={this.state.recurrenceEndDate}
+                            //    value={this.state.recurrenceEndDate}
+                            name="recurrenceEndDate"
                             onChange={this.handleInputChange}
-                          >
-                            <option value="SU">Sunday</option>
-                            <option value="MO">Monday</option>
-                            <option value="TU">Tuesday</option>
-                            <option value="WE">Wednesday</option>
-                            <option value="TH">Thursday</option>
-                            <option value="FR">Friday</option>
-                            <option value="SA">Saturday</option>
-                          </Input>
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
-                  </div>
-                ) : (
-                  <p />
-                )}
+                  ) : (
+                    <Row>
+                      <Col md={6}>
+                        <FormGroup>
+                          <Label htmlFor="start-date-input">Start Date</Label>
+                          <Input
+                            type="date"
+                            id="start-date-input"
+                            defaultValue={this.state.startDate}
+                            //        value={this.state.startDate}
+                            name="startDate"
+                            onChange={this.handleInputChange}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  )}
 
-                <Row form>
-                  <Col md={4}>
-                    <FormGroup>
-                      <Label htmlFor="repairCost"> Repair Cost</Label>
-                      <Input
-                        type="number"
-                        id="repairCostInput"
-                        defaultValue={this.state.cost}
-                        //    value={this.state.cost}
-                        name="cost"
-                        onChange={this.handleInputChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col md={4}>
-                    <FormGroup>
-                      <Label htmlFor="repairPriority">Repair Priority</Label>
-                      <Input
-                        type="select"
-                        id="repairPrioritySelect"
-                        defaultValue={this.state.priority}
-                        //    value={this.state.priority}
-                        name="priority"
-                        onChange={this.handleInputChange}
-                      >
-                        <option>low</option>
-                        <option>medium</option>
-                        <option>high</option>
-                      </Input>
-                    </FormGroup>
-                  </Col>
-                  <Col md={4}>
-                    <FormGroup>
-                      <Label htmlFor="repairStatus">Repair Status</Label>
-                      <Input
-                        type="select"
-                        id="repairStatusSelect"
-                        defaultValue={this.state.status}
-                        //    value={this.state.status}
-                        name="status"
-                        onChange={this.handleInputChange}
-                      >
-                        <option>Thinking about it!</option>
-                        <option>Getting Bids</option>
-                        <option>In Progress</option>
-                        <option>Completed</option>
-                      </Input>
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <FormGroup>
                   <Row form>
-                    <Col md={4}>
-                      <Label htmlFor="isVendor">
-                        Assign a Contractor/Vendor?
-                      </Label>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label htmlFor="start-time-input">Start Time</Label>
+                        <Input
+                          type="time"
+                          id="start-time-input"
+                          defaultValue={this.state.startTime}
+                          //     value={this.state.startTime}
+                          name="startTime"
+                          onChange={this.handleInputChange}
+                        />
+                      </FormGroup>
                     </Col>
-                    <Col md={4}>
-                      <input
-                        type="checkbox"
-                        name="vendorCheckbox"
-                        checked={this.state.isVendor}
-                        onChange={this.handleCheck}
-                      />
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label htmlFor="end-time-input">End Time</Label>
+                        <Input
+                          type="time"
+                          id="end-time-input"
+                          defaultValue={this.state.endTime}
+                          //    value={this.state.endTime}
+                          name="endTime"
+                          onChange={this.handleInputChange}
+                        />
+                      </FormGroup>
                     </Col>
                   </Row>
-                </FormGroup>
 
-                {(this.state.isVendor && this.state.vendors.length) ? (
+                  {this.state.recurrencePeriod === "weekly" ? (
+                    <div>
+                      <Row form>
+                        <Col md={6}>
+                          <FormGroup>
+                            <Label htmlFor="repeatInterval">every</Label>
+                            <Input
+                              type="select"
+                              name="repeatInterval"
+                              defaultValue={this.state.repeatInterval}
+                              //     value={this.state.repeatInterval}
+                              onChange={this.handleInputChange}
+                            >
+                              <option value={1}>1</option>
+                              <option value={2}>2</option>
+                              <option value={3}>3</option>
+                              <option value={4}>4</option>
+                            </Input>
+                            <span>week(s)</span>
+                          </FormGroup>
+                        </Col>
+                        <Col md={6}>
+                          <FormGroup>
+                            <Label htmlFor="repeatDayOfWeek">on</Label>
+                            <Input
+                              type="select"
+                              defaultValue={this.state.repeatDayOfWeek}
+                              //    value={this.state.repeatDayOfWeek}
+                              name="repeatDayOfWeek"
+                              onChange={this.handleInputChange}
+                            >
+                              <option value="SU">Sunday</option>
+                              <option value="MO">Monday</option>
+                              <option value="TU">Tuesday</option>
+                              <option value="WE">Wednesday</option>
+                              <option value="TH">Thursday</option>
+                              <option value="FR">Friday</option>
+                              <option value="SA">Saturday</option>
+                            </Input>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </div>
+                  ) : (
+                    <p />
+                  )}
+
+                  <Row form>
+                    <Col md={4}>
+                      <FormGroup>
+                        <Label htmlFor="repairCost"> Repair Cost</Label>
+                        <Input
+                          type="number"
+                          id="repairCostInput"
+                          defaultValue={this.state.cost}
+                          //    value={this.state.cost}
+                          name="cost"
+                          onChange={this.handleInputChange}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col md={4}>
+                      <FormGroup>
+                        <Label htmlFor="repairPriority">Repair Priority</Label>
+                        <Input
+                          type="select"
+                          id="repairPrioritySelect"
+                          defaultValue={this.state.priority}
+                          //    value={this.state.priority}
+                          name="priority"
+                          onChange={this.handleInputChange}
+                        >
+                          <option>low</option>
+                          <option>medium</option>
+                          <option>high</option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                    <Col md={4}>
+                      <FormGroup>
+                        <Label htmlFor="repairStatus">Repair Status</Label>
+                        <Input
+                          type="select"
+                          id="repairStatusSelect"
+                          defaultValue={this.state.status}
+                          //    value={this.state.status}
+                          name="status"
+                          onChange={this.handleInputChange}
+                        >
+                          <option>Thinking about it!</option>
+                          <option>Getting Bids</option>
+                          <option>In Progress</option>
+                          <option>Completed</option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <FormGroup>
+                    <Row form>
+                      <Col md={4}>
+                        <Label htmlFor="isVendor">
+                          Assign a Contractor/Vendor?
+                        </Label>
+                      </Col>
+                      <Col md={4}>
+                        <input
+                          type="checkbox"
+                          name="vendorCheckbox"
+                          checked={this.state.isVendor}
+                          onChange={this.handleCheck}
+                        />
+                      </Col>
+                    </Row>
+                  </FormGroup>
+
+                  {this.state.isVendor && this.state.vendors.length ? (
                     <FormGroup>
                       <Label htmlFor="repairVendor" />
                       <Input
@@ -1050,43 +1048,41 @@ export default class Calendar extends React.Component {
                         name="vendor"
                         onChange={this.handleInputChange}
                       >
-                 
-                {this.state.vendors.map(item => (
-                        <option>{item.vendorCompany}</option>
-                  ))})
-                
+                        {this.state.vendors.map(item => (
+                          <option>{item.vendorCompany}</option>
+                        ))}
+                        )
                       </Input>
                     </FormGroup>
                   ) : (
                     <p />
                   )}
 
-                <FormGroup>
-                  <Label htmlFor="repairNotes">
-                    Additional Notes/Instruction
-                  </Label>
-                  <Input
-                    type="textarea"
-                    id="repairNotesInput"
-                    rows="3"
-                    defaultValue={this.state.notes}
-                    //    value={this.state.notes}
-                    name="notes"
-                    onChange={this.handleInputChange}
-                  />
-                </FormGroup>
+                  <FormGroup>
+                    <Label htmlFor="repairNotes">
+                      Additional Notes/Instruction
+                    </Label>
+                    <Input
+                      type="textarea"
+                      id="repairNotesInput"
+                      rows="3"
+                      defaultValue={this.state.notes}
+                      //    value={this.state.notes}
+                      name="notes"
+                      onChange={this.handleInputChange}
+                    />
+                  </FormGroup>
 
-                <Button
-                  onClick={this.handleModifyFormSubmit}
-                  className="btn btn-block btn-success mt-3"
-                >
-                  Update
-                </Button>
-              </Form>
-            </ModalBody>
-          </Modal>
-        </div>
-        
+                  <Button
+                    onClick={this.handleModifyFormSubmit}
+                    className="btn btn-block btn-success mt-3"
+                  >
+                    Update
+                  </Button>
+                </Form>
+              </ModalBody>
+            </Modal>
+          </div>
         </div>
       </div>
     );

@@ -9,7 +9,7 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader,
+  ModalHeader
 } from "reactstrap";
 
 import MakeProfile from "./MakeProfile.js";
@@ -68,8 +68,8 @@ export default function Nav(props) {
               <DropdownItem className="text-center">
                 <Link
                   to="/Login/"
-                  // className="btn btn-outline-danger"
-                  // onClick={props.handleLogout}
+                  className="btn btn-outline-danger"
+                  onClick={props.handleLogout}
                 >
                   <i className="fas fa-sign-out-alt" /> Logout
                 </Link>

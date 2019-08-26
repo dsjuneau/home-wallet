@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   
-  <img  src="./images/logo.jpg">
+  <img  src="./images/readme.jpg">
 
   <p align="center">
     <a href="https://github.com/dsjuneau/home-wallet"»</strong>View the Repo</a>

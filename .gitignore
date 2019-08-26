@@ -24,3 +24,4 @@ yarn-error.log*
 # files used for testing only
 test.html
 list3.js
+.vscode

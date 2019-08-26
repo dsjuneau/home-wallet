@@ -29,13 +29,13 @@
 
 ## About The Project
 
-<img src="./images/home.jpg">
-
 Home Wallet is like CarFax for your Home. It helps you prioritize and keep track of home repairs and maintenance. From the smallest task to a major remodel.
 
 <li>Create your own list of vendors to keep track of who did what, and how much it cost. 
 <li>Setup recurring events like mowing the lawn, or one time events like fixing the drain.
-<li>Keep all of your documents and photos related to your home in one place
+<li>Keep all of your documents and photos related to your home in one place</li>
+<br/>
+<img src="./images/home.jpg">
 
 ### Built With
 
@@ -66,19 +66,19 @@ Home Wallet is like CarFax for your Home. It helps you prioritize and keep track
 
 ### Calendar
 
-<img src="./images/calendar.jpg">
+<img src="./images/calendar.JPG">
 
 ### Repairs
 
-<img src="./images/repairs.jpg">
+<img src="./images/repairs.JPG">
 
 ### Vendors
 
-<img src="./images/vendors.jpg">
+<img src="./images/vendors.JPG">
 
 ### Documents
 
-<img src="./images/documents.jpg">
+<img src="./images/documents.JPG">
 
 <!-- UPCOMING -->
 
@@ -90,7 +90,7 @@ Features for the future include :
 <li>Multiple properties  (investors, vacation home, etc… )
 </li>
   <li>Print a summary of Repairs etc</li>
-  <li>Share your profile with RE professionals</li>
+  <li>Share your profile with Real Estate professionals</li>
   <li>Integration with Google Calendar and Drive</li>
 <li>How-To videos and instructions when you don’t need a Vendor
 </li>
